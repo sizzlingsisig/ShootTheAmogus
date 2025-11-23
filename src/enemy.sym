@@ -1,0 +1,45 @@
+ASxxxx Assembler V02.00 + NoICE + SDCC mods  (GameBoy)                  Page 1
+Hexadecimal [32-Bits]
+
+Symbol Table
+
+    .__.$$$.                                                    =   00002710 L
+    .__.ABS.                                                    =   00000000 G
+    .__.CPU.                                                    =   00000000 L
+    .__.H$L.                                                    =   00000000 L
+    __modsint                                                       ******** GX
+    __moduchar                                                      ******** GX
+    __muluschar                                                     ******** GX
+  0 _countActiveEnemies                                             00000B10 GR
+  0 _drawEnemy                                                      00000AC7 GR
+  1 _enemies                                                        00000000 GR
+    _getEnemySpeed                                                  ******** GX
+    _getWaveNumber                                                  ******** GX
+    _hideSprite4                                                    ******** GX
+  0 _initEnemies                                                    00000000 GR
+    _moveSprite4                                                    ******** GX
+    _player                                                         ******** GX
+    _shadow_OAM                                                     ******** GX
+    _simpleRand                                                     ******** GX
+  0 _spawnBossEnemy                                                 0000026C GR
+  0 _spawnEnemy                                                     0000002F GR
+  0 _updateBossPhysics                                              000002F2 GR
+  0 _updateEnemyAnimation                                           00000805 GR
+  0 _updateEnemyPhysics                                             0000042A GR
+
+
+ASxxxx Assembler V02.00 + NoICE + SDCC mods  (GameBoy)                  Page 2
+Hexadecimal [32-Bits]
+
+Area Table
+
+   0 _CODE                                      size      B3B   flags    0
+   1 _DATA                                      size       50   flags    0
+   2 _INITIALIZED                               size        0   flags    0
+   3 _DABS                                      size        0   flags    8
+   4 _HOME                                      size        0   flags    0
+   5 _GSINIT                                    size        0   flags    0
+   6 _GSFINAL                                   size        0   flags    0
+   7 _INITIALIZER                               size        0   flags    0
+   8 _CABS                                      size        0   flags    8
+

@@ -3,7 +3,8 @@
         {
             "name": "Win32",
             "includePath": [
-                "${workspaceFolder}/**"
+                "${workspaceFolder}/**",
+                "C:/gbdk/include"
             ],
             "defines": [
                 "_DEBUG",
@@ -16,19 +17,28 @@
             "intelliSenseMode": "windows-gcc-x86"
         },
         {
-            "name": "Win32",
+            "name": "wind",
             "includePath": [
-                "${workspaceFolder}/**"
+                "c:/Users/cj/Downloads/SP/ShootTheAmogus/**",
+                "c:/Users/cj/Downloads/SP/ShootTheAmogus/src/**",
+                "C:/gbdk/include",
+                "C:/gbdk/include/gb"
             ],
             "defines": [
                 "_DEBUG",
                 "UNICODE",
                 "_UNICODE"
             ],
-            "compilerPath": "C:\\msys64\\mingw32\\bin\\gcc.exe",
-            "cStandard": "c17",
+            "compilerPath": "C:\\gbdk\\bin\\lcc.exe",
+            "cStandard": "c89",
             "cppStandard": "gnu++17",
-            "intelliSenseMode": "windows-gcc-x86"
+            "intelliSenseMode": "windows-gcc-x86",
+"compilerPathInCppPropertiesJson": "C:\\gbdk\\bin\\lcc.exe",
+            "mergeConfigurations": false,
+            "recursiveIncludes": {},
+            "browse": {
+                "limitSymbolsToIncludedHeaders": true
+            }
         }
     ],
     "version": 4

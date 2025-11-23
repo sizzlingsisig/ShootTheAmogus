@@ -1,0 +1,629 @@
+                                      1 ;--------------------------------------------------------
+                                      2 ; File Created by SDCC : free open source ISO C Compiler
+                                      3 ; Version 4.5.1 #15267 (MINGW64)
+                                      4 ;--------------------------------------------------------
+                                      5 	.module collision
+                                      6 	
+                                      7 ;--------------------------------------------------------
+                                      8 ; Public variables in this module
+                                      9 ;--------------------------------------------------------
+                                     10 	.globl _playSound
+                                     11 	.globl _checkCollision
+                                     12 	.globl _addScore
+                                     13 	.globl _incrementEnemiesKilled
+                                     14 	.globl _incrementWave
+                                     15 	.globl _checkBulletEnemyCollisions
+                                     16 	.globl _checkPlayerEnemyCollisions
+                                     17 ;--------------------------------------------------------
+                                     18 ; special function registers
+                                     19 ;--------------------------------------------------------
+                                     20 ;--------------------------------------------------------
+                                     21 ; ram data
+                                     22 ;--------------------------------------------------------
+                                     23 	.area _DATA
+                                     24 ;--------------------------------------------------------
+                                     25 ; ram data
+                                     26 ;--------------------------------------------------------
+                                     27 	.area _INITIALIZED
+                                     28 ;--------------------------------------------------------
+                                     29 ; absolute external ram data
+                                     30 ;--------------------------------------------------------
+                                     31 	.area _DABS (ABS)
+                                     32 ;--------------------------------------------------------
+                                     33 ; global & static initialisations
+                                     34 ;--------------------------------------------------------
+                                     35 	.area _HOME
+                                     36 	.area _GSINIT
+                                     37 	.area _GSFINAL
+                                     38 	.area _GSINIT
+                                     39 ;--------------------------------------------------------
+                                     40 ; Home
+                                     41 ;--------------------------------------------------------
+                                     42 	.area _HOME
+                                     43 	.area _HOME
+                                     44 ;--------------------------------------------------------
+                                     45 ; code
+                                     46 ;--------------------------------------------------------
+                                     47 	.area _CODE
+                                     48 ;src/collision.c:9: void checkBulletEnemyCollisions(void)
+                                     49 ;	---------------------------------
+                                     50 ; Function checkBulletEnemyCollisions
+                                     51 ; ---------------------------------
+    00000000                         52 _checkBulletEnemyCollisions::
+    00000000 E8 F5            [16]   53 	add	sp, #-11
+                                     54 ;src/collision.c:12: for (i = 0; i < MAX_BULLETS; i++)
+    00000002 F8 09            [12]   55 	ldhl	sp,	#9
+    00000004 36 00            [12]   56 	ld	(hl), #0x00
+    00000006                         57 00123$:
+                                     58 ;src/collision.c:14: if (bullets[i].y == 0)
+    00000006 F8 09            [12]   59 	ldhl	sp,	#9
+    00000008 7E               [ 8]   60 	ld	a, (hl)
+    00000009 16 00            [ 8]   61 	ld	d, #0x00
+    0000000B 87               [ 4]   62 	add	a, a
+    0000000C CB 12            [ 8]   63 	rl	d
+    0000000E 87               [ 4]   64 	add	a, a
+    0000000F CB 12            [ 8]   65 	rl	d
+    00000011 87               [ 4]   66 	add	a, a
+    00000012 CB 12            [ 8]   67 	rl	d
+    00000014 5F               [ 4]   68 	ld	e, a
+    00000015 21r00r00         [12]   69 	ld	hl, #_bullets
+    00000018 19               [ 8]   70 	add	hl, de
+    00000019 33               [ 8]   71 	inc	sp
+    0000001A 33               [ 8]   72 	inc	sp
+    0000001B 5D               [ 4]   73 	ld	e, l
+    0000001C 54               [ 4]   74 	ld	d, h
+    0000001D D5               [16]   75 	push	de
+    0000001E 6B               [ 4]   76 	ld	l, e
+    0000001F 62               [ 4]   77 	ld	h, d
+    00000020 23               [ 8]   78 	inc	hl
+    00000021 E5               [16]   79 	push	hl
+    00000022 7D               [ 4]   80 	ld	a, l
+    00000023 F8 04            [12]   81 	ldhl	sp,	#4
+    00000025 77               [ 8]   82 	ld	(hl), a
+    00000026 E1               [12]   83 	pop	hl
+    00000027 7C               [ 4]   84 	ld	a, h
+    00000028 F8 03            [12]   85 	ldhl	sp,	#3
+    0000002A 32               [ 8]   86 	ld	(hl-), a
+    0000002B 2A               [ 8]   87 	ld	a, (hl+)
+    0000002C 5F               [ 4]   88 	ld	e, a
+    0000002D 56               [ 8]   89 	ld	d, (hl)
+    0000002E 1A               [ 8]   90 	ld	a, (de)
+    0000002F F8 0A            [12]   91 	ldhl	sp,	#10
+    00000031 77               [ 8]   92 	ld	(hl), a
+    00000032 7E               [ 8]   93 	ld	a, (hl)
+    00000033 B7               [ 4]   94 	or	a, a
+    00000034 CArAFr01         [16]   95 	jp	Z, 00119$
+                                     96 ;src/collision.c:17: for (j = 0; j < MAX_ENEMIES; j++)
+    00000037 36 00            [12]   97 	ld	(hl), #0x00
+    00000039                         98 00122$:
+                                     99 ;src/collision.c:19: Enemy *e = &enemies[j];
+    00000039 F8 0A            [12]  100 	ldhl	sp,	#10
+    0000003B 4E               [ 8]  101 	ld	c, (hl)
+    0000003C 06 00            [ 8]  102 	ld	b, #0x00
+    0000003E 69               [ 4]  103 	ld	l, c
+    0000003F 60               [ 4]  104 	ld	h, b
+    00000040 29               [ 8]  105 	add	hl, hl
+    00000041 29               [ 8]  106 	add	hl, hl
+    00000042 09               [ 8]  107 	add	hl, bc
+    00000043 29               [ 8]  108 	add	hl, hl
+    00000044 29               [ 8]  109 	add	hl, hl
+    00000045 7D               [ 4]  110 	ld	a, l
+    00000046 C6r00            [ 8]  111 	add	a, #<(_enemies)
+    00000048 4F               [ 4]  112 	ld	c, a
+    00000049 7C               [ 4]  113 	ld	a, h
+    0000004A CEs00            [ 8]  114 	adc	a, #>(_enemies)
+    0000004C F8 04            [12]  115 	ldhl	sp,	#4
+    0000004E 71               [ 8]  116 	ld	(hl), c
+    0000004F 23               [ 8]  117 	inc	hl
+                                    118 ;src/collision.c:20: if (!e->isActive || e->deathTimer > 0)
+    00000050 32               [ 8]  119 	ld	(hl-), a
+    00000051 2A               [ 8]  120 	ld	a, (hl+)
+    00000052 5F               [ 4]  121 	ld	e, a
+    00000053 56               [ 8]  122 	ld	d, (hl)
+    00000054 21 05 00         [12]  123 	ld	hl, #0x0005
+    00000057 19               [ 8]  124 	add	hl, de
+    00000058 4D               [ 4]  125 	ld	c, l
+    00000059 44               [ 4]  126 	ld	b, h
+    0000005A 0A               [ 8]  127 	ld	a, (bc)
+    0000005B B7               [ 4]  128 	or	a, a
+    0000005C CArA6r01         [16]  129 	jp	Z, 00117$
+    0000005F F8 04            [12]  130 	ldhl	sp,#4
+    00000061 2A               [ 8]  131 	ld	a, (hl+)
+    00000062 5F               [ 4]  132 	ld	e, a
+    00000063 56               [ 8]  133 	ld	d, (hl)
+    00000064 21 0D 00         [12]  134 	ld	hl, #0x000d
+    00000067 19               [ 8]  135 	add	hl, de
+    00000068 E5               [16]  136 	push	hl
+    00000069 7D               [ 4]  137 	ld	a, l
+    0000006A F8 08            [12]  138 	ldhl	sp,	#8
+    0000006C 77               [ 8]  139 	ld	(hl), a
+    0000006D E1               [12]  140 	pop	hl
+    0000006E 7C               [ 4]  141 	ld	a, h
+    0000006F F8 07            [12]  142 	ldhl	sp,	#7
+    00000071 32               [ 8]  143 	ld	(hl-), a
+    00000072 2A               [ 8]  144 	ld	a, (hl+)
+    00000073 5F               [ 4]  145 	ld	e, a
+    00000074 56               [ 8]  146 	ld	d, (hl)
+    00000075 1A               [ 8]  147 	ld	a, (de)
+    00000076 B7               [ 4]  148 	or	a, a
+    00000077 C2rA6r01         [16]  149 	jp	NZ, 00117$
+                                    150 ;src/collision.c:24: e->x + 2, e->y + 2, 12, 12))
+    0000007A F8 04            [12]  151 	ldhl	sp,	#4
+    0000007C 2A               [ 8]  152 	ld	a, (hl+)
+    0000007D 66               [ 8]  153 	ld	h, (hl)
+    0000007E 6F               [ 4]  154 	ld	l, a
+    0000007F 23               [ 8]  155 	inc	hl
+    00000080 23               [ 8]  156 	inc	hl
+    00000081 4E               [ 8]  157 	ld	c, (hl)
+    00000082 0C               [ 4]  158 	inc	c
+    00000083 0C               [ 4]  159 	inc	c
+    00000084 F8 04            [12]  160 	ldhl	sp,#4
+    00000086 2A               [ 8]  161 	ld	a, (hl+)
+    00000087 5F               [ 4]  162 	ld	e, a
+                                    163 ;src/collision.c:23: if (checkCollision(bullets[i].x + 1, bullets[i].y + 1, 6, 6,
+    00000088 3A               [ 8]  164 	ld	a, (hl-)
+    00000089 2B               [ 8]  165 	dec	hl
+    0000008A 2B               [ 8]  166 	dec	hl
+    0000008B 57               [ 4]  167 	ld	d, a
+    0000008C 1A               [ 8]  168 	ld	a, (de)
+    0000008D C6 02            [ 8]  169 	add	a, #0x02
+    0000008F 47               [ 4]  170 	ld	b, a
+    00000090 2A               [ 8]  171 	ld	a, (hl+)
+    00000091 5F               [ 4]  172 	ld	e, a
+    00000092 56               [ 8]  173 	ld	d, (hl)
+    00000093 1A               [ 8]  174 	ld	a, (de)
+    00000094 3C               [ 4]  175 	inc	a
+    00000095 F8 08            [12]  176 	ldhl	sp,	#8
+    00000097 77               [ 8]  177 	ld	(hl), a
+    00000098 D1               [12]  178 	pop	de
+    00000099 D5               [16]  179 	push	de
+    0000009A 1A               [ 8]  180 	ld	a, (de)
+    0000009B 3C               [ 4]  181 	inc	a
+    0000009C 26 0C            [ 8]  182 	ld	h, #0x0c
+    0000009E E5               [16]  183 	push	hl
+    0000009F 33               [ 8]  184 	inc	sp
+    000000A0 26 0C            [ 8]  185 	ld	h, #0x0c
+    000000A2 E5               [16]  186 	push	hl
+    000000A3 33               [ 8]  187 	inc	sp
+    000000A4 61               [ 4]  188 	ld	h, c
+    000000A5 E5               [16]  189 	push	hl
+    000000A6 33               [ 8]  190 	inc	sp
+    000000A7 C5               [16]  191 	push	bc
+    000000A8 33               [ 8]  192 	inc	sp
+    000000A9 26 06            [ 8]  193 	ld	h, #0x06
+    000000AB E5               [16]  194 	push	hl
+    000000AC 33               [ 8]  195 	inc	sp
+    000000AD 26 06            [ 8]  196 	ld	h, #0x06
+    000000AF E5               [16]  197 	push	hl
+    000000B0 33               [ 8]  198 	inc	sp
+    000000B1 F8 0E            [12]  199 	ldhl	sp,	#14
+    000000B3 5E               [ 8]  200 	ld	e, (hl)
+    000000B4 CDr00r00         [24]  201 	call	_checkCollision
+    000000B7 B7               [ 4]  202 	or	a, a
+    000000B8 CArA6r01         [16]  203 	jp	Z, 00117$
+                                    204 ;src/collision.c:26: bullets[i].y = 0;
+    000000BB F8 02            [12]  205 	ldhl	sp,	#2
+    000000BD 2A               [ 8]  206 	ld	a, (hl+)
+    000000BE 66               [ 8]  207 	ld	h, (hl)
+    000000BF 6F               [ 4]  208 	ld	l, a
+    000000C0 36 00            [12]  209 	ld	(hl), #0x00
+                                    210 ;src/collision.c:27: move_sprite(bullets[i].spritids[0], OFFSCREEN_X, OFFSCREEN_Y);
+    000000C2 D1               [12]  211 	pop	de
+    000000C3 D5               [16]  212 	push	de
+    000000C4 21 04 00         [12]  213 	ld	hl, #0x0004
+    000000C7 19               [ 8]  214 	add	hl, de
+    000000C8 4D               [ 4]  215 	ld	c, l
+    000000C9 44               [ 4]  216 	ld	b, h
+    000000CA 0A               [ 8]  217 	ld	a, (bc)
+    000000CB 4F               [ 4]  218 	ld	c, a
+                                    219 ;c:\gbdk\include\gb\gb.h:1973: OAM_item_t * itm = &shadow_OAM[nb];
+    000000CC F8 02            [12]  220 	ldhl	sp,	#2
+    000000CE 79               [ 4]  221 	ld	a, c
+    000000CF 22               [ 8]  222 	ld	(hl+), a
+    000000D0 AF               [ 4]  223 	xor	a, a
+    000000D1 32               [ 8]  224 	ld	(hl-), a
+    000000D2 3A               [ 8]  225 	ld	a, (hl-)
+    000000D3 2B               [ 8]  226 	dec	hl
+    000000D4 22               [ 8]  227 	ld	(hl+), a
+    000000D5 36 00            [12]  228 	ld	(hl), #0x00
+    000000D7 3E 02            [ 8]  229 	ld	a, #0x02
+    000000D9                        230 00191$:
+    000000D9 F8 00            [12]  231 	ldhl	sp,	#0
+    000000DB CB 26            [16]  232 	sla	(hl)
+    000000DD 23               [ 8]  233 	inc	hl
+    000000DE CB 16            [16]  234 	rl	(hl)
+    000000E0 3D               [ 4]  235 	dec	a
+    000000E1 20 F6            [12]  236 	jr	NZ, 00191$
+    000000E3 D1               [12]  237 	pop	de
+    000000E4 D5               [16]  238 	push	de
+    000000E5 21r00r00         [12]  239 	ld	hl, #_shadow_OAM
+    000000E8 19               [ 8]  240 	add	hl, de
+    000000E9 E5               [16]  241 	push	hl
+    000000EA 7D               [ 4]  242 	ld	a, l
+    000000EB F8 04            [12]  243 	ldhl	sp,	#4
+    000000ED 77               [ 8]  244 	ld	(hl), a
+    000000EE E1               [12]  245 	pop	hl
+    000000EF 7C               [ 4]  246 	ld	a, h
+    000000F0 F8 03            [12]  247 	ldhl	sp,	#3
+    000000F2 32               [ 8]  248 	ld	(hl-), a
+    000000F3 3A               [ 8]  249 	ld	a, (hl-)
+    000000F4 2B               [ 8]  250 	dec	hl
+    000000F5 77               [ 8]  251 	ld	(hl), a
+    000000F6 F8 03            [12]  252 	ldhl	sp,	#3
+    000000F8 3A               [ 8]  253 	ld	a, (hl-)
+    000000F9 2B               [ 8]  254 	dec	hl
+    000000FA 77               [ 8]  255 	ld	(hl), a
+                                    256 ;c:\gbdk\include\gb\gb.h:1974: itm->y=y, itm->x=x;
+    000000FB E1               [12]  257 	pop	hl
+    000000FC 36 C8            [12]  258 	ld	(hl), #0xc8
+    000000FE 5D               [ 4]  259 	ld	e, l
+    000000FF 54               [ 4]  260 	ld	d, h
+    00000100 D5               [16]  261 	push	de
+    00000101 6B               [ 4]  262 	ld	l, e
+    00000102 62               [ 4]  263 	ld	h, d
+    00000103 23               [ 8]  264 	inc	hl
+    00000104 E5               [16]  265 	push	hl
+    00000105 7D               [ 4]  266 	ld	a, l
+    00000106 F8 04            [12]  267 	ldhl	sp,	#4
+    00000108 77               [ 8]  268 	ld	(hl), a
+    00000109 E1               [12]  269 	pop	hl
+    0000010A 7C               [ 4]  270 	ld	a, h
+    0000010B F8 03            [12]  271 	ldhl	sp,	#3
+    0000010D 32               [ 8]  272 	ld	(hl-), a
+    0000010E 2A               [ 8]  273 	ld	a, (hl+)
+    0000010F 66               [ 8]  274 	ld	h, (hl)
+    00000110 6F               [ 4]  275 	ld	l, a
+    00000111 36 C8            [12]  276 	ld	(hl), #0xc8
+                                    277 ;src/collision.c:29: e->health--;
+    00000113 F8 04            [12]  278 	ldhl	sp,#4
+    00000115 2A               [ 8]  279 	ld	a, (hl+)
+    00000116 5F               [ 4]  280 	ld	e, a
+    00000117 56               [ 8]  281 	ld	d, (hl)
+    00000118 21 0E 00         [12]  282 	ld	hl, #0x000e
+    0000011B 19               [ 8]  283 	add	hl, de
+    0000011C E5               [16]  284 	push	hl
+    0000011D 7D               [ 4]  285 	ld	a, l
+    0000011E F8 04            [12]  286 	ldhl	sp,	#4
+    00000120 77               [ 8]  287 	ld	(hl), a
+    00000121 E1               [12]  288 	pop	hl
+    00000122 7C               [ 4]  289 	ld	a, h
+    00000123 F8 03            [12]  290 	ldhl	sp,	#3
+    00000125 32               [ 8]  291 	ld	(hl-), a
+    00000126 2A               [ 8]  292 	ld	a, (hl+)
+    00000127 5F               [ 4]  293 	ld	e, a
+    00000128 3A               [ 8]  294 	ld	a, (hl-)
+    00000129 57               [ 4]  295 	ld	d, a
+    0000012A 1A               [ 8]  296 	ld	a, (de)
+    0000012B 3D               [ 4]  297 	dec	a
+    0000012C 5E               [ 8]  298 	ld	e, (hl)
+    0000012D 23               [ 8]  299 	inc	hl
+    0000012E 66               [ 8]  300 	ld	h, (hl)
+    0000012F 6B               [ 4]  301 	ld	l, e
+    00000130 77               [ 8]  302 	ld	(hl), a
+                                    303 ;src/collision.c:30: e->hitFlashTimer = 6;
+    00000131 F8 04            [12]  304 	ldhl	sp,#4
+    00000133 2A               [ 8]  305 	ld	a, (hl+)
+    00000134 5F               [ 4]  306 	ld	e, a
+    00000135 56               [ 8]  307 	ld	d, (hl)
+    00000136 21 10 00         [12]  308 	ld	hl, #0x0010
+    00000139 19               [ 8]  309 	add	hl, de
+    0000013A 33               [ 8]  310 	inc	sp
+    0000013B 33               [ 8]  311 	inc	sp
+    0000013C 36 06            [12]  312 	ld	(hl), #0x06
+    0000013E E5               [16]  313 	push	hl
+                                    314 ;src/collision.c:32: if (e->health == 0)
+    0000013F F8 02            [12]  315 	ldhl	sp,#2
+    00000141 2A               [ 8]  316 	ld	a, (hl+)
+    00000142 5F               [ 4]  317 	ld	e, a
+    00000143 56               [ 8]  318 	ld	d, (hl)
+    00000144 1A               [ 8]  319 	ld	a, (de)
+    00000145 F8 0A            [12]  320 	ldhl	sp,	#10
+    00000147 77               [ 8]  321 	ld	(hl), a
+    00000148 7E               [ 8]  322 	ld	a, (hl)
+    00000149 B7               [ 4]  323 	or	a, a
+    0000014A 20 63            [12]  324 	jr	NZ, 00119$
+                                    325 ;src/collision.c:34: playSound(SOUND_ENEMY_DEATH);
+    0000014C 3E 05            [ 8]  326 	ld	a, #0x05
+    0000014E CDr00r00         [24]  327 	call	_playSound
+                                    328 ;src/collision.c:36: if (e->type == ENEMY_TYPE_BOSS)
+    00000151 F8 04            [12]  329 	ldhl	sp,#4
+    00000153 2A               [ 8]  330 	ld	a, (hl+)
+    00000154 5F               [ 4]  331 	ld	e, a
+    00000155 56               [ 8]  332 	ld	d, (hl)
+    00000156 21 09 00         [12]  333 	ld	hl, #0x0009
+    00000159 19               [ 8]  334 	add	hl, de
+    0000015A E5               [16]  335 	push	hl
+    0000015B 7D               [ 4]  336 	ld	a, l
+    0000015C F8 04            [12]  337 	ldhl	sp,	#4
+    0000015E 77               [ 8]  338 	ld	(hl), a
+    0000015F E1               [12]  339 	pop	hl
+    00000160 7C               [ 4]  340 	ld	a, h
+    00000161 F8 03            [12]  341 	ldhl	sp,	#3
+    00000163 32               [ 8]  342 	ld	(hl-), a
+    00000164 2A               [ 8]  343 	ld	a, (hl+)
+    00000165 5F               [ 4]  344 	ld	e, a
+    00000166 56               [ 8]  345 	ld	d, (hl)
+    00000167 1A               [ 8]  346 	ld	a, (de)
+    00000168 F8 0A            [12]  347 	ldhl	sp,	#10
+    0000016A 77               [ 8]  348 	ld	(hl), a
+    0000016B 7E               [ 8]  349 	ld	a, (hl)
+    0000016C D6 05            [ 8]  350 	sub	a, #0x05
+    0000016E 20 0B            [12]  351 	jr	NZ, 00111$
+                                    352 ;src/collision.c:38: addScore(100);
+    00000170 11 64 00         [12]  353 	ld	de, #0x0064
+    00000173 CDr00r00         [24]  354 	call	_addScore
+                                    355 ;src/collision.c:39: incrementWave();
+    00000176 CDr00r00         [24]  356 	call	_incrementWave
+    00000179 18 22            [12]  357 	jr	00112$
+    0000017B                        358 00111$:
+                                    359 ;src/collision.c:41: else if (e->type == ENEMY_TYPE_FLYING || e->type == ENEMY_TYPE_TARGETING)
+    0000017B F8 0A            [12]  360 	ldhl	sp,	#10
+    0000017D 7E               [ 8]  361 	ld	a, (hl)
+    0000017E D6 03            [ 8]  362 	sub	a, #0x03
+    00000180 28 07            [12]  363 	jr	Z, 00106$
+    00000182 F8 0A            [12]  364 	ldhl	sp,	#10
+    00000184 7E               [ 8]  365 	ld	a, (hl)
+    00000185 D6 04            [ 8]  366 	sub	a, #0x04
+    00000187 20 0B            [12]  367 	jr	NZ, 00107$
+    00000189                        368 00106$:
+                                    369 ;src/collision.c:43: addScore(20);
+    00000189 11 14 00         [12]  370 	ld	de, #0x0014
+    0000018C CDr00r00         [24]  371 	call	_addScore
+                                    372 ;src/collision.c:44: incrementEnemiesKilled();
+    0000018F CDr00r00         [24]  373 	call	_incrementEnemiesKilled
+    00000192 18 09            [12]  374 	jr	00112$
+    00000194                        375 00107$:
+                                    376 ;src/collision.c:48: addScore(10);
+    00000194 11 0A 00         [12]  377 	ld	de, #0x000a
+    00000197 CDr00r00         [24]  378 	call	_addScore
+                                    379 ;src/collision.c:49: incrementEnemiesKilled();
+    0000019A CDr00r00         [24]  380 	call	_incrementEnemiesKilled
+    0000019D                        381 00112$:
+                                    382 ;src/collision.c:52: e->deathTimer = 12;
+    0000019D F8 06            [12]  383 	ldhl	sp,	#6
+    0000019F 2A               [ 8]  384 	ld	a, (hl+)
+    000001A0 66               [ 8]  385 	ld	h, (hl)
+    000001A1 6F               [ 4]  386 	ld	l, a
+    000001A2 36 0C            [12]  387 	ld	(hl), #0x0c
+                                    388 ;src/collision.c:55: break;
+    000001A4 18 09            [12]  389 	jr	00119$
+    000001A6                        390 00117$:
+                                    391 ;src/collision.c:17: for (j = 0; j < MAX_ENEMIES; j++)
+    000001A6 F8 0A            [12]  392 	ldhl	sp,	#10
+    000001A8 34               [12]  393 	inc	(hl)
+    000001A9 7E               [ 8]  394 	ld	a, (hl)
+    000001AA D6 04            [ 8]  395 	sub	a, #0x04
+    000001AC DAr39r00         [16]  396 	jp	C, 00122$
+    000001AF                        397 00119$:
+                                    398 ;src/collision.c:12: for (i = 0; i < MAX_BULLETS; i++)
+    000001AF F8 09            [12]  399 	ldhl	sp,	#9
+    000001B1 34               [12]  400 	inc	(hl)
+    000001B2 7E               [ 8]  401 	ld	a, (hl)
+    000001B3 D6 06            [ 8]  402 	sub	a, #0x06
+    000001B5 DAr06r00         [16]  403 	jp	C, 00123$
+                                    404 ;src/collision.c:59: }
+    000001B8 E8 0B            [16]  405 	add	sp, #11
+    000001BA C9               [16]  406 	ret
+                                    407 ;src/collision.c:61: void checkPlayerEnemyCollisions(void)
+                                    408 ;	---------------------------------
+                                    409 ; Function checkPlayerEnemyCollisions
+                                    410 ; ---------------------------------
+    000001BB                        411 _checkPlayerEnemyCollisions::
+    000001BB E8 F8            [16]  412 	add	sp, #-8
+                                    413 ;src/collision.c:63: if (player.invincibilityTimer > 0)
+    000001BD FAr06r00         [16]  414 	ld	a, (#(_player + 6) + 0)
+    000001C0 F8 07            [12]  415 	ldhl	sp,#7
+    000001C2 77               [ 8]  416 	ld	(hl), a
+    000001C3 B7               [ 4]  417 	or	a, a
+                                    418 ;src/collision.c:64: return;
+                                    419 ;src/collision.c:67: for (i = 0; i < MAX_ENEMIES; i++)
+    000001C4 C2rCCr02         [16]  420 	jp	NZ, 00117$
+    000001C7 F8 07            [12]  421 	ldhl	sp,	#7
+    000001C9 36 00            [12]  422 	ld	(hl), #0x00
+    000001CB                        423 00116$:
+                                    424 ;src/collision.c:69: Enemy *e = &enemies[i];
+    000001CB F8 07            [12]  425 	ldhl	sp,	#7
+    000001CD 4E               [ 8]  426 	ld	c, (hl)
+    000001CE 06 00            [ 8]  427 	ld	b, #0x00
+    000001D0 69               [ 4]  428 	ld	l, c
+    000001D1 60               [ 4]  429 	ld	h, b
+    000001D2 29               [ 8]  430 	add	hl, hl
+    000001D3 29               [ 8]  431 	add	hl, hl
+    000001D4 09               [ 8]  432 	add	hl, bc
+    000001D5 29               [ 8]  433 	add	hl, hl
+    000001D6 29               [ 8]  434 	add	hl, hl
+    000001D7 E5               [16]  435 	push	hl
+    000001D8 7D               [ 4]  436 	ld	a, l
+    000001D9 F8 05            [12]  437 	ldhl	sp,	#5
+    000001DB 77               [ 8]  438 	ld	(hl), a
+    000001DC E1               [12]  439 	pop	hl
+    000001DD 7C               [ 4]  440 	ld	a, h
+    000001DE F8 04            [12]  441 	ldhl	sp,	#4
+    000001E0 77               [ 8]  442 	ld	(hl), a
+    000001E1 11r00r00         [12]  443 	ld	de, #_enemies
+    000001E4 3A               [ 8]  444 	ld	a, (hl-)
+    000001E5 6E               [ 8]  445 	ld	l, (hl)
+    000001E6 67               [ 4]  446 	ld	h, a
+    000001E7 19               [ 8]  447 	add	hl, de
+    000001E8 E5               [16]  448 	push	hl
+    000001E9 7D               [ 4]  449 	ld	a, l
+    000001EA F8 07            [12]  450 	ldhl	sp,	#7
+    000001EC 77               [ 8]  451 	ld	(hl), a
+    000001ED E1               [12]  452 	pop	hl
+    000001EE 7C               [ 4]  453 	ld	a, h
+    000001EF F8 06            [12]  454 	ldhl	sp,	#6
+    000001F1 32               [ 8]  455 	ld	(hl-), a
+    000001F2 7E               [ 8]  456 	ld	a, (hl)
+    000001F3 F8 00            [12]  457 	ldhl	sp,	#0
+    000001F5 77               [ 8]  458 	ld	(hl), a
+    000001F6 F8 06            [12]  459 	ldhl	sp,	#6
+    000001F8 7E               [ 8]  460 	ld	a, (hl)
+    000001F9 F8 01            [12]  461 	ldhl	sp,	#1
+    000001FB 77               [ 8]  462 	ld	(hl), a
+                                    463 ;src/collision.c:70: if (!e->isActive || e->deathTimer > 0)
+    000001FC D1               [12]  464 	pop	de
+    000001FD D5               [16]  465 	push	de
+    000001FE 21 05 00         [12]  466 	ld	hl, #0x0005
+    00000201 19               [ 8]  467 	add	hl, de
+    00000202 E5               [16]  468 	push	hl
+    00000203 7D               [ 4]  469 	ld	a, l
+    00000204 F8 07            [12]  470 	ldhl	sp,	#7
+    00000206 77               [ 8]  471 	ld	(hl), a
+    00000207 E1               [12]  472 	pop	hl
+    00000208 7C               [ 4]  473 	ld	a, h
+    00000209 F8 06            [12]  474 	ldhl	sp,	#6
+    0000020B 32               [ 8]  475 	ld	(hl-), a
+    0000020C 2A               [ 8]  476 	ld	a, (hl+)
+    0000020D 5F               [ 4]  477 	ld	e, a
+    0000020E 56               [ 8]  478 	ld	d, (hl)
+    0000020F 1A               [ 8]  479 	ld	a, (de)
+    00000210 B7               [ 4]  480 	or	a, a
+    00000211 CArC3r02         [16]  481 	jp	Z, 00114$
+    00000214 D1               [12]  482 	pop	de
+    00000215 D5               [16]  483 	push	de
+    00000216 21 0D 00         [12]  484 	ld	hl, #0x000d
+    00000219 19               [ 8]  485 	add	hl, de
+    0000021A E5               [16]  486 	push	hl
+    0000021B 7D               [ 4]  487 	ld	a, l
+    0000021C F8 04            [12]  488 	ldhl	sp,	#4
+    0000021E 77               [ 8]  489 	ld	(hl), a
+    0000021F E1               [12]  490 	pop	hl
+    00000220 7C               [ 4]  491 	ld	a, h
+    00000221 F8 03            [12]  492 	ldhl	sp,	#3
+    00000223 32               [ 8]  493 	ld	(hl-), a
+    00000224 2A               [ 8]  494 	ld	a, (hl+)
+    00000225 5F               [ 4]  495 	ld	e, a
+    00000226 56               [ 8]  496 	ld	d, (hl)
+    00000227 1A               [ 8]  497 	ld	a, (de)
+    00000228 B7               [ 4]  498 	or	a, a
+    00000229 C2rC3r02         [16]  499 	jp	NZ, 00114$
+                                    500 ;src/collision.c:74: e->x + 2, e->y + 2, 12, 12))
+    0000022C C1               [12]  501 	pop	bc
+    0000022D C5               [16]  502 	push	bc
+    0000022E 03               [ 8]  503 	inc	bc
+    0000022F 03               [ 8]  504 	inc	bc
+    00000230 0A               [ 8]  505 	ld	a, (bc)
+    00000231 F8 06            [12]  506 	ldhl	sp,	#6
+    00000233 32               [ 8]  507 	ld	(hl-), a
+    00000234 2B               [ 8]  508 	dec	hl
+    00000235 C6 02            [ 8]  509 	add	a, #0x02
+    00000237 22               [ 8]  510 	ld	(hl+), a
+    00000238 D1               [12]  511 	pop	de
+    00000239 D5               [16]  512 	push	de
+    0000023A 1A               [ 8]  513 	ld	a, (de)
+    0000023B C6 02            [ 8]  514 	add	a, #0x02
+    0000023D 77               [ 8]  515 	ld	(hl), a
+                                    516 ;src/collision.c:73: if (checkCollision(player.x + 2, player.y + 2, 12, 12,
+    0000023E FAr01r00         [16]  517 	ld	a, (#(_player + 1) + 0)
+    00000241 F8 06            [12]  518 	ldhl	sp,#6
+    00000243 77               [ 8]  519 	ld	(hl), a
+    00000244 34               [12]  520 	inc	(hl)
+    00000245 34               [12]  521 	inc	(hl)
+    00000246 FAr00r00         [16]  522 	ld	a, (#_player + 0)
+    00000249 C6 02            [ 8]  523 	add	a, #0x02
+    0000024B 26 0C            [ 8]  524 	ld	h, #0x0c
+    0000024D E5               [16]  525 	push	hl
+    0000024E 33               [ 8]  526 	inc	sp
+    0000024F 26 0C            [ 8]  527 	ld	h, #0x0c
+    00000251 E5               [16]  528 	push	hl
+    00000252 33               [ 8]  529 	inc	sp
+    00000253 F8 06            [12]  530 	ldhl	sp,	#6
+    00000255 66               [ 8]  531 	ld	h, (hl)
+    00000256 E5               [16]  532 	push	hl
+    00000257 33               [ 8]  533 	inc	sp
+    00000258 F8 08            [12]  534 	ldhl	sp,	#8
+    0000025A 66               [ 8]  535 	ld	h, (hl)
+    0000025B E5               [16]  536 	push	hl
+    0000025C 33               [ 8]  537 	inc	sp
+    0000025D 26 0C            [ 8]  538 	ld	h, #0x0c
+    0000025F E5               [16]  539 	push	hl
+    00000260 33               [ 8]  540 	inc	sp
+    00000261 26 0C            [ 8]  541 	ld	h, #0x0c
+    00000263 E5               [16]  542 	push	hl
+    00000264 33               [ 8]  543 	inc	sp
+    00000265 F8 0C            [12]  544 	ldhl	sp,	#12
+    00000267 5E               [ 8]  545 	ld	e, (hl)
+    00000268 CDr00r00         [24]  546 	call	_checkCollision
+    0000026B B7               [ 4]  547 	or	a, a
+    0000026C 28 55            [12]  548 	jr	Z, 00114$
+                                    549 ;src/collision.c:76: game.lives--;
+    0000026E 01r00r00         [12]  550 	ld	bc, #_game+0
+    00000271 0A               [ 8]  551 	ld	a, (bc)
+    00000272 3D               [ 4]  552 	dec	a
+    00000273 02               [ 8]  553 	ld	(bc), a
+                                    554 ;src/collision.c:77: playSound(SOUND_HIT);
+    00000274 3E 04            [ 8]  555 	ld	a, #0x04
+    00000276 CDr00r00         [24]  556 	call	_playSound
+                                    557 ;src/collision.c:78: player.invincibilityTimer = INVINCIBILITY_TIME;
+    00000279 21r06r00         [12]  558 	ld	hl, #(_player + 6)
+    0000027C 36 3C            [12]  559 	ld	(hl), #0x3c
+                                    560 ;src/collision.c:80: if (e->type == ENEMY_TYPE_BOSS)
+    0000027E D1               [12]  561 	pop	de
+    0000027F D5               [16]  562 	push	de
+    00000280 21 09 00         [12]  563 	ld	hl, #0x0009
+    00000283 19               [ 8]  564 	add	hl, de
+    00000284 4D               [ 4]  565 	ld	c, l
+    00000285 44               [ 4]  566 	ld	b, h
+    00000286 0A               [ 8]  567 	ld	a, (bc)
+    00000287 D6 05            [ 8]  568 	sub	a, #0x05
+    00000289 20 2F            [12]  569 	jr	NZ, 00110$
+                                    570 ;src/collision.c:82: e->health--;
+    0000028B D1               [12]  571 	pop	de
+    0000028C D5               [16]  572 	push	de
+    0000028D 21 0E 00         [12]  573 	ld	hl, #0x000e
+    00000290 19               [ 8]  574 	add	hl, de
+    00000291 4D               [ 4]  575 	ld	c, l
+    00000292 44               [ 4]  576 	ld	b, h
+    00000293 0A               [ 8]  577 	ld	a, (bc)
+    00000294 3D               [ 4]  578 	dec	a
+    00000295 02               [ 8]  579 	ld	(bc), a
+                                    580 ;src/collision.c:83: e->hitFlashTimer = 6;
+    00000296 D1               [12]  581 	pop	de
+    00000297 D5               [16]  582 	push	de
+    00000298 21 10 00         [12]  583 	ld	hl, #0x0010
+    0000029B 19               [ 8]  584 	add	hl, de
+    0000029C 36 06            [12]  585 	ld	(hl), #0x06
+                                    586 ;src/collision.c:85: if (e->health == 0)
+    0000029E 0A               [ 8]  587 	ld	a, (bc)
+    0000029F B7               [ 4]  588 	or	a, a
+    000002A0 20 11            [12]  589 	jr	NZ, 00107$
+                                    590 ;src/collision.c:87: e->deathTimer = 12;
+    000002A2 F8 02            [12]  591 	ldhl	sp,	#2
+    000002A4 2A               [ 8]  592 	ld	a, (hl+)
+    000002A5 66               [ 8]  593 	ld	h, (hl)
+    000002A6 6F               [ 4]  594 	ld	l, a
+    000002A7 36 0C            [12]  595 	ld	(hl), #0x0c
+                                    596 ;src/collision.c:88: incrementWave();
+    000002A9 CDr00r00         [24]  597 	call	_incrementWave
+                                    598 ;src/collision.c:89: playSound(SOUND_ENEMY_DEATH);
+    000002AC 3E 05            [ 8]  599 	ld	a, #0x05
+    000002AE CDr00r00         [24]  600 	call	_playSound
+    000002B1 18 19            [12]  601 	jr	00117$
+    000002B3                        602 00107$:
+                                    603 ;src/collision.c:93: playSound(SOUND_HIT);
+    000002B3 3E 04            [ 8]  604 	ld	a, #0x04
+    000002B5 CDr00r00         [24]  605 	call	_playSound
+    000002B8 18 12            [12]  606 	jr	00117$
+    000002BA                        607 00110$:
+                                    608 ;src/collision.c:98: e->deathTimer = 12;
+    000002BA F8 02            [12]  609 	ldhl	sp,	#2
+    000002BC 2A               [ 8]  610 	ld	a, (hl+)
+    000002BD 66               [ 8]  611 	ld	h, (hl)
+    000002BE 6F               [ 4]  612 	ld	l, a
+    000002BF 36 0C            [12]  613 	ld	(hl), #0x0c
+                                    614 ;src/collision.c:100: return;
+    000002C1 18 09            [12]  615 	jr	00117$
+    000002C3                        616 00114$:
+                                    617 ;src/collision.c:67: for (i = 0; i < MAX_ENEMIES; i++)
+    000002C3 F8 07            [12]  618 	ldhl	sp,	#7
+    000002C5 34               [12]  619 	inc	(hl)
+    000002C6 7E               [ 8]  620 	ld	a, (hl)
+    000002C7 D6 04            [ 8]  621 	sub	a, #0x04
+    000002C9 DArCBr01         [16]  622 	jp	C, 00116$
+    000002CC                        623 00117$:
+                                    624 ;src/collision.c:103: }
+    000002CC E8 08            [16]  625 	add	sp, #8
+    000002CE C9               [16]  626 	ret
+                                    627 	.area _CODE
+                                    628 	.area _INITIALIZER
+                                    629 	.area _CABS (ABS)

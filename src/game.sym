@@ -1,0 +1,101 @@
+ASxxxx Assembler V02.00 + NoICE + SDCC mods  (GameBoy)                  Page 1
+Hexadecimal [32-Bits]
+
+Symbol Table
+
+    .__.$$$.                                                    =   00002710 L
+    .__.ABS.                                                    =   00000000 G
+    .__.CPU.                                                    =   00000000 L
+    .__.H$L.                                                    =   00000000 L
+    _Amogus                                                         ******** GX
+    _BGP_REG                                                        ******** GX
+    _DIV_REG                                                        ******** GX
+    _GameSprites                                                    ******** GX
+  0 _Game_draw                                                      000002CB GR
+  0 _Game_init                                                      0000002B GR
+  0 _Game_reset                                                     0000011B GR
+  0 _Game_start                                                     000000A4 GR
+  0 _Game_update                                                    00000254 GR
+  1 _Game_update_fireDelay_10000_249                                0000000C R
+    _LCDC_REG                                                       ******** GX
+    _NR50_REG                                                       ******** GX
+    _NR51_REG                                                       ******** GX
+    _NR52_REG                                                       ******** GX
+    _OBP0_REG                                                       ******** GX
+    _OBP1_REG                                                       ******** GX
+    _SCX_REG                                                        ******** GX
+    __moduchar                                                      ******** GX
+    __moduint                                                       ******** GX
+  0 _addScore                                                       00000019 GR
+    _bgmap                                                          ******** GX
+    _bigamogus                                                      ******** GX
+    _checkBulletEnemyCollisions                                     ******** GX
+    _checkPlayerEnemyCollisions                                     ******** GX
+  0 _checkWaveCompletion                                            0000019E GR
+    _countActiveEnemies                                             ******** GX
+    _drawEnemy                                                      ******** GX
+    _drawHearts                                                     ******** GX
+    _drawPlayer                                                     ******** GX
+    _drawScore                                                      ******** GX
+    _drawWave                                                       ******** GX
+    _enemies                                                        ******** GX
+  1 _enemySpawnTimer                                                0000000B GR
+    _fireBullet                                                     ******** GX
+  1 _game                                                           00000000 GR
+    _gbt_loop                                                       ******** GX
+    _gbt_play                                                       ******** GX
+  0 _getEnemySpeed                                                  00000004 GR
+  0 _getSpawnInterval                                               0000018E GR
+  0 _getWaveNumber                                                  00000000 GR
+    _ghostamogus                                                    ******** GX
+    _hatamogus                                                      ******** GX
+    _heart                                                          ******** GX
+  0 _incrementEnemiesKilled                                         00000012 GR
+  0 _incrementWave                                                  00000008 GR
+    _initBullets                                                    ******** GX
+    _initEnemies                                                    ******** GX
+    _initPlayer                                                     ******** GX
+    _initRand                                                       ******** GX
+    _joypad                                                         ******** GX
+    _set_bkg_data                                                   ******** GX
+ASxxxx Assembler V02.00 + NoICE + SDCC mods  (GameBoy)                  Page 2
+Hexadecimal [32-Bits]
+
+Symbol Table
+
+    _set_bkg_tiles                                                  ******** GX
+    _set_interrupts                                                 ******** GX
+    _set_sprite_data                                                ******** GX
+    _shadow_OAM                                                     ******** GX
+    _showGameOverScreen                                             ******** GX
+    _showStartScreen                                                ******** GX
+    _simpleRand                                                     ******** GX
+    _song_Data                                                      ******** GX
+    _spawnBossEnemy                                                 ******** GX
+    _spawnEnemy                                                     ******** GX
+    _tile                                                           ******** GX
+    _updateBullets                                                  ******** GX
+  0 _updateDifficulty                                               0000016A GR
+    _updateEnemyAnimation                                           ******** GX
+    _updateEnemyPhysics                                             ******** GX
+  0 _updateEnemySpawning                                            000001C0 GR
+    _updatePlayerAnimation                                          ******** GX
+    _updatePlayerInput                                              ******** GX
+    _updatePlayerPhysics                                            ******** GX
+    _waitFrames                                                     ******** GX
+
+ASxxxx Assembler V02.00 + NoICE + SDCC mods  (GameBoy)                  Page 3
+Hexadecimal [32-Bits]
+
+Area Table
+
+   0 _CODE                                      size      2F8   flags    0
+   1 _DATA                                      size        D   flags    0
+   2 _INITIALIZED                               size        0   flags    0
+   3 _DABS                                      size        0   flags    8
+   4 _HOME                                      size        0   flags    0
+   5 _GSINIT                                    size        5   flags    0
+   6 _GSFINAL                                   size        0   flags    0
+   7 _INITIALIZER                               size        0   flags    0
+   8 _CABS                                      size        0   flags    8
+

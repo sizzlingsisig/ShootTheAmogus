@@ -1,0 +1,725 @@
+;--------------------------------------------------------
+; File Created by SDCC : free open source ISO C Compiler
+; Version 4.5.1 #15267 (MINGW64)
+;--------------------------------------------------------
+	.module game
+	
+;--------------------------------------------------------
+; Public variables in this module
+;--------------------------------------------------------
+	.globl _gbt_loop
+	.globl _gbt_play
+	.globl _checkPlayerEnemyCollisions
+	.globl _checkBulletEnemyCollisions
+	.globl _showGameOverScreen
+	.globl _showStartScreen
+	.globl _drawWave
+	.globl _drawScore
+	.globl _drawHearts
+	.globl _waitFrames
+	.globl _initRand
+	.globl _simpleRand
+	.globl _updateBullets
+	.globl _fireBullet
+	.globl _initBullets
+	.globl _countActiveEnemies
+	.globl _drawEnemy
+	.globl _updateEnemyAnimation
+	.globl _updateEnemyPhysics
+	.globl _spawnBossEnemy
+	.globl _spawnEnemy
+	.globl _initEnemies
+	.globl _drawPlayer
+	.globl _updatePlayerAnimation
+	.globl _updatePlayerPhysics
+	.globl _updatePlayerInput
+	.globl _initPlayer
+	.globl _set_sprite_data
+	.globl _set_bkg_tiles
+	.globl _set_bkg_data
+	.globl _set_interrupts
+	.globl _joypad
+	.globl _enemySpawnTimer
+	.globl _game
+	.globl _getWaveNumber
+	.globl _getEnemySpeed
+	.globl _incrementWave
+	.globl _incrementEnemiesKilled
+	.globl _addScore
+	.globl _Game_init
+	.globl _Game_start
+	.globl _Game_reset
+	.globl _updateDifficulty
+	.globl _getSpawnInterval
+	.globl _checkWaveCompletion
+	.globl _updateEnemySpawning
+	.globl _Game_update
+	.globl _Game_draw
+;--------------------------------------------------------
+; special function registers
+;--------------------------------------------------------
+;--------------------------------------------------------
+; ram data
+;--------------------------------------------------------
+	.area _DATA
+_game::
+	.ds 11
+_enemySpawnTimer::
+	.ds 1
+_Game_update_fireDelay_10000_249:
+	.ds 1
+;--------------------------------------------------------
+; ram data
+;--------------------------------------------------------
+	.area _INITIALIZED
+;--------------------------------------------------------
+; absolute external ram data
+;--------------------------------------------------------
+	.area _DABS (ABS)
+;--------------------------------------------------------
+; global & static initialisations
+;--------------------------------------------------------
+	.area _HOME
+	.area _GSINIT
+	.area _GSFINAL
+	.area _GSINIT
+;src/game.c:190: static UINT8 fireDelay = 0;
+	xor	a, a
+	ld	hl, #_Game_update_fireDelay_10000_249
+	ld	(hl), a
+;--------------------------------------------------------
+; Home
+;--------------------------------------------------------
+	.area _HOME
+	.area _HOME
+;--------------------------------------------------------
+; code
+;--------------------------------------------------------
+	.area _CODE
+;src/game.c:27: UINT8 getWaveNumber(void) { return game.waveNumber; }
+;	---------------------------------
+; Function getWaveNumber
+; ---------------------------------
+_getWaveNumber::
+	ld	a, (#(_game + 5) + 0)
+	ret
+;src/game.c:28: UINT8 getEnemySpeed(void) { return game.enemySpeed; }
+;	---------------------------------
+; Function getEnemySpeed
+; ---------------------------------
+_getEnemySpeed::
+	ld	a, (#(_game + 8) + 0)
+	ret
+;src/game.c:29: void incrementWave(void) { game.waveNumber++; game.enemiesKilledInWave = 0; }
+;	---------------------------------
+; Function incrementWave
+; ---------------------------------
+_incrementWave::
+	ld	hl, #_game + 5
+	inc	(hl)
+	ld	hl, #_game + 6
+	ld	(hl), #0x00
+	ret
+;src/game.c:30: void incrementEnemiesKilled(void) { game.enemiesKilledInWave++; }
+;	---------------------------------
+; Function incrementEnemiesKilled
+; ---------------------------------
+_incrementEnemiesKilled::
+	ld	bc, #_game+6
+	ld	a, (bc)
+	inc	a
+	ld	(bc), a
+	ret
+;src/game.c:31: void addScore(UINT16 points) { game.score += points; }
+;	---------------------------------
+; Function addScore
+; ---------------------------------
+_addScore::
+	ld	c, e
+	ld	b, d
+	ld	hl, #(_game + 1)
+	ld	a,	(hl+)
+	ld	h, (hl)
+	ld	l, a
+	add	hl, bc
+	ld	c, l
+	ld	b, h
+	ld	hl, #(_game + 1)
+	ld	a, c
+	ld	(hl+), a
+	ld	(hl), b
+	ret
+;src/game.c:33: void Game_init(void)
+;	---------------------------------
+; Function Game_init
+; ---------------------------------
+_Game_init::
+;src/game.c:36: set_sprite_data(0, 8, GameSprites);
+	ld	de, #_GameSprites
+	push	de
+	ld	hl, #0x800
+	push	hl
+	call	_set_sprite_data
+	add	sp, #4
+;src/game.c:37: set_sprite_data(8, 12, Amogus);
+	ld	de, #_Amogus
+	push	de
+	ld	hl, #0xc08
+	push	hl
+	call	_set_sprite_data
+	add	sp, #4
+;src/game.c:38: set_sprite_data(20, 12, hatamogus);
+	ld	de, #_hatamogus
+	push	de
+	ld	hl, #0xc14
+	push	hl
+	call	_set_sprite_data
+	add	sp, #4
+;src/game.c:39: set_sprite_data(32, 4, ghostamogus);
+	ld	de, #_ghostamogus
+	push	de
+	ld	hl, #0x420
+	push	hl
+	call	_set_sprite_data
+	add	sp, #4
+;src/game.c:40: set_sprite_data(36, 12, bigamogus);
+	ld	de, #_bigamogus
+	push	de
+	ld	hl, #0xc24
+	push	hl
+	call	_set_sprite_data
+	add	sp, #4
+;src/game.c:41: set_sprite_data(48, 2, heart);
+	ld	de, #_heart
+	push	de
+	ld	hl, #0x230
+	push	hl
+	call	_set_sprite_data
+	add	sp, #4
+;src/game.c:44: NR52_REG = 0x80;
+	ld	a, #0x80
+	ldh	(_NR52_REG + 0), a
+;src/game.c:45: NR50_REG = 0x77;
+	ld	a, #0x77
+	ldh	(_NR50_REG + 0), a
+;src/game.c:46: NR51_REG = 0xFF;
+	ld	a, #0xff
+	ldh	(_NR51_REG + 0), a
+;src/game.c:49: BGP_REG = 0xE4;
+	ld	a, #0xe4
+	ldh	(_BGP_REG + 0), a
+;src/game.c:50: OBP0_REG = 0xE4;
+	ld	a, #0xe4
+	ldh	(_OBP0_REG + 0), a
+;src/game.c:51: OBP1_REG = 0xE4;
+	ld	a, #0xe4
+	ldh	(_OBP1_REG + 0), a
+;src/game.c:53: SHOW_BKG;
+	ldh	a, (_LCDC_REG + 0)
+	or	a, #0x01
+	ldh	(_LCDC_REG + 0), a
+;src/game.c:54: DISPLAY_ON;
+	ldh	a, (_LCDC_REG + 0)
+	or	a, #0x80
+	ldh	(_LCDC_REG + 0), a
+;src/game.c:56: game.highScore = 0;
+	ld	hl, #(_game + 3)
+	xor	a, a
+	ld	(hl+), a
+	ld	(hl), a
+;src/game.c:57: }
+	ret
+;src/game.c:59: void Game_start(void)
+;	---------------------------------
+; Function Game_start
+; ---------------------------------
+_Game_start::
+;src/game.c:61: while (1)
+00107$:
+;src/game.c:63: showStartScreen();
+	call	_showStartScreen
+;src/game.c:66: set_bkg_data(0, 9, tile);
+	ld	de, #_tile
+	push	de
+	ld	hl, #0x900
+	push	hl
+	call	_set_bkg_data
+	add	sp, #4
+;src/game.c:67: set_bkg_tiles(0, 0, 40, 18, bgmap);
+	ld	de, #_bgmap
+	push	de
+	ld	hl, #0x1228
+	push	hl
+	xor	a, a
+	rrca
+	push	af
+	call	_set_bkg_tiles
+	add	sp, #6
+;src/game.c:68: BGP_REG = 0xE4;
+	ld	a, #0xe4
+	ldh	(_BGP_REG + 0), a
+;src/game.c:70: Game_reset();
+	call	_Game_reset
+;c:\gbdk\include\gb\gb.h:811: __asm__("di");
+	di
+;src/game.c:74: gbt_play(song_Data, 2, 7);
+	ld	hl, #0x702
+	push	hl
+	ld	de, #_song_Data
+	push	de
+	call	_gbt_play
+	add	sp, #4
+;src/game.c:75: gbt_loop(1);
+	ld	a, #0x01
+	push	af
+	inc	sp
+	call	_gbt_loop
+	inc	sp
+;src/game.c:76: set_interrupts(VBL_IFLAG);
+	ld	a, #0x01
+	call	_set_interrupts
+;c:\gbdk\include\gb\gb.h:795: __asm__("ei");
+	ei
+;src/game.c:79: SHOW_SPRITES;
+	ldh	a, (_LCDC_REG + 0)
+	or	a, #0x02
+	ldh	(_LCDC_REG + 0), a
+;c:\gbdk\include\gb\gb.h:1887: shadow_OAM[nb].tile=tile;
+	ld	hl, #(_shadow_OAM + 2)
+	ld	(hl), #0x00
+	ld	hl, #(_shadow_OAM + 6)
+	ld	(hl), #0x02
+	ld	hl, #(_shadow_OAM + 10)
+	ld	(hl), #0x01
+	ld	hl, #(_shadow_OAM + 14)
+	ld	(hl), #0x03
+;src/game.c:86: while (game.lives > 0)
+00101$:
+	ld	a, (#_game + 0)
+	or	a, a
+	jr	Z, 00103$
+;src/game.c:88: Game_update();
+	call	_Game_update
+;src/game.c:89: Game_draw();
+	call	_Game_draw
+;src/game.c:90: waitFrames(4);
+	ld	a, #0x04
+	call	_waitFrames
+	jr	00101$
+00103$:
+;src/game.c:93: if (!showGameOverScreen())
+	call	_showGameOverScreen
+	or	a, a
+	jr	NZ, 00107$
+;src/game.c:94: break;
+;src/game.c:96: }
+	ret
+;src/game.c:98: void Game_reset(void)
+;	---------------------------------
+; Function Game_reset
+; ---------------------------------
+_Game_reset::
+;src/game.c:100: if (game.score > game.highScore)
+	ld	hl, #(_game + 1)
+	ld	a, (hl+)
+	ld	c, a
+	ld	b, (hl)
+	ld	hl, #(_game + 3)
+	ld	a,	(hl+)
+	ld	h, (hl)
+	sub	a, c
+	ld	a, h
+	sbc	a, b
+	jr	NC, 00102$
+;src/game.c:102: game.highScore = game.score;
+	ld	hl, #(_game + 3)
+	ld	a, c
+	ld	(hl+), a
+	ld	(hl), b
+00102$:
+;src/game.c:105: game.lives = MAX_LIVES;
+	ld	hl, #_game
+;src/game.c:106: game.score = 0;
+	ld	a, #0x03
+	ld	(hl+), a
+	xor	a, a
+	ld	(hl+), a
+	ld	(hl), a
+;src/game.c:107: game.difficultyLevel = 1;
+	ld	hl, #_game + 7
+	ld	(hl), #0x01
+;src/game.c:108: game.enemySpeed = ENEMY_SPEED_BASE;
+	ld	hl, #_game + 8
+	ld	(hl), #0x02
+;src/game.c:109: game.frameCounter = 0;
+	ld	hl, #(_game + 9)
+	xor	a, a
+	ld	(hl+), a
+	ld	(hl), a
+;src/game.c:110: game.waveNumber = 1;
+	ld	hl, #_game + 5
+	ld	(hl), #0x01
+;src/game.c:111: game.enemiesKilledInWave = 0;
+	ld	hl, #_game + 6
+	ld	(hl), #0x00
+;src/game.c:113: enemySpawnTimer = INITIAL_SPAWN_INTERVAL;
+	ld	hl, #_enemySpawnTimer
+	ld	(hl), #0x14
+;src/game.c:114: initRand(DIV_REG);
+	ldh	a, (_DIV_REG + 0)
+	ld	d, #0x00
+	ld	e, a
+	call	_initRand
+;src/game.c:116: initPlayer();
+	call	_initPlayer
+;src/game.c:117: initBullets();
+	call	_initBullets
+;src/game.c:118: initEnemies();
+;src/game.c:119: }
+	jp	_initEnemies
+;src/game.c:121: void updateDifficulty(void)
+;	---------------------------------
+; Function updateDifficulty
+; ---------------------------------
+_updateDifficulty::
+;src/game.c:123: if (game.frameCounter % DIFFICULTY_INTERVAL == 0 && game.frameCounter > 0)
+	ld	hl, #_game + 9
+	ld	a,	(hl+)
+	ld	h, (hl)
+	ld	l, a
+	push	hl
+	ld	bc, #0x012c
+	ld	e, l
+	ld	d, h
+	call	__moduint
+	pop	hl
+	ld	a, b
+	or	a, c
+	ret	NZ
+	ld	a, h
+	or	a, l
+	ret	Z
+;src/game.c:125: game.difficultyLevel++;
+	ld	hl, #_game + 7
+	inc	(hl)
+;src/game.c:126: if (game.enemySpeed < MAX_ENEMY_SPEED)
+	ld	hl, #_game + 8
+	ld	a, (hl)
+	cp	a, #0x06
+	ret	NC
+;src/game.c:128: game.enemySpeed++;
+	inc	a
+	ld	(hl), a
+;src/game.c:131: }
+	ret
+;src/game.c:133: UINT8 getSpawnInterval(void)
+;	---------------------------------
+; Function getSpawnInterval
+; ---------------------------------
+_getSpawnInterval::
+;src/game.c:135: UINT8 interval = BASE_SPAWN_INTERVAL - (game.difficultyLevel * 3);
+	ld	a, (#(_game + 7) + 0)
+	ld	c, a
+	add	a, a
+	add	a, c
+	ld	c, a
+	ld	a, #0x23
+	sub	a, c
+;src/game.c:136: return (interval < MIN_SPAWN_INTERVAL) ? MIN_SPAWN_INTERVAL : interval;
+	cp	a, #0x0a
+	ret	NC
+	ld	a, #0x0a
+;src/game.c:137: }
+	ret
+;src/game.c:139: void checkWaveCompletion(void)
+;	---------------------------------
+; Function checkWaveCompletion
+; ---------------------------------
+_checkWaveCompletion::
+;src/game.c:141: if (game.enemiesKilledInWave >= ENEMIES_PER_WAVE)
+	ld	hl, #_game + 6
+	ld	a, (hl)
+	sub	a, #0x0a
+	ret	C
+;src/game.c:143: game.waveNumber++;
+	ld	bc, #_game + 5
+	ld	a, (bc)
+	inc	a
+	ld	(bc), a
+;src/game.c:144: game.enemiesKilledInWave = 0;
+	ld	(hl), #0x00
+;src/game.c:145: game.score += 50;
+	ld	hl, #(_game + 1)
+	ld	a, (hl+)
+	ld	c, a
+	ld	b, (hl)
+	ld	hl, #0x0032
+	add	hl, bc
+	ld	c, l
+	ld	b, h
+	ld	hl, #(_game + 1)
+	ld	a, c
+	ld	(hl+), a
+	ld	(hl), b
+;src/game.c:147: }
+	ret
+;src/game.c:149: void updateEnemySpawning(void)
+;	---------------------------------
+; Function updateEnemySpawning
+; ---------------------------------
+_updateEnemySpawning::
+	dec	sp
+;src/game.c:151: if (game.waveNumber >= 5 && game.waveNumber % 5 == 0)
+	ld	a, (#(_game + 5) + 0)
+	cp	a, #0x05
+	jr	C, 00108$
+	ld	e, #0x05
+	call	__moduchar
+	ld	a, c
+	or	a, a
+	jr	NZ, 00108$
+;src/game.c:153: if (countActiveEnemies() == 0 && enemySpawnTimer == 0)
+	call	_countActiveEnemies
+	or	a, a
+	jr	NZ, 00104$
+	ld	a, (#_enemySpawnTimer)
+;src/game.c:155: spawnBossEnemy(0);
+	or	a,a
+	jr	NZ, 00104$
+	call	_spawnBossEnemy
+;src/game.c:156: enemySpawnTimer = 255;
+	ld	hl, #_enemySpawnTimer
+	ld	(hl), #0xff
+	jr	00120$
+00104$:
+;src/game.c:158: else if (enemySpawnTimer > 0)
+	ld	hl, #_enemySpawnTimer
+	ld	a, (hl)
+	or	a, a
+	jr	Z, 00120$
+;src/game.c:160: enemySpawnTimer--;
+	dec	(hl)
+;src/game.c:162: return;
+	jr	00120$
+00108$:
+;src/game.c:165: enemySpawnTimer--;
+	ld	hl, #_enemySpawnTimer
+;src/game.c:166: if (enemySpawnTimer == 0 || countActiveEnemies() == 0)
+	dec	(hl)
+	jr	Z, 00113$
+	call	_countActiveEnemies
+	or	a, a
+	jr	NZ, 00120$
+00113$:
+;src/game.c:169: UINT8 spawnCount = (simpleRand() % 10 == 0) ? 2 : 1;
+	call	_simpleRand
+	ld	e, #0x0a
+	call	__moduchar
+	ld	a, c
+	or	a, a
+	ld	a, #0x02
+	jr	Z, 00123$
+	ld	a, #0x01
+00123$:
+	ldhl	sp,	#0
+	ld	(hl), a
+;src/game.c:172: for (i = 0; i < MAX_ENEMIES && spawned < spawnCount; i++)
+	ld	bc, #0x0
+00118$:
+	ld	a, c
+	sub	a, #0x04
+	jr	NC, 00112$
+	ld	a, b
+	ldhl	sp,	#0
+	sub	a, (hl)
+	jr	NC, 00112$
+;src/game.c:174: if (!enemies[i].isActive)
+	ld	e, c
+	ld	d, #0x00
+	ld	l, e
+	ld	h, d
+	add	hl, hl
+	add	hl, hl
+	add	hl, de
+	add	hl, hl
+	add	hl, hl
+	ld	de, #_enemies
+	add	hl, de
+	inc	hl
+	inc	hl
+	inc	hl
+	inc	hl
+	inc	hl
+	ld	a, (hl)
+	or	a, a
+	jr	NZ, 00119$
+;src/game.c:176: spawnEnemy(i);
+	push	bc
+	ld	a, c
+	call	_spawnEnemy
+	pop	bc
+;src/game.c:177: spawned++;
+	inc	b
+00119$:
+;src/game.c:172: for (i = 0; i < MAX_ENEMIES && spawned < spawnCount; i++)
+	inc	c
+	jr	00118$
+00112$:
+;src/game.c:181: UINT8 baseInterval = getSpawnInterval();
+	call	_getSpawnInterval
+	ld	c, a
+;src/game.c:182: UINT8 randomVariation = simpleRand() % (SPAWN_RANDOMNESS * 2);
+	push	bc
+	call	_simpleRand
+	ld	e, #0x32
+;src/game.c:183: enemySpawnTimer = baseInterval + randomVariation;
+	call	__moduchar
+	ld	a, c
+	pop	bc
+	add	a, c
+	ld	(#_enemySpawnTimer),a
+00120$:
+;src/game.c:185: }
+	inc	sp
+	ret
+;src/game.c:187: void Game_update(void)
+;	---------------------------------
+; Function Game_update
+; ---------------------------------
+_Game_update::
+	dec	sp
+;src/game.c:189: UINT8 joy = joypad();
+	call	_joypad
+	ldhl	sp,	#0
+	ld	(hl), a
+;src/game.c:192: game.frameCounter++;
+	ld	hl, #(_game + 9)
+	ld	a, (hl+)
+	ld	c, a
+	ld	b, (hl)
+	inc	bc
+	ld	hl, #(_game + 9)
+	ld	a, c
+	ld	(hl+), a
+	ld	(hl), b
+;src/game.c:194: updateDifficulty();
+	call	_updateDifficulty
+;src/game.c:195: updatePlayerInput(joy);
+	ldhl	sp,	#0
+	ld	a, (hl)
+	call	_updatePlayerInput
+;src/game.c:196: updatePlayerPhysics();
+	call	_updatePlayerPhysics
+;src/game.c:197: updatePlayerAnimation();
+	call	_updatePlayerAnimation
+;src/game.c:199: if ((joy & J_A) && fireDelay == 0)
+	push	hl
+	ldhl	sp,	#2
+	bit	4, (hl)
+	pop	hl
+	jr	Z, 00104$
+	ld	a, (#_Game_update_fireDelay_10000_249)
+	or	a, a
+	jr	NZ, 00104$
+;src/game.c:201: if (fireBullet())
+	call	_fireBullet
+	or	a, a
+	jr	Z, 00104$
+;src/game.c:203: fireDelay = FIRE_RATE;
+	ld	hl, #_Game_update_fireDelay_10000_249
+	ld	(hl), #0x0f
+00104$:
+;src/game.c:206: if (fireDelay > 0) fireDelay--;
+	ld	hl, #_Game_update_fireDelay_10000_249
+	ld	a, (hl)
+	or	a, a
+	jr	Z, 00107$
+	dec	(hl)
+00107$:
+;src/game.c:208: updateBullets();
+	call	_updateBullets
+;src/game.c:209: updateEnemySpawning();
+	call	_updateEnemySpawning
+;src/game.c:212: for (i = 0; i < MAX_ENEMIES; i++)
+	ld	c, #0x00
+00109$:
+;src/game.c:214: updateEnemyPhysics(&enemies[i]);
+	ld	b, #0x00
+	ld	l, c
+	ld	h, b
+	add	hl, hl
+	add	hl, hl
+	add	hl, bc
+	add	hl, hl
+	add	hl, hl
+	ld	de, #_enemies
+	add	hl, de
+	ld	e, l
+	ld	d, h
+	push	bc
+	push	de
+	call	_updateEnemyPhysics
+	pop	de
+;src/game.c:215: updateEnemyAnimation(&enemies[i]);
+	call	_updateEnemyAnimation
+	pop	bc
+;src/game.c:212: for (i = 0; i < MAX_ENEMIES; i++)
+	inc	c
+	ld	a, c
+	sub	a, #0x04
+	jr	C, 00109$
+;src/game.c:218: checkBulletEnemyCollisions();
+	call	_checkBulletEnemyCollisions
+;src/game.c:219: checkPlayerEnemyCollisions();
+	call	_checkPlayerEnemyCollisions
+;src/game.c:220: checkWaveCompletion();
+	inc	sp
+	jp	_checkWaveCompletion
+;src/game.c:221: }
+	inc	sp
+	ret
+;src/game.c:223: void Game_draw(void)
+;	---------------------------------
+; Function Game_draw
+; ---------------------------------
+_Game_draw::
+;src/game.c:227: drawPlayer();
+	call	_drawPlayer
+;src/game.c:228: for (i = 0; i < MAX_ENEMIES; i++)
+	ld	c, #0x00
+00103$:
+;src/game.c:230: drawEnemy(&enemies[i]);
+	ld	b, #0x00
+	ld	l, c
+	ld	h, b
+	add	hl, hl
+	add	hl, hl
+	add	hl, bc
+	add	hl, hl
+	add	hl, hl
+	ld	de, #_enemies
+	add	hl, de
+	ld	e, l
+	ld	d, h
+	push	bc
+	call	_drawEnemy
+	pop	bc
+;src/game.c:228: for (i = 0; i < MAX_ENEMIES; i++)
+	inc	c
+	ld	a, c
+	sub	a, #0x04
+	jr	C, 00103$
+;c:\gbdk\include\gb\gb.h:1475: SCX_REG+=x, SCY_REG+=y;
+	ldh	a, (_SCX_REG + 0)
+	inc	a
+	ldh	(_SCX_REG + 0), a
+;src/game.c:234: drawHearts();
+	call	_drawHearts
+;src/game.c:235: drawScore();
+	call	_drawScore
+;src/game.c:236: drawWave();
+;src/game.c:237: }
+	jp	_drawWave
+	.area _CODE
+	.area _INITIALIZER
+	.area _CABS (ABS)

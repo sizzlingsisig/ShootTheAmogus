@@ -1,0 +1,464 @@
+                                      1 ;--------------------------------------------------------
+                                      2 ; File Created by SDCC : free open source ISO C Compiler
+                                      3 ; Version 4.5.1 #15267 (MINGW64)
+                                      4 ;--------------------------------------------------------
+                                      5 	.module bullet
+                                      6 	
+                                      7 ;--------------------------------------------------------
+                                      8 ; Public variables in this module
+                                      9 ;--------------------------------------------------------
+                                     10 	.globl _playSound
+                                     11 	.globl _bullets
+                                     12 	.globl _initBullets
+                                     13 	.globl _fireBullet
+                                     14 	.globl _updateBullets
+                                     15 ;--------------------------------------------------------
+                                     16 ; special function registers
+                                     17 ;--------------------------------------------------------
+                                     18 ;--------------------------------------------------------
+                                     19 ; ram data
+                                     20 ;--------------------------------------------------------
+                                     21 	.area _DATA
+    00000000                         22 _bullets::
+    00000000                         23 	.ds 48
+                                     24 ;--------------------------------------------------------
+                                     25 ; ram data
+                                     26 ;--------------------------------------------------------
+                                     27 	.area _INITIALIZED
+                                     28 ;--------------------------------------------------------
+                                     29 ; absolute external ram data
+                                     30 ;--------------------------------------------------------
+                                     31 	.area _DABS (ABS)
+                                     32 ;--------------------------------------------------------
+                                     33 ; global & static initialisations
+                                     34 ;--------------------------------------------------------
+                                     35 	.area _HOME
+                                     36 	.area _GSINIT
+                                     37 	.area _GSFINAL
+                                     38 	.area _GSINIT
+                                     39 ;--------------------------------------------------------
+                                     40 ; Home
+                                     41 ;--------------------------------------------------------
+                                     42 	.area _HOME
+                                     43 	.area _HOME
+                                     44 ;--------------------------------------------------------
+                                     45 ; code
+                                     46 ;--------------------------------------------------------
+                                     47 	.area _CODE
+                                     48 ;src/bullet.c:8: void initBullets(void)
+                                     49 ;	---------------------------------
+                                     50 ; Function initBullets
+                                     51 ; ---------------------------------
+    00000000                         52 _initBullets::
+    00000000 3B               [ 8]   53 	dec	sp
+                                     54 ;src/bullet.c:11: for (i = 0; i < MAX_BULLETS; i++)
+    00000001 0E 00            [ 8]   55 	ld	c, #0x00
+    00000003                         56 00104$:
+                                     57 ;src/bullet.c:13: bullets[i].x = 0;
+    00000003 69               [ 4]   58 	ld	l, c
+    00000004 26 00            [ 8]   59 	ld	h, #0x00
+    00000006 29               [ 8]   60 	add	hl, hl
+    00000007 29               [ 8]   61 	add	hl, hl
+    00000008 29               [ 8]   62 	add	hl, hl
+    00000009 7D               [ 4]   63 	ld	a, l
+    0000000A C6r00            [ 8]   64 	add	a, #<(_bullets)
+    0000000C 5F               [ 4]   65 	ld	e, a
+    0000000D 7C               [ 4]   66 	ld	a, h
+    0000000E CEs00            [ 8]   67 	adc	a, #>(_bullets)
+    00000010 57               [ 4]   68 	ld	d, a
+    00000011 AF               [ 4]   69 	xor	a, a
+    00000012 12               [ 8]   70 	ld	(de), a
+                                     71 ;src/bullet.c:14: bullets[i].y = 0;
+    00000013 6B               [ 4]   72 	ld	l, e
+    00000014 62               [ 4]   73 	ld	h, d
+    00000015 23               [ 8]   74 	inc	hl
+    00000016 36 00            [12]   75 	ld	(hl), #0x00
+                                     76 ;src/bullet.c:15: set_sprite_tile(24 + i, 0);
+    00000018 79               [ 4]   77 	ld	a, c
+    00000019 C6 18            [ 8]   78 	add	a, #0x18
+    0000001B F8 00            [12]   79 	ldhl	sp,	#0
+    0000001D 77               [ 8]   80 	ld	(hl), a
+    0000001E 46               [ 8]   81 	ld	b, (hl)
+                                     82 ;c:\gbdk\include\gb\gb.h:1887: shadow_OAM[nb].tile=tile;
+    0000001F AF               [ 4]   83 	xor	a, a
+    00000020 68               [ 4]   84 	ld	l, b
+    00000021 67               [ 4]   85 	ld	h, a
+    00000022 29               [ 8]   86 	add	hl, hl
+    00000023 29               [ 8]   87 	add	hl, hl
+    00000024 D5               [16]   88 	push	de
+    00000025 11r00r00         [12]   89 	ld	de, #_shadow_OAM
+    00000028 19               [ 8]   90 	add	hl, de
+    00000029 23               [ 8]   91 	inc	hl
+    0000002A 23               [ 8]   92 	inc	hl
+    0000002B D1               [12]   93 	pop	de
+    0000002C 36 00            [12]   94 	ld	(hl), #0x00
+                                     95 ;src/bullet.c:16: bullets[i].spritids[0] = 24 + i;
+    0000002E 13               [ 8]   96 	inc	de
+    0000002F 13               [ 8]   97 	inc	de
+    00000030 13               [ 8]   98 	inc	de
+    00000031 13               [ 8]   99 	inc	de
+    00000032 F8 00            [12]  100 	ldhl	sp,	#0
+    00000034 7E               [ 8]  101 	ld	a, (hl)
+    00000035 12               [ 8]  102 	ld	(de), a
+                                    103 ;src/bullet.c:17: move_sprite(24 + i, OFFSCREEN_X, OFFSCREEN_Y);
+                                    104 ;c:\gbdk\include\gb\gb.h:1973: OAM_item_t * itm = &shadow_OAM[nb];
+    00000036 6E               [ 8]  105 	ld	l, (hl)
+    00000037 11r00r00         [12]  106 	ld	de, #_shadow_OAM+0
+    0000003A 26 00            [ 8]  107 	ld	h, #0x00
+    0000003C 29               [ 8]  108 	add	hl, hl
+    0000003D 29               [ 8]  109 	add	hl, hl
+    0000003E 19               [ 8]  110 	add	hl, de
+                                    111 ;c:\gbdk\include\gb\gb.h:1974: itm->y=y, itm->x=x;
+    0000003F 3E C8            [ 8]  112 	ld	a, #0xc8
+    00000041 22               [ 8]  113 	ld	(hl+), a
+    00000042 36 C8            [12]  114 	ld	(hl), #0xc8
+                                    115 ;src/bullet.c:11: for (i = 0; i < MAX_BULLETS; i++)
+    00000044 0C               [ 4]  116 	inc	c
+    00000045 79               [ 4]  117 	ld	a, c
+    00000046 D6 06            [ 8]  118 	sub	a, #0x06
+    00000048 38 B9            [12]  119 	jr	C, 00104$
+                                    120 ;src/bullet.c:19: }
+    0000004A 33               [ 8]  121 	inc	sp
+    0000004B C9               [16]  122 	ret
+                                    123 ;src/bullet.c:21: UINT8 fireBullet(void)
+                                    124 ;	---------------------------------
+                                    125 ; Function fireBullet
+                                    126 ; ---------------------------------
+    0000004C                        127 _fireBullet::
+    0000004C E8 FA            [16]  128 	add	sp, #-6
+                                    129 ;src/bullet.c:24: for (i = 0; i < MAX_BULLETS; i++)
+    0000004E F8 05            [12]  130 	ldhl	sp,	#5
+    00000050 36 00            [12]  131 	ld	(hl), #0x00
+    00000052                        132 00104$:
+                                    133 ;src/bullet.c:26: if (bullets[i].y == 0)
+    00000052 F8 05            [12]  134 	ldhl	sp,	#5
+    00000054 3A               [ 8]  135 	ld	a, (hl-)
+    00000055 2B               [ 8]  136 	dec	hl
+    00000056 22               [ 8]  137 	ld	(hl+), a
+    00000057 36 00            [12]  138 	ld	(hl), #0x00
+    00000059 3E 03            [ 8]  139 	ld	a, #0x03
+    0000005B                        140 00129$:
+    0000005B F8 03            [12]  141 	ldhl	sp,	#3
+    0000005D CB 26            [16]  142 	sla	(hl)
+    0000005F 23               [ 8]  143 	inc	hl
+    00000060 CB 16            [16]  144 	rl	(hl)
+    00000062 3D               [ 4]  145 	dec	a
+    00000063 20 F6            [12]  146 	jr	NZ, 00129$
+    00000065 2B               [ 8]  147 	dec	hl
+    00000066 2A               [ 8]  148 	ld	a, (hl+)
+    00000067 5F               [ 4]  149 	ld	e, a
+    00000068 56               [ 8]  150 	ld	d, (hl)
+    00000069 21r00r00         [12]  151 	ld	hl, #_bullets
+    0000006C 19               [ 8]  152 	add	hl, de
+    0000006D 33               [ 8]  153 	inc	sp
+    0000006E 33               [ 8]  154 	inc	sp
+    0000006F 5D               [ 4]  155 	ld	e, l
+    00000070 54               [ 4]  156 	ld	d, h
+    00000071 D5               [16]  157 	push	de
+    00000072 6B               [ 4]  158 	ld	l, e
+    00000073 62               [ 4]  159 	ld	h, d
+    00000074 23               [ 8]  160 	inc	hl
+    00000075 E5               [16]  161 	push	hl
+    00000076 7D               [ 4]  162 	ld	a, l
+    00000077 F8 04            [12]  163 	ldhl	sp,	#4
+    00000079 77               [ 8]  164 	ld	(hl), a
+    0000007A E1               [12]  165 	pop	hl
+    0000007B 7C               [ 4]  166 	ld	a, h
+    0000007C F8 03            [12]  167 	ldhl	sp,	#3
+    0000007E 32               [ 8]  168 	ld	(hl-), a
+    0000007F 2A               [ 8]  169 	ld	a, (hl+)
+    00000080 5F               [ 4]  170 	ld	e, a
+    00000081 2A               [ 8]  171 	ld	a, (hl+)
+    00000082 57               [ 4]  172 	ld	d, a
+    00000083 1A               [ 8]  173 	ld	a, (de)
+    00000084 77               [ 8]  174 	ld	(hl), a
+    00000085 B7               [ 4]  175 	or	a, a
+    00000086 20 30            [12]  176 	jr	NZ, 00105$
+                                    177 ;src/bullet.c:28: bullets[i].x = player.x + BULLET_OFFSET_X;
+    00000088 F8 00            [12]  178 	ldhl	sp,	#0
+    0000008A 7E               [ 8]  179 	ld	a, (hl)
+    0000008B F8 04            [12]  180 	ldhl	sp,	#4
+    0000008D 77               [ 8]  181 	ld	(hl), a
+    0000008E F8 01            [12]  182 	ldhl	sp,	#1
+    00000090 7E               [ 8]  183 	ld	a, (hl)
+    00000091 F8 05            [12]  184 	ldhl	sp,	#5
+    00000093 32               [ 8]  185 	ld	(hl-), a
+    00000094 FAr00r00         [16]  186 	ld	a, (#_player + 0)
+    00000097 C6 0C            [ 8]  187 	add	a, #0x0c
+    00000099 5E               [ 8]  188 	ld	e, (hl)
+    0000009A 23               [ 8]  189 	inc	hl
+    0000009B 66               [ 8]  190 	ld	h, (hl)
+    0000009C 6B               [ 4]  191 	ld	l, e
+    0000009D 77               [ 8]  192 	ld	(hl), a
+                                    193 ;src/bullet.c:29: bullets[i].y = player.y + BULLET_OFFSET_Y;
+    0000009E FAr01r00         [16]  194 	ld	a, (#(_player + 1) + 0)
+    000000A1 F8 05            [12]  195 	ldhl	sp,#5
+    000000A3 77               [ 8]  196 	ld	(hl), a
+    000000A4 34               [12]  197 	inc	(hl)
+    000000A5 34               [12]  198 	inc	(hl)
+    000000A6 F8 02            [12]  199 	ldhl	sp,	#2
+    000000A8 2A               [ 8]  200 	ld	a, (hl+)
+    000000A9 5F               [ 4]  201 	ld	e, a
+    000000AA 2A               [ 8]  202 	ld	a, (hl+)
+    000000AB 23               [ 8]  203 	inc	hl
+    000000AC 57               [ 4]  204 	ld	d, a
+    000000AD 7E               [ 8]  205 	ld	a, (hl)
+    000000AE 12               [ 8]  206 	ld	(de), a
+                                    207 ;src/bullet.c:30: playSound(SOUND_SHOOT);
+    000000AF 3E 02            [ 8]  208 	ld	a, #0x02
+    000000B1 CDr00r00         [24]  209 	call	_playSound
+                                    210 ;src/bullet.c:31: return 1;
+    000000B4 3E 01            [ 8]  211 	ld	a, #0x01
+    000000B6 18 09            [12]  212 	jr	00106$
+    000000B8                        213 00105$:
+                                    214 ;src/bullet.c:24: for (i = 0; i < MAX_BULLETS; i++)
+    000000B8 F8 05            [12]  215 	ldhl	sp,	#5
+    000000BA 34               [12]  216 	inc	(hl)
+    000000BB 7E               [ 8]  217 	ld	a, (hl)
+    000000BC D6 06            [ 8]  218 	sub	a, #0x06
+    000000BE 38 92            [12]  219 	jr	C, 00104$
+                                    220 ;src/bullet.c:34: return 0;
+    000000C0 AF               [ 4]  221 	xor	a, a
+    000000C1                        222 00106$:
+                                    223 ;src/bullet.c:35: }
+    000000C1 E8 06            [16]  224 	add	sp, #6
+    000000C3 C9               [16]  225 	ret
+                                    226 ;src/bullet.c:37: void updateBullets(void)
+                                    227 ;	---------------------------------
+                                    228 ; Function updateBullets
+                                    229 ; ---------------------------------
+    000000C4                        230 _updateBullets::
+    000000C4 E8 F8            [16]  231 	add	sp, #-8
+                                    232 ;src/bullet.c:40: for (i = 0; i < MAX_BULLETS; i++)
+    000000C6 F8 07            [12]  233 	ldhl	sp,	#7
+    000000C8 36 00            [12]  234 	ld	(hl), #0x00
+    000000CA                        235 00109$:
+                                    236 ;src/bullet.c:42: if (bullets[i].y > 0)
+    000000CA F8 07            [12]  237 	ldhl	sp,	#7
+    000000CC 4E               [ 8]  238 	ld	c, (hl)
+    000000CD 06 00            [ 8]  239 	ld	b, #0x00
+    000000CF CB 21            [ 8]  240 	sla	c
+    000000D1 CB 10            [ 8]  241 	rl	b
+    000000D3 CB 21            [ 8]  242 	sla	c
+    000000D5 CB 10            [ 8]  243 	rl	b
+    000000D7 CB 21            [ 8]  244 	sla	c
+    000000D9 CB 10            [ 8]  245 	rl	b
+    000000DB 21r00r00         [12]  246 	ld	hl, #_bullets
+    000000DE 09               [ 8]  247 	add	hl, bc
+    000000DF 33               [ 8]  248 	inc	sp
+    000000E0 33               [ 8]  249 	inc	sp
+    000000E1 5D               [ 4]  250 	ld	e, l
+    000000E2 54               [ 4]  251 	ld	d, h
+    000000E3 D5               [16]  252 	push	de
+    000000E4 6B               [ 4]  253 	ld	l, e
+    000000E5 62               [ 4]  254 	ld	h, d
+    000000E6 23               [ 8]  255 	inc	hl
+    000000E7 E5               [16]  256 	push	hl
+    000000E8 7D               [ 4]  257 	ld	a, l
+    000000E9 F8 04            [12]  258 	ldhl	sp,	#4
+    000000EB 77               [ 8]  259 	ld	(hl), a
+    000000EC E1               [12]  260 	pop	hl
+    000000ED 7C               [ 4]  261 	ld	a, h
+    000000EE F8 03            [12]  262 	ldhl	sp,	#3
+    000000F0 32               [ 8]  263 	ld	(hl-), a
+    000000F1 2A               [ 8]  264 	ld	a, (hl+)
+    000000F2 5F               [ 4]  265 	ld	e, a
+    000000F3 56               [ 8]  266 	ld	d, (hl)
+    000000F4 1A               [ 8]  267 	ld	a, (de)
+    000000F5 F8 06            [12]  268 	ldhl	sp,	#6
+    000000F7 77               [ 8]  269 	ld	(hl), a
+    000000F8 7E               [ 8]  270 	ld	a, (hl)
+    000000F9 B7               [ 4]  271 	or	a, a
+    000000FA CArCBr01         [16]  272 	jp	Z, 00110$
+                                    273 ;src/bullet.c:44: bullets[i].x += BULLET_SPEED;
+                                    274 ;src/bullet.c:46: if (bullets[i].x >= SCREEN_WIDTH)
+    000000FD 2B               [ 8]  275 	dec	hl
+    000000FE 2B               [ 8]  276 	dec	hl
+    000000FF C1               [12]  277 	pop	bc
+    00000100 C5               [16]  278 	push	bc
+    00000101 0A               [ 8]  279 	ld	a, (bc)
+    00000102 C6 04            [ 8]  280 	add	a, #0x04
+    00000104 02               [ 8]  281 	ld	(bc), a
+    00000105 0A               [ 8]  282 	ld	a, (bc)
+    00000106 77               [ 8]  283 	ld	(hl), a
+                                    284 ;src/bullet.c:49: move_sprite(bullets[i].spritids[0], OFFSCREEN_X, OFFSCREEN_Y);
+    00000107 D1               [12]  285 	pop	de
+    00000108 D5               [16]  286 	push	de
+    00000109 21 04 00         [12]  287 	ld	hl, #0x0004
+    0000010C 19               [ 8]  288 	add	hl, de
+    0000010D E5               [16]  289 	push	hl
+    0000010E 7D               [ 4]  290 	ld	a, l
+    0000010F F8 07            [12]  291 	ldhl	sp,	#7
+    00000111 77               [ 8]  292 	ld	(hl), a
+    00000112 E1               [12]  293 	pop	hl
+    00000113 7C               [ 4]  294 	ld	a, h
+    00000114 F8 06            [12]  295 	ldhl	sp,	#6
+                                    296 ;src/bullet.c:46: if (bullets[i].x >= SCREEN_WIDTH)
+    00000116 32               [ 8]  297 	ld	(hl-), a
+    00000117 2B               [ 8]  298 	dec	hl
+    00000118 7E               [ 8]  299 	ld	a, (hl)
+    00000119 D6 A0            [ 8]  300 	sub	a, #0xa0
+    0000011B 38 5A            [12]  301 	jr	C, 00102$
+                                    302 ;src/bullet.c:48: bullets[i].y = 0;
+    0000011D 2B               [ 8]  303 	dec	hl
+    0000011E 3A               [ 8]  304 	ld	a, (hl-)
+    0000011F 6E               [ 8]  305 	ld	l, (hl)
+    00000120 67               [ 4]  306 	ld	h, a
+    00000121 36 00            [12]  307 	ld	(hl), #0x00
+                                    308 ;src/bullet.c:49: move_sprite(bullets[i].spritids[0], OFFSCREEN_X, OFFSCREEN_Y);
+    00000123 F8 05            [12]  309 	ldhl	sp,#5
+    00000125 2A               [ 8]  310 	ld	a, (hl+)
+    00000126 5F               [ 4]  311 	ld	e, a
+                                    312 ;c:\gbdk\include\gb\gb.h:1973: OAM_item_t * itm = &shadow_OAM[nb];
+    00000127 3A               [ 8]  313 	ld	a, (hl-)
+    00000128 57               [ 4]  314 	ld	d, a
+    00000129 1A               [ 8]  315 	ld	a, (de)
+    0000012A 4F               [ 4]  316 	ld	c, a
+    0000012B 22               [ 8]  317 	ld	(hl+), a
+    0000012C AF               [ 4]  318 	xor	a, a
+    0000012D 32               [ 8]  319 	ld	(hl-), a
+    0000012E 3A               [ 8]  320 	ld	a, (hl-)
+    0000012F 2B               [ 8]  321 	dec	hl
+    00000130 22               [ 8]  322 	ld	(hl+), a
+    00000131 36 00            [12]  323 	ld	(hl), #0x00
+    00000133 3E 02            [ 8]  324 	ld	a, #0x02
+    00000135                        325 00136$:
+    00000135 F8 03            [12]  326 	ldhl	sp,	#3
+    00000137 CB 26            [16]  327 	sla	(hl)
+    00000139 23               [ 8]  328 	inc	hl
+    0000013A CB 16            [16]  329 	rl	(hl)
+    0000013C 3D               [ 4]  330 	dec	a
+    0000013D 20 F6            [12]  331 	jr	NZ, 00136$
+    0000013F 2B               [ 8]  332 	dec	hl
+    00000140 2A               [ 8]  333 	ld	a, (hl+)
+    00000141 5F               [ 4]  334 	ld	e, a
+    00000142 56               [ 8]  335 	ld	d, (hl)
+    00000143 21r00r00         [12]  336 	ld	hl, #_shadow_OAM
+    00000146 19               [ 8]  337 	add	hl, de
+    00000147 E5               [16]  338 	push	hl
+    00000148 7D               [ 4]  339 	ld	a, l
+    00000149 F8 07            [12]  340 	ldhl	sp,	#7
+    0000014B 77               [ 8]  341 	ld	(hl), a
+    0000014C E1               [12]  342 	pop	hl
+    0000014D 7C               [ 4]  343 	ld	a, h
+    0000014E F8 06            [12]  344 	ldhl	sp,	#6
+    00000150 32               [ 8]  345 	ld	(hl-), a
+    00000151 3A               [ 8]  346 	ld	a, (hl-)
+    00000152 2B               [ 8]  347 	dec	hl
+    00000153 77               [ 8]  348 	ld	(hl), a
+    00000154 F8 06            [12]  349 	ldhl	sp,	#6
+    00000156 3A               [ 8]  350 	ld	a, (hl-)
+    00000157 2B               [ 8]  351 	dec	hl
+                                    352 ;c:\gbdk\include\gb\gb.h:1974: itm->y=y, itm->x=x;
+    00000158 32               [ 8]  353 	ld	(hl-), a
+    00000159 2A               [ 8]  354 	ld	a, (hl+)
+    0000015A 66               [ 8]  355 	ld	h, (hl)
+    0000015B 6F               [ 4]  356 	ld	l, a
+    0000015C 36 C8            [12]  357 	ld	(hl), #0xc8
+    0000015E F8 03            [12]  358 	ldhl	sp,#3
+    00000160 2A               [ 8]  359 	ld	a, (hl+)
+    00000161 5F               [ 4]  360 	ld	e, a
+    00000162 56               [ 8]  361 	ld	d, (hl)
+    00000163 6B               [ 4]  362 	ld	l, e
+    00000164 62               [ 4]  363 	ld	h, d
+    00000165 23               [ 8]  364 	inc	hl
+    00000166 E5               [16]  365 	push	hl
+    00000167 7D               [ 4]  366 	ld	a, l
+    00000168 F8 07            [12]  367 	ldhl	sp,	#7
+    0000016A 77               [ 8]  368 	ld	(hl), a
+    0000016B E1               [12]  369 	pop	hl
+    0000016C 7C               [ 4]  370 	ld	a, h
+    0000016D F8 06            [12]  371 	ldhl	sp,	#6
+    0000016F 32               [ 8]  372 	ld	(hl-), a
+    00000170 2A               [ 8]  373 	ld	a, (hl+)
+    00000171 66               [ 8]  374 	ld	h, (hl)
+    00000172 6F               [ 4]  375 	ld	l, a
+    00000173 36 C8            [12]  376 	ld	(hl), #0xc8
+                                    377 ;src/bullet.c:49: move_sprite(bullets[i].spritids[0], OFFSCREEN_X, OFFSCREEN_Y);
+    00000175 18 54            [12]  378 	jr	00110$
+    00000177                        379 00102$:
+                                    380 ;src/bullet.c:53: move_sprite(bullets[i].spritids[0], bullets[i].x, bullets[i].y);
+    00000177 F8 02            [12]  381 	ldhl	sp,#2
+    00000179 2A               [ 8]  382 	ld	a, (hl+)
+    0000017A 5F               [ 4]  383 	ld	e, a
+    0000017B 56               [ 8]  384 	ld	d, (hl)
+    0000017C 1A               [ 8]  385 	ld	a, (de)
+    0000017D 77               [ 8]  386 	ld	(hl), a
+    0000017E F8 05            [12]  387 	ldhl	sp,#5
+    00000180 2A               [ 8]  388 	ld	a, (hl+)
+    00000181 5F               [ 4]  389 	ld	e, a
+                                    390 ;c:\gbdk\include\gb\gb.h:1973: OAM_item_t * itm = &shadow_OAM[nb];
+    00000182 3A               [ 8]  391 	ld	a, (hl-)
+    00000183 57               [ 4]  392 	ld	d, a
+    00000184 1A               [ 8]  393 	ld	a, (de)
+    00000185 22               [ 8]  394 	ld	(hl+), a
+    00000186 AF               [ 4]  395 	xor	a, a
+    00000187 32               [ 8]  396 	ld	(hl-), a
+    00000188 7E               [ 8]  397 	ld	a, (hl)
+    00000189 F8 01            [12]  398 	ldhl	sp,	#1
+    0000018B 22               [ 8]  399 	ld	(hl+), a
+    0000018C 36 00            [12]  400 	ld	(hl), #0x00
+    0000018E 3E 02            [ 8]  401 	ld	a, #0x02
+    00000190                        402 00137$:
+    00000190 F8 01            [12]  403 	ldhl	sp,	#1
+    00000192 CB 26            [16]  404 	sla	(hl)
+    00000194 23               [ 8]  405 	inc	hl
+    00000195 CB 16            [16]  406 	rl	(hl)
+    00000197 3D               [ 4]  407 	dec	a
+    00000198 20 F6            [12]  408 	jr	NZ, 00137$
+    0000019A 2B               [ 8]  409 	dec	hl
+    0000019B 2A               [ 8]  410 	ld	a, (hl+)
+    0000019C 5F               [ 4]  411 	ld	e, a
+    0000019D 56               [ 8]  412 	ld	d, (hl)
+    0000019E 21r00r00         [12]  413 	ld	hl, #_shadow_OAM
+    000001A1 19               [ 8]  414 	add	hl, de
+    000001A2 E5               [16]  415 	push	hl
+    000001A3 7D               [ 4]  416 	ld	a, l
+    000001A4 F8 07            [12]  417 	ldhl	sp,	#7
+    000001A6 77               [ 8]  418 	ld	(hl), a
+    000001A7 E1               [12]  419 	pop	hl
+    000001A8 7C               [ 4]  420 	ld	a, h
+    000001A9 F8 06            [12]  421 	ldhl	sp,	#6
+                                    422 ;c:\gbdk\include\gb\gb.h:1974: itm->y=y, itm->x=x;
+    000001AB 32               [ 8]  423 	ld	(hl-), a
+    000001AC 2A               [ 8]  424 	ld	a, (hl+)
+    000001AD 5F               [ 4]  425 	ld	e, a
+    000001AE 56               [ 8]  426 	ld	d, (hl)
+    000001AF F8 03            [12]  427 	ldhl	sp,	#3
+    000001B1 7E               [ 8]  428 	ld	a, (hl)
+    000001B2 12               [ 8]  429 	ld	(de), a
+    000001B3 F8 05            [12]  430 	ldhl	sp,#5
+    000001B5 2A               [ 8]  431 	ld	a, (hl+)
+    000001B6 5F               [ 4]  432 	ld	e, a
+    000001B7 56               [ 8]  433 	ld	d, (hl)
+    000001B8 6B               [ 4]  434 	ld	l, e
+    000001B9 62               [ 4]  435 	ld	h, d
+    000001BA 23               [ 8]  436 	inc	hl
+    000001BB E5               [16]  437 	push	hl
+    000001BC 7D               [ 4]  438 	ld	a, l
+    000001BD F8 04            [12]  439 	ldhl	sp,	#4
+    000001BF 77               [ 8]  440 	ld	(hl), a
+    000001C0 E1               [12]  441 	pop	hl
+    000001C1 7C               [ 4]  442 	ld	a, h
+    000001C2 F8 03            [12]  443 	ldhl	sp,	#3
+    000001C4 32               [ 8]  444 	ld	(hl-), a
+    000001C5 2A               [ 8]  445 	ld	a, (hl+)
+    000001C6 5F               [ 4]  446 	ld	e, a
+    000001C7 2A               [ 8]  447 	ld	a, (hl+)
+    000001C8 57               [ 4]  448 	ld	d, a
+    000001C9 7E               [ 8]  449 	ld	a, (hl)
+    000001CA 12               [ 8]  450 	ld	(de), a
+                                    451 ;src/bullet.c:53: move_sprite(bullets[i].spritids[0], bullets[i].x, bullets[i].y);
+    000001CB                        452 00110$:
+                                    453 ;src/bullet.c:40: for (i = 0; i < MAX_BULLETS; i++)
+    000001CB F8 07            [12]  454 	ldhl	sp,	#7
+    000001CD 34               [12]  455 	inc	(hl)
+    000001CE 7E               [ 8]  456 	ld	a, (hl)
+    000001CF D6 06            [ 8]  457 	sub	a, #0x06
+    000001D1 DArCAr00         [16]  458 	jp	C, 00109$
+                                    459 ;src/bullet.c:57: }
+    000001D4 E8 08            [16]  460 	add	sp, #8
+    000001D6 C9               [16]  461 	ret
+                                    462 	.area _CODE
+                                    463 	.area _INITIALIZER
+                                    464 	.area _CABS (ABS)
