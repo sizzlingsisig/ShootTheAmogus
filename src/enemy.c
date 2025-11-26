@@ -284,6 +284,8 @@ void updateEnemyPhysics(Enemy *e)
     {
         e->isActive = 0;
         hideSprite4(e->spriteBase);
+        // Lose 1/4 life when enemy leaves screen
+        loseQuarterLife();
     }
 }
 

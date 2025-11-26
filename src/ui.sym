@@ -11,41 +11,41 @@ Symbol Table
     _LCDC_REG                                                       ******** GX
     _SCX_REG                                                        ******** GX
     _SCY_REG                                                        ******** GX
-  0 ___str_0                                                        000000A6 R
-  0 ___str_1                                                        000000C3 R
-  0 ___str_10                                                       00000297 R
-  0 ___str_11                                                       000002A1 R
-  0 ___str_12                                                       000002AB R
-  0 ___str_13                                                       000002B7 R
-  0 ___str_2                                                        0000018E R
-  0 ___str_3                                                        00000199 R
-  0 ___str_4                                                        000001A1 R
-  0 ___str_5                                                        000001A4 R
-  0 ___str_6                                                        000001B3 R
-  0 ___str_7                                                        000001BC R
-  0 ___str_8                                                        000001C9 R
-  0 ___str_9                                                        0000028C R
+  0 ___str_0                                                        000001A2 R
+  0 ___str_1                                                        000001BF R
+  0 ___str_10                                                       00000393 R
+  0 ___str_11                                                       0000039D R
+  0 ___str_12                                                       000003A7 R
+  0 ___str_13                                                       000003B3 R
+  0 ___str_2                                                        0000028A R
+  0 ___str_3                                                        00000295 R
+  0 ___str_4                                                        0000029D R
+  0 ___str_5                                                        000002A0 R
+  0 ___str_6                                                        000002AF R
+  0 ___str_7                                                        000002B8 R
+  0 ___str_8                                                        000002C5 R
+  0 ___str_9                                                        00000388 R
   0 _drawHearts                                                     00000000 GR
-  0 _drawScore                                                      0000008D GR
-  0 _drawWave                                                       000000AB GR
+  0 _drawScore                                                      00000189 GR
+  0 _drawWave                                                       000001A7 GR
     _fill_bkg_rect                                                  ******** GX
     _game                                                           ******** GX
     _gotoxy                                                         ******** GX
     _joypad                                                         ******** GX
     _playSound                                                      ******** GX
     _printf                                                         ******** GX
+    _quarterLife                                                    ******** GX
     _shadow_OAM                                                     ******** GX
-  0 _showGameOverScreen                                             000001D8 GR
-  0 _showStartScreen                                                000000CC GR
+  0 _showGameOverScreen                                             000002D4 GR
+  0 _showStartScreen                                                000001C8 GR
     _wait_vbl_done                                                  ******** GX
-
 
 ASxxxx Assembler V02.00 + NoICE + SDCC mods  (GameBoy)                  Page 2
 Hexadecimal [32-Bits]
 
 Area Table
 
-   0 _CODE                                      size      2C3   flags    0
+   0 _CODE                                      size      3BF   flags    0
    1 _DATA                                      size        0   flags    0
    2 _INITIALIZED                               size        0   flags    0
    3 _DABS                                      size        0   flags    8

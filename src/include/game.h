@@ -15,6 +15,7 @@ void updateDifficulty(void);
 UINT8 getSpawnInterval(void);
 void checkWaveCompletion(void);
 void updateEnemySpawning(void);
+void loseQuarterLife(void);
 
 // Game state accessors
 UINT8 getWaveNumber(void);

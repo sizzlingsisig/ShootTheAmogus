@@ -3,6 +3,8 @@
 
 #include "gametypes.h"
 
+extern UINT8 quarterLife;
+
 void drawHearts(void);
 void drawScore(void);
 void drawWave(void);

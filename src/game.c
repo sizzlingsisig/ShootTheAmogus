@@ -23,6 +23,7 @@ extern const unsigned char *song_Data[];
 
 Game game;
 UINT8 enemySpawnTimer;
+UINT8 quarterLife = 0;
 
 UINT8 getWaveNumber(void) { return game.waveNumber; }
 UINT8 getEnemySpeed(void) { return game.enemySpeed; }
@@ -38,7 +39,7 @@ void Game_init(void)
     set_sprite_data(20, 12, hatamogus);
     set_sprite_data(32, 4, ghostamogus);
     set_sprite_data(36, 12, bigamogus);
-    set_sprite_data(48, 2, heart);
+    set_sprite_data(48, 5, heart);
 
     // Initialize sound
     NR52_REG = 0x80;
@@ -234,4 +235,17 @@ void Game_draw(void)
     drawHearts();
     drawScore();
     drawWave();
+}
+
+// Lose 1/4 life (quarter heart)
+void loseQuarterLife(void)
+{
+    quarterLife++;
+    if (quarterLife >= 4) {
+        if (game.lives > 0) {
+            game.lives--;
+        }
+        quarterLife = 0; // Reset partial heart when a life is lost
+    }
+    drawHearts();
 }

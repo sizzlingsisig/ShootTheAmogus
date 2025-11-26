@@ -10,7 +10,7 @@
   Compression          : None.
   Counter              : None.
   Tile size            : 8 x 8
-  Tiles                : 0 to 1
+  Tiles                : 0 to 4
 
   Palette colors       : None.
   SGB Palette          : None.
@@ -24,8 +24,8 @@
 
 
 /* Bank of tiles. */
-#define playerBank 0
+#define heartBank 0
 /* Start of tile array. */
-extern unsigned char player[];
+extern unsigned char heart[];
 
 /* End of HEART.H */

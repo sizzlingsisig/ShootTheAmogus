@@ -9,6 +9,7 @@
 ;--------------------------------------------------------
 	.globl _getEnemySpeed
 	.globl _getWaveNumber
+	.globl _loseQuarterLife
 	.globl _hideSprite4
 	.globl _moveSprite4
 	.globl _simpleRand
@@ -1800,11 +1801,13 @@ _updateEnemyPhysics::
 	ld	d, (hl)
 	ld	a, (de)
 	call	_hideSprite4
+;src/enemy.c:288: loseQuarterLife();
+	call	_loseQuarterLife
 00153$:
-;src/enemy.c:288: }
+;src/enemy.c:290: }
 	add	sp, #20
 	ret
-;src/enemy.c:290: void updateEnemyAnimation(Enemy *e)
+;src/enemy.c:292: void updateEnemyAnimation(Enemy *e)
 ;	---------------------------------
 ; Function updateEnemyAnimation
 ; ---------------------------------
@@ -1813,7 +1816,7 @@ _updateEnemyAnimation::
 	ldhl	sp,	#11
 	ld	a, e
 	ld	(hl+), a
-;src/enemy.c:292: if (!e->isActive)
+;src/enemy.c:294: if (!e->isActive)
 	ld	a, d
 	ld	(hl-), a
 	ld	a, (hl+)
@@ -1828,9 +1831,9 @@ _updateEnemyAnimation::
 	ld	(hl), a
 	ld	a, (hl)
 	or	a, a
-;src/enemy.c:293: return;
+;src/enemy.c:295: return;
 	jp	Z, 00125$
-;src/enemy.c:295: if (e->deathTimer > 0)
+;src/enemy.c:297: if (e->deathTimer > 0)
 	ldhl	sp,#11
 	ld	a, (hl+)
 	ld	e, a
@@ -1849,7 +1852,7 @@ _updateEnemyAnimation::
 	ld	e, a
 	ld	d, (hl)
 	ld	a, (de)
-;src/enemy.c:299: hideSprite4(e->spriteBase);
+;src/enemy.c:301: hideSprite4(e->spriteBase);
 	ld	(hl+), a
 	ld	a, (hl+)
 	ld	e, a
@@ -1864,29 +1867,29 @@ _updateEnemyAnimation::
 	ld	a, h
 	ldhl	sp,	#3
 	ld	(hl), a
-;src/enemy.c:295: if (e->deathTimer > 0)
+;src/enemy.c:297: if (e->deathTimer > 0)
 	ldhl	sp,	#10
 	ld	a, (hl)
 	or	a, a
 	jr	Z, 00106$
-;src/enemy.c:297: if (e->deathTimer % 4 < 2)
+;src/enemy.c:299: if (e->deathTimer % 4 < 2)
 	ld	a, (hl)
 	and	a, #0x03
 	ld	(hl), a
 	ld	a, (hl)
 	sub	a, #0x02
 	jp	NC, 00125$
-;src/enemy.c:299: hideSprite4(e->spriteBase);
+;src/enemy.c:301: hideSprite4(e->spriteBase);
 	ldhl	sp,#2
 	ld	a, (hl+)
 	ld	e, a
 	ld	d, (hl)
 	ld	a, (de)
 	call	_hideSprite4
-;src/enemy.c:301: return;
+;src/enemy.c:303: return;
 	jp	00125$
 00106$:
-;src/enemy.c:304: if (e->hitFlashTimer > 0)
+;src/enemy.c:306: if (e->hitFlashTimer > 0)
 	ldhl	sp,#11
 	ld	a, (hl+)
 	ld	e, a
@@ -1898,23 +1901,23 @@ _updateEnemyAnimation::
 	ld	a, (bc)
 	or	a, a
 	jr	Z, 00110$
-;src/enemy.c:306: e->hitFlashTimer--;
+;src/enemy.c:308: e->hitFlashTimer--;
 	dec	a
 	ld	(bc), a
-;src/enemy.c:307: if (e->hitFlashTimer % 2 == 0)
+;src/enemy.c:309: if (e->hitFlashTimer % 2 == 0)
 	and	a, #0x01
 	jr	NZ, 00110$
-;src/enemy.c:309: hideSprite4(e->spriteBase);
+;src/enemy.c:311: hideSprite4(e->spriteBase);
 	ldhl	sp,#2
 	ld	a, (hl+)
 	ld	e, a
 	ld	d, (hl)
 	ld	a, (de)
 	call	_hideSprite4
-;src/enemy.c:310: return;
+;src/enemy.c:312: return;
 	jp	00125$
 00110$:
-;src/enemy.c:314: e->animCounter++;
+;src/enemy.c:316: e->animCounter++;
 	ldhl	sp,#11
 	ld	a, (hl+)
 	ld	e, a
@@ -1939,7 +1942,7 @@ _updateEnemyAnimation::
 	ld	l, (hl)
 	ld	h, a
 	ld	(hl), c
-;src/enemy.c:318: e->currentFrame = (e->currentFrame + 1) % 3;
+;src/enemy.c:320: e->currentFrame = (e->currentFrame + 1) % 3;
 	ldhl	sp,#11
 	ld	a, (hl+)
 	ld	e, a
@@ -1954,17 +1957,17 @@ _updateEnemyAnimation::
 	ld	a, h
 	ldhl	sp,	#5
 	ld	(hl), a
-;src/enemy.c:315: if (e->animCounter >= ANIM_SPEED)
+;src/enemy.c:317: if (e->animCounter >= ANIM_SPEED)
 	ld	a, c
 	sub	a, #0x0a
 	jr	C, 00112$
-;src/enemy.c:317: e->animCounter = 0;
+;src/enemy.c:319: e->animCounter = 0;
 	ldhl	sp,	#8
 	ld	a, (hl+)
 	ld	h, (hl)
 	ld	l, a
 	ld	(hl), #0x00
-;src/enemy.c:318: e->currentFrame = (e->currentFrame + 1) % 3;
+;src/enemy.c:320: e->currentFrame = (e->currentFrame + 1) % 3;
 	ldhl	sp,#4
 	ld	a, (hl+)
 	ld	e, a
@@ -1981,12 +1984,12 @@ _updateEnemyAnimation::
 	ld	l, a
 	ld	(hl), c
 00112$:
-;src/enemy.c:321: UINT8 baseTile = 0;
+;src/enemy.c:323: UINT8 baseTile = 0;
 	ldhl	sp,	#6
 	ld	(hl), #0x00
-;src/enemy.c:322: UINT8 frame_count = 1;
+;src/enemy.c:324: UINT8 frame_count = 1;
 	ldhl	sp,	#10
-;src/enemy.c:324: switch (e->type)
+;src/enemy.c:326: switch (e->type)
 	ld	a, #0x01
 	ld	(hl+), a
 	ld	a, (hl+)
@@ -2017,12 +2020,12 @@ _updateEnemyAnimation::
 	.dw	00115$
 	.dw	00116$
 	.dw	00117$
-;src/enemy.c:326: case ENEMY_TYPE_GROUND:
+;src/enemy.c:328: case ENEMY_TYPE_GROUND:
 00113$:
-;src/enemy.c:327: frame_count = 3;
+;src/enemy.c:329: frame_count = 3;
 	ldhl	sp,	#10
 	ld	(hl), #0x03
-;src/enemy.c:328: baseTile = 8 + (e->currentFrame * 4);
+;src/enemy.c:330: baseTile = 8 + (e->currentFrame * 4);
 	ldhl	sp,#4
 	ld	a, (hl+)
 	ld	e, a
@@ -2033,14 +2036,14 @@ _updateEnemyAnimation::
 	add	a, a
 	add	a, #0x08
 	ld	(hl), a
-;src/enemy.c:329: break;
+;src/enemy.c:331: break;
 	jr	00118$
-;src/enemy.c:330: case ENEMY_TYPE_JUMPING:
+;src/enemy.c:332: case ENEMY_TYPE_JUMPING:
 00114$:
-;src/enemy.c:331: frame_count = 3;
+;src/enemy.c:333: frame_count = 3;
 	ldhl	sp,	#10
 	ld	(hl), #0x03
-;src/enemy.c:332: baseTile = 20 + (e->currentFrame * 4);
+;src/enemy.c:334: baseTile = 20 + (e->currentFrame * 4);
 	ldhl	sp,#4
 	ld	a, (hl+)
 	ld	e, a
@@ -2051,24 +2054,24 @@ _updateEnemyAnimation::
 	add	a, a
 	add	a, #0x14
 	ld	(hl), a
-;src/enemy.c:333: break;
+;src/enemy.c:335: break;
 	jr	00118$
-;src/enemy.c:334: case ENEMY_TYPE_FLYING:
+;src/enemy.c:336: case ENEMY_TYPE_FLYING:
 00115$:
-;src/enemy.c:335: frame_count = 1;
+;src/enemy.c:337: frame_count = 1;
 	ldhl	sp,	#10
 	ld	(hl), #0x01
-;src/enemy.c:336: baseTile = 32;
+;src/enemy.c:338: baseTile = 32;
 	ldhl	sp,	#6
 	ld	(hl), #0x20
-;src/enemy.c:337: break;
+;src/enemy.c:339: break;
 	jr	00118$
-;src/enemy.c:338: case ENEMY_TYPE_TARGETING:
+;src/enemy.c:340: case ENEMY_TYPE_TARGETING:
 00116$:
-;src/enemy.c:339: frame_count = 3;
+;src/enemy.c:341: frame_count = 3;
 	ldhl	sp,	#10
 	ld	(hl), #0x03
-;src/enemy.c:340: baseTile = 8 + (e->currentFrame * 4);
+;src/enemy.c:342: baseTile = 8 + (e->currentFrame * 4);
 	ldhl	sp,#4
 	ld	a, (hl+)
 	ld	e, a
@@ -2079,14 +2082,14 @@ _updateEnemyAnimation::
 	add	a, a
 	add	a, #0x08
 	ld	(hl), a
-;src/enemy.c:341: break;
+;src/enemy.c:343: break;
 	jr	00118$
-;src/enemy.c:342: case ENEMY_TYPE_BOSS:
+;src/enemy.c:344: case ENEMY_TYPE_BOSS:
 00117$:
-;src/enemy.c:343: frame_count = 3;
+;src/enemy.c:345: frame_count = 3;
 	ldhl	sp,	#10
 	ld	(hl), #0x03
-;src/enemy.c:344: baseTile = 36 + (e->currentFrame * 4);
+;src/enemy.c:346: baseTile = 36 + (e->currentFrame * 4);
 	ldhl	sp,#4
 	ld	a, (hl+)
 	ld	e, a
@@ -2097,9 +2100,9 @@ _updateEnemyAnimation::
 	add	a, a
 	add	a, #0x24
 	ld	(hl), a
-;src/enemy.c:346: }
+;src/enemy.c:348: }
 00118$:
-;src/enemy.c:348: if (e->animCounter >= ANIM_SPEED)
+;src/enemy.c:350: if (e->animCounter >= ANIM_SPEED)
 	ldhl	sp,#8
 	ld	a, (hl+)
 	ld	e, a
@@ -2107,12 +2110,12 @@ _updateEnemyAnimation::
 	ld	a, (de)
 	sub	a, #0x0a
 	jr	C, 00120$
-;src/enemy.c:350: e->animCounter = 0;
+;src/enemy.c:352: e->animCounter = 0;
 	ld	a, (hl-)
 	ld	l, (hl)
 	ld	h, a
 	ld	(hl), #0x00
-;src/enemy.c:351: e->currentFrame = (e->currentFrame + 1) % frame_count;
+;src/enemy.c:353: e->currentFrame = (e->currentFrame + 1) % frame_count;
 	ldhl	sp,#4
 	ld	a, (hl+)
 	ld	e, a
@@ -2156,7 +2159,7 @@ _updateEnemyAnimation::
 	ld	l, a
 	ld	(hl), c
 00120$:
-;src/enemy.c:354: set_sprite_tile(e->spriteBase, baseTile);
+;src/enemy.c:356: set_sprite_tile(e->spriteBase, baseTile);
 	ldhl	sp,#2
 	ld	a, (hl+)
 	ld	e, a
@@ -2209,7 +2212,7 @@ _updateEnemyAnimation::
 	ldhl	sp,	#6
 	ld	a, (hl)
 	ld	(de), a
-;src/enemy.c:355: set_sprite_tile(e->spriteBase + 1, baseTile + 2);
+;src/enemy.c:357: set_sprite_tile(e->spriteBase + 1, baseTile + 2);
 	ld	a, (hl)
 	ldhl	sp,	#10
 	ld	(hl), a
@@ -2271,7 +2274,7 @@ _updateEnemyAnimation::
 	ldhl	sp,	#5
 	ld	a, (hl)
 	ld	(de), a
-;src/enemy.c:356: set_sprite_tile(e->spriteBase + 2, baseTile + 1);
+;src/enemy.c:358: set_sprite_tile(e->spriteBase + 2, baseTile + 1);
 	ldhl	sp,	#10
 	ld	a, (hl)
 	inc	a
@@ -2331,7 +2334,7 @@ _updateEnemyAnimation::
 	ldhl	sp,	#5
 	ld	a, (hl)
 	ld	(de), a
-;src/enemy.c:357: set_sprite_tile(e->spriteBase + 3, baseTile + 3);
+;src/enemy.c:359: set_sprite_tile(e->spriteBase + 3, baseTile + 3);
 	ldhl	sp,	#10
 	inc	(hl)
 	inc	(hl)
@@ -2393,12 +2396,12 @@ _updateEnemyAnimation::
 	ld	d, a
 	ld	a, (hl)
 	ld	(de), a
-;src/enemy.c:357: set_sprite_tile(e->spriteBase + 3, baseTile + 3);
+;src/enemy.c:359: set_sprite_tile(e->spriteBase + 3, baseTile + 3);
 00125$:
-;src/enemy.c:358: }
+;src/enemy.c:360: }
 	add	sp, #13
 	ret
-;src/enemy.c:360: void drawEnemy(Enemy *e)
+;src/enemy.c:362: void drawEnemy(Enemy *e)
 ;	---------------------------------
 ; Function drawEnemy
 ; ---------------------------------
@@ -2406,7 +2409,7 @@ _drawEnemy::
 	add	sp, #-3
 	ld	c, e
 	ld	b, d
-;src/enemy.c:362: if (e->isActive && e->deathTimer == 0)
+;src/enemy.c:364: if (e->isActive && e->deathTimer == 0)
 	ld	hl, #0x0005
 	add	hl, bc
 	ld	a, (hl)
@@ -2417,7 +2420,7 @@ _drawEnemy::
 	ld	a, (hl)
 	or	a, a
 	jr	NZ, 00104$
-;src/enemy.c:366: e->x, e->y);
+;src/enemy.c:368: e->x, e->y);
 	ld	e, c
 	ld	d, b
 	inc	de
@@ -2432,7 +2435,7 @@ _drawEnemy::
 	inc	de
 	ld	a, (de)
 	ld	(hl), a
-;src/enemy.c:365: e->spriteBase + 2, e->spriteBase + 3,
+;src/enemy.c:367: e->spriteBase + 2, e->spriteBase + 3,
 	ld	hl, #0x000a
 	add	hl, bc
 	ld	c, (hl)
@@ -2444,7 +2447,7 @@ _drawEnemy::
 	ld	a, e
 	inc	a
 	inc	a
-;src/enemy.c:364: moveSprite4(e->spriteBase, e->spriteBase + 1,
+;src/enemy.c:366: moveSprite4(e->spriteBase, e->spriteBase + 1,
 	inc	e
 	ldhl	sp,	#0
 	ld	h, (hl)
@@ -2464,21 +2467,21 @@ _drawEnemy::
 	ld	a, c
 	call	_moveSprite4
 00104$:
-;src/enemy.c:368: }
+;src/enemy.c:370: }
 	add	sp, #3
 	ret
-;src/enemy.c:370: UINT8 countActiveEnemies(void)
+;src/enemy.c:372: UINT8 countActiveEnemies(void)
 ;	---------------------------------
 ; Function countActiveEnemies
 ; ---------------------------------
 _countActiveEnemies::
 	dec	sp
-;src/enemy.c:374: for (i = 0; i < MAX_ENEMIES; i++)
+;src/enemy.c:376: for (i = 0; i < MAX_ENEMIES; i++)
 	ldhl	sp,	#0
 	ld	(hl), #0x00
 	ld	c, #0x00
 00104$:
-;src/enemy.c:376: if (enemies[i].isActive)
+;src/enemy.c:378: if (enemies[i].isActive)
 	ld	b, #0x00
 	ld	l, c
 	ld	h, b
@@ -2497,19 +2500,19 @@ _countActiveEnemies::
 	ld	a, (hl)
 	or	a, a
 	jr	Z, 00105$
-;src/enemy.c:377: count++;
+;src/enemy.c:379: count++;
 	ldhl	sp,	#0
 	inc	(hl)
 00105$:
-;src/enemy.c:374: for (i = 0; i < MAX_ENEMIES; i++)
+;src/enemy.c:376: for (i = 0; i < MAX_ENEMIES; i++)
 	inc	c
 	ld	a, c
 	sub	a, #0x04
 	jr	C, 00104$
-;src/enemy.c:379: return count;
+;src/enemy.c:381: return count;
 	ldhl	sp,	#0
 	ld	a, (hl)
-;src/enemy.c:380: }
+;src/enemy.c:382: }
 	inc	sp
 	ret
 	.area _CODE

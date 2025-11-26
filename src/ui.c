@@ -1,4 +1,3 @@
-
 #include <gb/gb.h>
 #include <gbdk/console.h>
 #include "gametypes.h"
@@ -10,15 +9,41 @@
 
 void drawHearts(void)
 {
+    extern UINT8 quarterLife;
     UINT8 i;
     for (i = 0; i < MAX_LIVES; i++)
     {
         UINT8 spriteBase = 28 + (i * 2);
-        if (i < game.lives)
+        if (i < game.lives - 1)
         {
-            set_sprite_tile(spriteBase, 48);
+            set_sprite_tile(spriteBase, 49); // full heart
+            set_sprite_tile(spriteBase + 1, 49); // full heart
             move_sprite(spriteBase, 8 + (i * 16), 8);
-            set_sprite_tile(spriteBase + 1, 49);
+            move_sprite(spriteBase + 1, 8 + (i * 16), 16);
+        }
+        else if (i == game.lives - 1)
+        {
+            if (quarterLife == 1)
+            {
+                set_sprite_tile(spriteBase, 50); // 3/4 heart
+                set_sprite_tile(spriteBase + 1, 50);
+            }
+            else if (quarterLife == 2)
+            {
+                set_sprite_tile(spriteBase, 51); // 1/2 heart
+                set_sprite_tile(spriteBase + 1, 51);
+            }
+            else if (quarterLife == 3)
+            {
+                set_sprite_tile(spriteBase, 52); // 1/4 heart
+                set_sprite_tile(spriteBase + 1, 52);
+            }
+            else
+            {
+                set_sprite_tile(spriteBase, 49); // full heart
+                set_sprite_tile(spriteBase + 1, 49);
+            }
+            move_sprite(spriteBase, 8 + (i * 16), 8);
             move_sprite(spriteBase + 1, 8 + (i * 16), 16);
         }
         else
