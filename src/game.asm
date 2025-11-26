@@ -354,7 +354,7 @@ _Game_reset::
 	ld	(hl), #0x01
 ;src/game.c:109: game.enemySpeed = ENEMY_SPEED_BASE;
 	ld	hl, #_game + 8
-	ld	(hl), #0x02
+	ld	(hl), #0x04
 ;src/game.c:110: game.frameCounter = 0;
 	ld	hl, #(_game + 9)
 	xor	a, a

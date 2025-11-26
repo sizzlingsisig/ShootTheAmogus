@@ -354,7 +354,7 @@
     0000013D 36 01            [12]  354 	ld	(hl), #0x01
                                     355 ;src/game.c:109: game.enemySpeed = ENEMY_SPEED_BASE;
     0000013F 21r08r00         [12]  356 	ld	hl, #_game + 8
-    00000142 36 02            [12]  357 	ld	(hl), #0x02
+    00000142 36 04            [12]  357 	ld	(hl), #0x04
                                     358 ;src/game.c:110: game.frameCounter = 0;
     00000144 21r09r00         [12]  359 	ld	hl, #(_game + 9)
     00000147 AF               [ 4]  360 	xor	a, a

@@ -19,7 +19,7 @@ typedef signed int INT16;
 
 #define PLAYER_SPEED 2
 #define BULLET_SPEED 4
-#define ENEMY_SPEED_BASE 2
+#define ENEMY_SPEED_BASE 4
 #define ANIM_SPEED 10
 #define FIRE_RATE 15
 

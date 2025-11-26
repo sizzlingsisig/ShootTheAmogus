@@ -10,8 +10,8 @@ Symbol Table
     __modsint                                                       ******** GX
     __moduchar                                                      ******** GX
     __muluschar                                                     ******** GX
-  0 _countActiveEnemies                                             00000B13 GR
-  0 _drawEnemy                                                      00000ACA GR
+  0 _countActiveEnemies                                             00000B17 GR
+  0 _drawEnemy                                                      00000ACE GR
   1 _enemies                                                        00000000 GR
     _getEnemySpeed                                                  ******** GX
     _getWaveNumber                                                  ******** GX
@@ -22,18 +22,18 @@ Symbol Table
     _player                                                         ******** GX
     _shadow_OAM                                                     ******** GX
     _simpleRand                                                     ******** GX
-  0 _spawnBossEnemy                                                 0000026C GR
+  0 _spawnBossEnemy                                                 0000026B GR
   0 _spawnEnemy                                                     0000002F GR
-  0 _updateBossPhysics                                              000002F2 GR
-  0 _updateEnemyAnimation                                           00000808 GR
-  0 _updateEnemyPhysics                                             0000042A GR
+  0 _updateBossPhysics                                              000002F1 GR
+  0 _updateEnemyAnimation                                           0000080C GR
+  0 _updateEnemyPhysics                                             00000429 GR
 
 ASxxxx Assembler V02.00 + NoICE + SDCC mods  (GameBoy)                  Page 2
 Hexadecimal [32-Bits]
 
 Area Table
 
-   0 _CODE                                      size      B3E   flags    0
+   0 _CODE                                      size      B42   flags    0
    1 _DATA                                      size       50   flags    0
    2 _INITIALIZED                               size        0   flags    0
    3 _DABS                                      size        0   flags    8

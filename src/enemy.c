@@ -65,6 +65,8 @@ void spawnEnemy(UINT8 index)
         e->isJumping = 0;
         e->flyingBobTimer = simpleRand() % 16;
         e->flyingDirection = (simpleRand() & 1) ? 1 : -1;
+        // Set initial speed for flying enemies
+        e->maxHealth = 2; // reuse field for max speed if needed
         break;
 
     case 3: // Targeting
@@ -223,7 +225,11 @@ void updateEnemyPhysics(Enemy *e)
             e->flyingDirection = -1;
         }
 
-        e->x -= getEnemySpeed();
+        // Set max speed for ghost enemies
+        UINT8 speed = getEnemySpeed();
+        UINT8 maxGhostSpeed = 4; // Set your desired max speed here
+        if (speed > maxGhostSpeed) speed = maxGhostSpeed;
+        e->x -= speed;
     }
     else if (e->isJumping)
     {
