@@ -1,3 +1,4 @@
+// Collision handling between bullets, enemies, and the player
 #include "collision.h"
 #include "player.h"
 #include "enemy.h"
@@ -6,6 +7,7 @@
 #include "utils.h"
 #include "sound.h"
 
+// Check all bullets against all active enemies and apply damage
 void checkBulletEnemyCollisions(void)
 {
     UINT8 i, j;
@@ -58,6 +60,7 @@ void checkBulletEnemyCollisions(void)
     }
 }
 
+// Check player against enemies; apply invincibility and life loss
 void checkPlayerEnemyCollisions(void)
 {
     if (player.invincibilityTimer > 0)

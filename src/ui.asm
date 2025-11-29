@@ -49,24 +49,24 @@
 ; code
 ;--------------------------------------------------------
 	.area _CODE
-;src/ui.c:10: void drawHearts(void)
+;src/ui.c:12: void drawHearts(void)
 ;	---------------------------------
 ; Function drawHearts
 ; ---------------------------------
 _drawHearts::
 	add	sp, #-4
-;src/ui.c:14: for (i = 0; i < MAX_LIVES; i++)
+;src/ui.c:16: for (i = 0; i < MAX_LIVES; i++)
 	ldhl	sp,	#3
 	ld	(hl), #0x00
 00133$:
-;src/ui.c:16: UINT8 spriteBase = 28 + (i * 2);
+;src/ui.c:18: UINT8 spriteBase = 28 + (i * 2);
 	ldhl	sp,	#3
 	ld	a, (hl)
 	add	a, a
 	add	a, #0x1c
 	ldhl	sp,	#0
 	ld	(hl), a
-;src/ui.c:17: if (i < game.lives - 1)
+;src/ui.c:19: if (i < game.lives - 1)
 	ld	hl, #_game
 	ld	c, (hl)
 	ld	b, #0x00
@@ -108,7 +108,7 @@ _drawHearts::
 	add	hl,de
 	inc	hl
 	ld	(hl), #0x31
-;src/ui.c:20: set_sprite_tile(spriteBase + 1, 49); // full heart
+;src/ui.c:22: set_sprite_tile(spriteBase + 1, 49); // full heart
 	ldhl	sp,	#0
 	ld	a, (hl+)
 	inc	hl
@@ -126,7 +126,7 @@ _drawHearts::
 	inc	hl
 	inc	hl
 	ld	(hl), #0x31
-;src/ui.c:21: move_sprite(spriteBase, 8 + (i * 16), 8);
+;src/ui.c:23: move_sprite(spriteBase, 8 + (i * 16), 8);
 	ldhl	sp,	#3
 	ld	a, (hl)
 	swap	a
@@ -141,7 +141,7 @@ _drawHearts::
 	ld	a, #0x08
 	ld	(hl+), a
 	ld	(hl), b
-;src/ui.c:22: move_sprite(spriteBase + 1, 8 + (i * 16), 16);
+;src/ui.c:24: move_sprite(spriteBase + 1, 8 + (i * 16), 16);
 	ldhl	sp,	#2
 ;c:\gbdk\include\gb\gb.h:1973: OAM_item_t * itm = &shadow_OAM[nb];
 	ld	l, (hl)
@@ -154,10 +154,10 @@ _drawHearts::
 	ld	a, #0x10
 	ld	(hl+), a
 	ld	(hl), c
-;src/ui.c:22: move_sprite(spriteBase + 1, 8 + (i * 16), 16);
+;src/ui.c:24: move_sprite(spriteBase + 1, 8 + (i * 16), 16);
 	jp	00134$
 00114$:
-;src/ui.c:24: else if (i == game.lives - 1)
+;src/ui.c:26: else if (i == game.lives - 1)
 	ldhl	sp,	#1
 	ld	a, (hl)
 	sub	a, c
@@ -165,7 +165,7 @@ _drawHearts::
 	xor	a, a
 	sub	a, b
 	jp	NZ, 00111$
-;src/ui.c:26: if (quarterLife == 1)
+;src/ui.c:28: if (quarterLife == 1)
 	ld	a, (#_quarterLife)
 	dec	a
 	jr	NZ, 00108$
@@ -182,7 +182,7 @@ _drawHearts::
 	inc	hl
 	inc	hl
 	ld	(hl), #0x32
-;src/ui.c:29: set_sprite_tile(spriteBase + 1, 50);
+;src/ui.c:31: set_sprite_tile(spriteBase + 1, 50);
 	ldhl	sp,	#0
 	ld	c, (hl)
 	inc	c
@@ -197,10 +197,10 @@ _drawHearts::
 	inc	hl
 	inc	hl
 	ld	(hl), #0x32
-;src/ui.c:29: set_sprite_tile(spriteBase + 1, 50);
+;src/ui.c:31: set_sprite_tile(spriteBase + 1, 50);
 	jr	00109$
 00108$:
-;src/ui.c:31: else if (quarterLife == 2)
+;src/ui.c:33: else if (quarterLife == 2)
 	ld	a, (#_quarterLife)
 	sub	a, #0x02
 	jr	NZ, 00105$
@@ -217,7 +217,7 @@ _drawHearts::
 	inc	hl
 	inc	hl
 	ld	(hl), #0x33
-;src/ui.c:34: set_sprite_tile(spriteBase + 1, 51);
+;src/ui.c:36: set_sprite_tile(spriteBase + 1, 51);
 	ldhl	sp,	#0
 	ld	e, (hl)
 	inc	e
@@ -232,10 +232,10 @@ _drawHearts::
 	inc	hl
 	inc	hl
 	ld	(hl), #0x33
-;src/ui.c:34: set_sprite_tile(spriteBase + 1, 51);
+;src/ui.c:36: set_sprite_tile(spriteBase + 1, 51);
 	jr	00109$
 00105$:
-;src/ui.c:36: else if (quarterLife == 3)
+;src/ui.c:38: else if (quarterLife == 3)
 	ld	a, (#_quarterLife)
 	sub	a, #0x03
 	jr	NZ, 00102$
@@ -252,7 +252,7 @@ _drawHearts::
 	inc	hl
 	inc	hl
 	ld	(hl), #0x34
-;src/ui.c:39: set_sprite_tile(spriteBase + 1, 52);
+;src/ui.c:41: set_sprite_tile(spriteBase + 1, 52);
 	ldhl	sp,	#0
 	ld	c, (hl)
 	inc	c
@@ -267,7 +267,7 @@ _drawHearts::
 	inc	hl
 	inc	hl
 	ld	(hl), #0x34
-;src/ui.c:39: set_sprite_tile(spriteBase + 1, 52);
+;src/ui.c:41: set_sprite_tile(spriteBase + 1, 52);
 	jr	00109$
 00102$:
 ;c:\gbdk\include\gb\gb.h:1887: shadow_OAM[nb].tile=tile;
@@ -283,7 +283,7 @@ _drawHearts::
 	inc	hl
 	inc	hl
 	ld	(hl), #0x31
-;src/ui.c:44: set_sprite_tile(spriteBase + 1, 49);
+;src/ui.c:46: set_sprite_tile(spriteBase + 1, 49);
 	ldhl	sp,	#0
 	ld	c, (hl)
 	inc	c
@@ -298,9 +298,9 @@ _drawHearts::
 	inc	hl
 	inc	hl
 	ld	(hl), #0x31
-;src/ui.c:44: set_sprite_tile(spriteBase + 1, 49);
+;src/ui.c:46: set_sprite_tile(spriteBase + 1, 49);
 00109$:
-;src/ui.c:46: move_sprite(spriteBase, 8 + (i * 16), 8);
+;src/ui.c:48: move_sprite(spriteBase, 8 + (i * 16), 8);
 	ldhl	sp,	#3
 	ld	a, (hl)
 	swap	a
@@ -322,7 +322,7 @@ _drawHearts::
 	ld	a, #0x08
 	ld	(hl+), a
 	ld	(hl), e
-;src/ui.c:47: move_sprite(spriteBase + 1, 8 + (i * 16), 16);
+;src/ui.c:49: move_sprite(spriteBase + 1, 8 + (i * 16), 16);
 	ldhl	sp,	#0
 	ld	e, (hl)
 	inc	e
@@ -338,7 +338,7 @@ _drawHearts::
 	ld	a, #0x10
 	ld	(hl+), a
 	ld	(hl), d
-;src/ui.c:47: move_sprite(spriteBase + 1, 8 + (i * 16), 16);
+;src/ui.c:49: move_sprite(spriteBase + 1, 8 + (i * 16), 16);
 	jr	00134$
 00111$:
 ;c:\gbdk\include\gb\gb.h:1973: OAM_item_t * itm = &shadow_OAM[nb];
@@ -355,7 +355,7 @@ _drawHearts::
 	ld	a, #0xc8
 	ld	(hl+), a
 	ld	(hl), #0xc8
-;src/ui.c:52: move_sprite(spriteBase + 1, OFFSCREEN_X, OFFSCREEN_Y);
+;src/ui.c:54: move_sprite(spriteBase + 1, OFFSCREEN_X, OFFSCREEN_Y);
 	ldhl	sp,	#0
 	ld	c, (hl)
 	inc	c
@@ -371,28 +371,28 @@ _drawHearts::
 	ld	a, #0xc8
 	ld	(hl+), a
 	ld	(hl), #0xc8
-;src/ui.c:52: move_sprite(spriteBase + 1, OFFSCREEN_X, OFFSCREEN_Y);
+;src/ui.c:54: move_sprite(spriteBase + 1, OFFSCREEN_X, OFFSCREEN_Y);
 00134$:
-;src/ui.c:14: for (i = 0; i < MAX_LIVES; i++)
+;src/ui.c:16: for (i = 0; i < MAX_LIVES; i++)
 	ldhl	sp,	#3
 	inc	(hl)
 	ld	a, (hl)
 	sub	a, #0x03
 	jp	C, 00133$
-;src/ui.c:55: }
+;src/ui.c:57: }
 	add	sp, #4
 	ret
-;src/ui.c:57: void drawScore(void)
+;src/ui.c:60: void drawScore(void)
 ;	---------------------------------
 ; Function drawScore
 ; ---------------------------------
 _drawScore::
-;src/ui.c:59: gotoxy(13, 0);
+;src/ui.c:62: gotoxy(13, 0);
 	ld	hl, #0x0d
 	push	hl
 	call	_gotoxy
 	pop	hl
-;src/ui.c:60: printf("%05d", game.score);
+;src/ui.c:63: printf("%05d", game.score);
 	ld	hl, #(_game + 1)
 	ld	a, (hl+)
 	ld	c, a
@@ -402,23 +402,23 @@ _drawScore::
 	push	de
 	call	_printf
 	add	sp, #4
-;src/ui.c:61: }
+;src/ui.c:64: }
 	ret
 ___str_0:
 	.ascii "%05d"
 	.db 0x00
-;src/ui.c:63: void drawWave(void)
+;src/ui.c:67: void drawWave(void)
 ;	---------------------------------
 ; Function drawWave
 ; ---------------------------------
 _drawWave::
-;src/ui.c:65: gotoxy(0, 0);
+;src/ui.c:69: gotoxy(0, 0);
 	xor	a, a
 	rrca
 	push	af
 	call	_gotoxy
 	pop	hl
-;src/ui.c:66: printf(" Wave:%d", game.waveNumber);
+;src/ui.c:70: printf(" Wave:%d", game.waveNumber);
 	ld	hl, #(_game + 5)
 	ld	c, (hl)
 	ld	b, #0x00
@@ -427,38 +427,38 @@ _drawWave::
 	push	de
 	call	_printf
 	add	sp, #4
-;src/ui.c:67: }
+;src/ui.c:71: }
 	ret
 ___str_1:
 	.ascii " Wave:%d"
 	.db 0x00
-;src/ui.c:69: void showStartScreen(void)
+;src/ui.c:74: void showStartScreen(void)
 ;	---------------------------------
 ; Function showStartScreen
 ; ---------------------------------
 _showStartScreen::
 	dec	sp
 	dec	sp
-;src/ui.c:71: UINT8 blinkCounter = 0;
+;src/ui.c:76: UINT8 blinkCounter = 0;
 	ldhl	sp,	#1
-;src/ui.c:72: UINT8 showText = 1;
+;src/ui.c:77: UINT8 showText = 1;
 	xor	a, a
 	ld	(hl-), a
 	ld	(hl), #0x01
-;src/ui.c:74: SCX_REG = 0;
+;src/ui.c:79: SCX_REG = 0;
 	xor	a, a
 	ldh	(_SCX_REG + 0), a
-;src/ui.c:75: SCY_REG = 0;
+;src/ui.c:80: SCY_REG = 0;
 	xor	a, a
 	ldh	(_SCY_REG + 0), a
-;src/ui.c:76: HIDE_SPRITES;
+;src/ui.c:81: HIDE_SPRITES;
 	ldh	a, (_LCDC_REG + 0)
 	and	a, #0xfd
 	ldh	(_LCDC_REG + 0), a
-;src/ui.c:77: BGP_REG = 0x1B;
+;src/ui.c:82: BGP_REG = 0x1B;
 	ld	a, #0x1b
 	ldh	(_BGP_REG + 0), a
-;src/ui.c:78: fill_bkg_rect(0, 0, 20, 18, 0x00);
+;src/ui.c:83: fill_bkg_rect(0, 0, 20, 18, 0x00);
 	xor	a, a
 	ld	h, a
 	ld	l, #0x12
@@ -471,57 +471,57 @@ _showStartScreen::
 	push	af
 	call	_fill_bkg_rect
 	add	sp, #5
-;src/ui.c:80: gotoxy(4, 5);
+;src/ui.c:85: gotoxy(4, 5);
 	ld	hl, #0x504
 	push	hl
 	call	_gotoxy
 	pop	hl
-;src/ui.c:81: printf("SHOOT 'THE");
+;src/ui.c:86: printf("SHOOT 'THE");
 	ld	de, #___str_2
 	push	de
 	call	_printf
 	pop	hl
-;src/ui.c:82: gotoxy(6, 6);
+;src/ui.c:87: gotoxy(6, 6);
 	ld	hl, #0x606
 	push	hl
 	call	_gotoxy
 	pop	hl
-;src/ui.c:83: printf("AMOGUS!");
+;src/ui.c:88: printf("AMOGUS!");
 	ld	de, #___str_3
 	push	de
 	call	_printf
 	pop	hl
-;src/ui.c:84: gotoxy(8, 9);
+;src/ui.c:89: gotoxy(8, 9);
 	ld	hl, #0x908
 	push	hl
 	call	_gotoxy
 	pop	hl
-;src/ui.c:85: printf("BY");
+;src/ui.c:90: printf("BY");
 	ld	de, #___str_4
 	push	de
 	call	_printf
 	pop	hl
-;src/ui.c:86: gotoxy(3, 10);
+;src/ui.c:91: gotoxy(3, 10);
 	ld	hl, #0xa03
 	push	hl
 	call	_gotoxy
 	pop	hl
-;src/ui.c:87: printf("SIZZLING SISIG");
+;src/ui.c:92: printf("SIZZLING SISIG");
 	ld	de, #___str_5
 	push	de
 	call	_printf
 	pop	hl
-;src/ui.c:89: if (game.highScore > 0)
+;src/ui.c:94: if (game.highScore > 0)
 	ld	hl, #(_game + 3)
 	ld	a, (hl+)
 	or	a, (hl)
 	jr	Z, 00118$
-;src/ui.c:91: gotoxy(3, 11);
+;src/ui.c:96: gotoxy(3, 11);
 	ld	hl, #0xb03
 	push	hl
 	call	_gotoxy
 	pop	hl
-;src/ui.c:92: printf("HIGH: %d", game.highScore);
+;src/ui.c:97: printf("HIGH: %d", game.highScore);
 	ld	hl, #(_game + 3)
 	ld	a, (hl+)
 	ld	c, a
@@ -531,17 +531,17 @@ _showStartScreen::
 	push	de
 	call	_printf
 	add	sp, #4
-;src/ui.c:95: while (1)
+;src/ui.c:100: while (1)
 00118$:
 00108$:
-;src/ui.c:97: if (++blinkCounter > 30)
+;src/ui.c:102: if (++blinkCounter > 30)
 	ldhl	sp,	#1
 	inc	(hl)
 	ld	a, #0x1e
 	sub	a, (hl)
 	jr	NC, 00104$
-;src/ui.c:99: blinkCounter = 0;
-;src/ui.c:100: showText = !showText;
+;src/ui.c:104: blinkCounter = 0;
+;src/ui.c:105: showText = !showText;
 	xor	a, a
 	ld	(hl-), a
 	ld	a, (hl)
@@ -549,12 +549,12 @@ _showStartScreen::
 	ld	a, #0x00
 	rla
 	ld	(hl), a
-;src/ui.c:101: gotoxy(2, 14);
+;src/ui.c:106: gotoxy(2, 14);
 	ld	hl, #0xe02
 	push	hl
 	call	_gotoxy
 	pop	hl
-;src/ui.c:102: printf(showText ? "PRESS  START" : "              ");
+;src/ui.c:107: printf(showText ? "PRESS  START" : "              ");
 	ldhl	sp,	#0
 	ld	a, (hl)
 	or	a, a
@@ -568,15 +568,15 @@ _showStartScreen::
 	call	_printf
 	pop	hl
 00104$:
-;src/ui.c:105: if (joypad() & J_START)
+;src/ui.c:110: if (joypad() & J_START)
 	call	_joypad
 	rlca
 	jr	C, 00110$
-;src/ui.c:107: wait_vbl_done();
+;src/ui.c:112: wait_vbl_done();
 	call	_wait_vbl_done
 	jr	00108$
 00110$:
-;src/ui.c:109: }
+;src/ui.c:114: }
 	inc	sp
 	inc	sp
 	ret
@@ -601,36 +601,36 @@ ___str_7:
 ___str_8:
 	.ascii "              "
 	.db 0x00
-;src/ui.c:111: UINT8 showGameOverScreen(void)
+;src/ui.c:117: UINT8 showGameOverScreen(void)
 ;	---------------------------------
 ; Function showGameOverScreen
 ; ---------------------------------
 _showGameOverScreen::
 	dec	sp
 	dec	sp
-;src/ui.c:113: UINT8 blinkCounter = 0;
+;src/ui.c:119: UINT8 blinkCounter = 0;
 	ldhl	sp,	#1
-;src/ui.c:114: UINT8 showText = 1;
+;src/ui.c:120: UINT8 showText = 1;
 	xor	a, a
 	ld	(hl-), a
 	ld	(hl), #0x01
-;src/ui.c:117: playSound(SOUND_GAME_OVER);
+;src/ui.c:123: playSound(SOUND_GAME_OVER);
 	ld	a, #0x03
 	call	_playSound
-;src/ui.c:119: SCX_REG = 0;
+;src/ui.c:125: SCX_REG = 0;
 	xor	a, a
 	ldh	(_SCX_REG + 0), a
-;src/ui.c:120: SCY_REG = 0;
+;src/ui.c:126: SCY_REG = 0;
 	xor	a, a
 	ldh	(_SCY_REG + 0), a
-;src/ui.c:121: HIDE_SPRITES;
+;src/ui.c:127: HIDE_SPRITES;
 	ldh	a, (_LCDC_REG + 0)
 	and	a, #0xfd
 	ldh	(_LCDC_REG + 0), a
-;src/ui.c:122: BGP_REG = 0x1B;
+;src/ui.c:128: BGP_REG = 0x1B;
 	ld	a, #0x1b
 	ldh	(_BGP_REG + 0), a
-;src/ui.c:123: fill_bkg_rect(0, 0, 20, 18, 0x00);
+;src/ui.c:129: fill_bkg_rect(0, 0, 20, 18, 0x00);
 	xor	a, a
 	ld	h, a
 	ld	l, #0x12
@@ -643,22 +643,22 @@ _showGameOverScreen::
 	push	af
 	call	_fill_bkg_rect
 	add	sp, #5
-;src/ui.c:125: gotoxy(5, 6);
+;src/ui.c:131: gotoxy(5, 6);
 	ld	hl, #0x605
 	push	hl
 	call	_gotoxy
 	pop	hl
-;src/ui.c:126: printf("GAME  OVER");
+;src/ui.c:132: printf("GAME  OVER");
 	ld	de, #___str_9
 	push	de
 	call	_printf
 	pop	hl
-;src/ui.c:127: gotoxy(4, 9);
+;src/ui.c:133: gotoxy(4, 9);
 	ld	hl, #0x904
 	push	hl
 	call	_gotoxy
 	pop	hl
-;src/ui.c:128: printf("SCORE: %d", game.score);
+;src/ui.c:134: printf("SCORE: %d", game.score);
 	ld	hl, #_game + 1
 	ld	a, (hl+)
 	ld	c, a
@@ -668,12 +668,12 @@ _showGameOverScreen::
 	push	de
 	call	_printf
 	add	sp, #4
-;src/ui.c:129: gotoxy(4, 10);
+;src/ui.c:135: gotoxy(4, 10);
 	ld	hl, #0xa04
 	push	hl
 	call	_gotoxy
 	pop	hl
-;src/ui.c:130: printf("WAVE:  %d", game.waveNumber);
+;src/ui.c:136: printf("WAVE:  %d", game.waveNumber);
 	ld	hl, #_game + 5
 	ld	c, (hl)
 	ld	b, #0x00
@@ -682,24 +682,24 @@ _showGameOverScreen::
 	push	de
 	call	_printf
 	add	sp, #4
-;src/ui.c:132: for (i = 0; i < 60; i++)
+;src/ui.c:138: for (i = 0; i < 60; i++)
 	ld	c, #0x3c
 00111$:
-;src/ui.c:133: wait_vbl_done();
+;src/ui.c:139: wait_vbl_done();
 	call	_wait_vbl_done
 	dec	c
 	jr	NZ, 00111$
-;src/ui.c:132: for (i = 0; i < 60; i++)
-;src/ui.c:135: while (1)
+;src/ui.c:138: for (i = 0; i < 60; i++)
+;src/ui.c:141: while (1)
 00107$:
-;src/ui.c:137: if (++blinkCounter > 30)
+;src/ui.c:143: if (++blinkCounter > 30)
 	ldhl	sp,	#1
 	inc	(hl)
 	ld	a, #0x1e
 	sub	a, (hl)
 	jr	NC, 00103$
-;src/ui.c:139: blinkCounter = 0;
-;src/ui.c:140: showText = !showText;
+;src/ui.c:145: blinkCounter = 0;
+;src/ui.c:146: showText = !showText;
 	xor	a, a
 	ld	(hl-), a
 	ld	a, (hl)
@@ -707,12 +707,12 @@ _showGameOverScreen::
 	ld	a, #0x00
 	rla
 	ld	(hl), a
-;src/ui.c:141: gotoxy(3, 15);
+;src/ui.c:147: gotoxy(3, 15);
 	ld	hl, #0xf03
 	push	hl
 	call	_gotoxy
 	pop	hl
-;src/ui.c:142: printf(showText ? "START:RETRY" : "           ");
+;src/ui.c:148: printf(showText ? "START:RETRY" : "           ");
 	ldhl	sp,	#0
 	ld	a, (hl)
 	or	a, a
@@ -726,19 +726,19 @@ _showGameOverScreen::
 	call	_printf
 	pop	hl
 00103$:
-;src/ui.c:145: if (joypad() & J_START)
+;src/ui.c:151: if (joypad() & J_START)
 	call	_joypad
 	rlca
 	jr	NC, 00105$
-;src/ui.c:146: return 1;
+;src/ui.c:152: return 1;
 	ld	a, #0x01
 	jr	00112$
 00105$:
-;src/ui.c:147: wait_vbl_done();
+;src/ui.c:153: wait_vbl_done();
 	call	_wait_vbl_done
 	jr	00107$
 00112$:
-;src/ui.c:149: }
+;src/ui.c:155: }
 	inc	sp
 	inc	sp
 	ret

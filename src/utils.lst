@@ -8,7 +8,7 @@
                                       8 ; Public variables in this module
                                       9 ;--------------------------------------------------------
                                      10 	.globl _gbt_update
-                                     11 	.globl _wait_vbl_done
+                                     11 	.globl _vsync
                                      12 	.globl _simpleRand
                                      13 	.globl _initRand
                                      14 	.globl _moveSprite4
@@ -48,12 +48,12 @@
                                      48 ; code
                                      49 ;--------------------------------------------------------
                                      50 	.area _CODE
-                                     51 ;src/utils.c:7: UINT8 simpleRand(void)
+                                     51 ;src/utils.c:9: UINT8 simpleRand(void)
                                      52 ;	---------------------------------
                                      53 ; Function simpleRand
                                      54 ; ---------------------------------
     00000000                         55 _simpleRand::
-                                     56 ;src/utils.c:9: randSeed = (randSeed * 1103515245U + 12345U) & 0x7FFFU;
+                                     56 ;src/utils.c:11: randSeed = (randSeed * 1103515245U + 12345U) & 0x7FFFU;
     00000000 FAr00r00         [16]   57 	ld	a, (_randSeed)
     00000003 4F               [ 4]   58 	ld	c, a
     00000004 21r01r00         [12]   59 	ld	hl, #_randSeed + 1
@@ -89,11 +89,11 @@
     00000028 7C               [ 4]   89 	ld	a, h
     00000029 E6 7F            [ 8]   90 	and	a, #0x7f
     0000002B EAr01r00         [16]   91 	ld	(#_randSeed + 1),a
-                                     92 ;src/utils.c:10: return (UINT8)(randSeed >> 8);
+                                     92 ;src/utils.c:12: return (UINT8)(randSeed >> 8);
     0000002E FAr01r00         [16]   93 	ld	a, (_randSeed + 1)
-                                     94 ;src/utils.c:11: }
+                                     94 ;src/utils.c:13: }
     00000031 C9               [16]   95 	ret
-                                     96 ;src/utils.c:13: void initRand(UINT16 seed)
+                                     96 ;src/utils.c:16: void initRand(UINT16 seed)
                                      97 ;	---------------------------------
                                      98 ; Function initRand
                                      99 ; ---------------------------------
@@ -102,10 +102,10 @@
     00000035 7B               [ 4]  102 	ld	a, e
     00000036 22               [ 8]  103 	ld	(hl+), a
     00000037 72               [ 8]  104 	ld	(hl), d
-                                    105 ;src/utils.c:15: randSeed = seed;
-                                    106 ;src/utils.c:16: }
+                                    105 ;src/utils.c:18: randSeed = seed;
+                                    106 ;src/utils.c:19: }
     00000038 C9               [16]  107 	ret
-                                    108 ;src/utils.c:18: void moveSprite4(UINT8 sprite1, UINT8 sprite2, UINT8 sprite3, UINT8 sprite4,
+                                    108 ;src/utils.c:22: void moveSprite4(UINT8 sprite1, UINT8 sprite2, UINT8 sprite3, UINT8 sprite4,
                                     109 ;	---------------------------------
                                     110 ; Function moveSprite4
                                     111 ; ---------------------------------
@@ -114,7 +114,7 @@
     0000003B F8 03            [12]  114 	ldhl	sp,	#3
     0000003D 32               [ 8]  115 	ld	(hl-), a
     0000003E 73               [ 8]  116 	ld	(hl), e
-                                    117 ;src/utils.c:21: move_sprite(sprite1, x, y);
+                                    117 ;src/utils.c:25: move_sprite(sprite1, x, y);
     0000003F F8 0A            [12]  118 	ldhl	sp,	#10
     00000041 3A               [ 8]  119 	ld	a, (hl-)
     00000042 2B               [ 8]  120 	dec	hl
@@ -139,7 +139,7 @@
     00000057 7B               [ 4]  139 	ld	a, e
     00000058 22               [ 8]  140 	ld	(hl+), a
     00000059 71               [ 8]  141 	ld	(hl), c
-                                    142 ;src/utils.c:22: move_sprite(sprite2, x + SPRITE_SIZE, y);
+                                    142 ;src/utils.c:26: move_sprite(sprite2, x + SPRITE_SIZE, y);
     0000005A F8 08            [12]  143 	ldhl	sp,	#8
     0000005C 7E               [ 8]  144 	ld	a, (hl)
     0000005D C6 08            [ 8]  145 	add	a, #0x08
@@ -161,7 +161,7 @@
     0000006F 7B               [ 4]  161 	ld	a, e
     00000070 22               [ 8]  162 	ld	(hl+), a
     00000071 70               [ 8]  163 	ld	(hl), b
-                                    164 ;src/utils.c:23: move_sprite(sprite3, x, y + SPRITE_SIZE);
+                                    164 ;src/utils.c:27: move_sprite(sprite3, x, y + SPRITE_SIZE);
     00000072 7B               [ 4]  165 	ld	a, e
     00000073 C6 08            [ 8]  166 	add	a, #0x08
     00000075 47               [ 4]  167 	ld	b, a
@@ -184,7 +184,7 @@
     0000008A 13               [ 8]  184 	inc	de
     0000008B 7E               [ 8]  185 	ld	a, (hl)
     0000008C 12               [ 8]  186 	ld	(de), a
-                                    187 ;src/utils.c:24: move_sprite(sprite4, x + SPRITE_SIZE, y + SPRITE_SIZE);
+                                    187 ;src/utils.c:28: move_sprite(sprite4, x + SPRITE_SIZE, y + SPRITE_SIZE);
     0000008D F8 07            [12]  188 	ldhl	sp,	#7
                                     189 ;c:\gbdk\include\gb\gb.h:1973: OAM_item_t * itm = &shadow_OAM[nb];
     0000008F 6E               [ 8]  190 	ld	l, (hl)
@@ -197,13 +197,13 @@
     00000098 70               [ 8]  197 	ld	(hl), b
     00000099 23               [ 8]  198 	inc	hl
     0000009A 71               [ 8]  199 	ld	(hl), c
-                                    200 ;src/utils.c:24: move_sprite(sprite4, x + SPRITE_SIZE, y + SPRITE_SIZE);
-                                    201 ;src/utils.c:25: }
+                                    200 ;src/utils.c:28: move_sprite(sprite4, x + SPRITE_SIZE, y + SPRITE_SIZE);
+                                    201 ;src/utils.c:29: }
     0000009B E8 04            [16]  202 	add	sp, #4
     0000009D E1               [12]  203 	pop	hl
     0000009E E8 05            [16]  204 	add	sp, #5
     000000A0 E9               [ 4]  205 	jp	(hl)
-                                    206 ;src/utils.c:27: void hideSprite4(UINT8 base)
+                                    206 ;src/utils.c:32: void hideSprite4(UINT8 base)
                                     207 ;	---------------------------------
                                     208 ; Function hideSprite4
                                     209 ; ---------------------------------
@@ -221,7 +221,7 @@
     000000AB 3E C8            [ 8]  221 	ld	a, #0xc8
     000000AD 22               [ 8]  222 	ld	(hl+), a
     000000AE 36 C8            [12]  223 	ld	(hl), #0xc8
-                                    224 ;src/utils.c:30: move_sprite(base + 1, OFFSCREEN_X, OFFSCREEN_Y);
+                                    224 ;src/utils.c:35: move_sprite(base + 1, OFFSCREEN_X, OFFSCREEN_Y);
     000000B0 53               [ 4]  225 	ld	d, e
     000000B1 14               [ 4]  226 	inc	d
                                     227 ;c:\gbdk\include\gb\gb.h:1973: OAM_item_t * itm = &shadow_OAM[nb];
@@ -235,7 +235,7 @@
     000000BB 3E C8            [ 8]  235 	ld	a, #0xc8
     000000BD 22               [ 8]  236 	ld	(hl+), a
     000000BE 36 C8            [12]  237 	ld	(hl), #0xc8
-                                    238 ;src/utils.c:31: move_sprite(base + 2, OFFSCREEN_X, OFFSCREEN_Y);
+                                    238 ;src/utils.c:36: move_sprite(base + 2, OFFSCREEN_X, OFFSCREEN_Y);
     000000C0 53               [ 4]  239 	ld	d, e
     000000C1 14               [ 4]  240 	inc	d
     000000C2 14               [ 4]  241 	inc	d
@@ -250,7 +250,7 @@
     000000CC 3E C8            [ 8]  250 	ld	a, #0xc8
     000000CE 22               [ 8]  251 	ld	(hl+), a
     000000CF 36 C8            [12]  252 	ld	(hl), #0xc8
-                                    253 ;src/utils.c:32: move_sprite(base + 3, OFFSCREEN_X, OFFSCREEN_Y);
+                                    253 ;src/utils.c:37: move_sprite(base + 3, OFFSCREEN_X, OFFSCREEN_Y);
     000000D1 1C               [ 4]  254 	inc	e
     000000D2 1C               [ 4]  255 	inc	e
     000000D3 1C               [ 4]  256 	inc	e
@@ -266,32 +266,32 @@
     000000DD 3E C8            [ 8]  266 	ld	a, #0xc8
     000000DF 22               [ 8]  267 	ld	(hl+), a
     000000E0 36 C8            [12]  268 	ld	(hl), #0xc8
-                                    269 ;src/utils.c:32: move_sprite(base + 3, OFFSCREEN_X, OFFSCREEN_Y);
-                                    270 ;src/utils.c:33: }
+                                    269 ;src/utils.c:37: move_sprite(base + 3, OFFSCREEN_X, OFFSCREEN_Y);
+                                    270 ;src/utils.c:38: }
     000000E2 C9               [16]  271 	ret
-                                    272 ;src/utils.c:35: void waitFrames(UINT8 frames)
+                                    272 ;src/utils.c:41: void waitFrames(UINT8 frames)
                                     273 ;	---------------------------------
                                     274 ; Function waitFrames
                                     275 ; ---------------------------------
     000000E3                        276 _waitFrames::
     000000E3 4F               [ 4]  277 	ld	c, a
-                                    278 ;src/utils.c:38: for (i = 0; i < frames; i++)
+                                    278 ;src/utils.c:44: for (i = 0; i < frames; i++)
     000000E4 06 00            [ 8]  279 	ld	b, #0x00
     000000E6                        280 00103$:
     000000E6 78               [ 4]  281 	ld	a, b
     000000E7 91               [ 4]  282 	sub	a, c
     000000E8 D0               [20]  283 	ret	NC
-                                    284 ;src/utils.c:40: wait_vbl_done();
-    000000E9 CDr00r00         [24]  285 	call	_wait_vbl_done
-                                    286 ;src/utils.c:41: gbt_update();
+                                    284 ;src/utils.c:46: vsync();
+    000000E9 CDr00r00         [24]  285 	call	_vsync
+                                    286 ;src/utils.c:47: gbt_update();
     000000EC C5               [16]  287 	push	bc
     000000ED CDr00r00         [24]  288 	call	_gbt_update
     000000F0 C1               [12]  289 	pop	bc
-                                    290 ;src/utils.c:38: for (i = 0; i < frames; i++)
+                                    290 ;src/utils.c:44: for (i = 0; i < frames; i++)
     000000F1 04               [ 4]  291 	inc	b
-                                    292 ;src/utils.c:43: }
+                                    292 ;src/utils.c:49: }
     000000F2 18 F2            [12]  293 	jr	00103$
-                                    294 ;src/utils.c:45: UINT8 checkCollision(UINT8 x1, UINT8 y1, UINT8 w1, UINT8 h1,
+                                    294 ;src/utils.c:52: UINT8 checkCollision(UINT8 x1, UINT8 y1, UINT8 w1, UINT8 h1,
                                     295 ;	---------------------------------
                                     296 ; Function checkCollision
                                     297 ; ---------------------------------
@@ -300,7 +300,7 @@
     000000F6 57               [ 4]  300 	ld	d, a
     000000F7 F8 04            [12]  301 	ldhl	sp,	#4
     000000F9 73               [ 8]  302 	ld	(hl), e
-                                    303 ;src/utils.c:48: return (x1 < x2 + w2 && x1 + w1 > x2 &&
+                                    303 ;src/utils.c:55: return (x1 < x2 + w2 && x1 + w1 > x2 &&
     000000FA F8 09            [12]  304 	ldhl	sp,	#9
     000000FC 7E               [ 8]  305 	ld	a, (hl)
     000000FD F8 00            [12]  306 	ldhl	sp,	#0
@@ -340,7 +340,7 @@
     00000129 7E               [ 8]  340 	ld	a, (hl)
     0000012A 98               [ 4]  341 	sbc	a, b
     0000012B 30 34            [12]  342 	jr	NC, 00103$
-                                    343 ;src/utils.c:49: y1 < y2 + h2 && y1 + h1 > y2);
+                                    343 ;src/utils.c:56: y1 < y2 + h2 && y1 + h1 > y2);
     0000012D F8 0A            [12]  344 	ldhl	sp,	#10
     0000012F 7E               [ 8]  345 	ld	a, (hl)
     00000130 F8 00            [12]  346 	ldhl	sp,	#0
@@ -387,7 +387,7 @@
     00000164                        387 00104$:
     00000164 3E 01            [ 8]  388 	ld	a, #0x01
     00000166                        389 00105$:
-                                    390 ;src/utils.c:50: }
+                                    390 ;src/utils.c:57: }
     00000166 E8 05            [16]  391 	add	sp, #5
     00000168 E1               [12]  392 	pop	hl
     00000169 E8 06            [16]  393 	add	sp, #6

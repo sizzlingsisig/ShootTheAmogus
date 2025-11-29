@@ -10,6 +10,7 @@
 #include "collision.h"
 #include "gbt_player.h"
 
+// Game core: initialization, main loop, wave and spawn management
 // External asset data
 extern const unsigned char GameSprites[];
 extern const unsigned char Amogus[];
@@ -31,6 +32,7 @@ void incrementWave(void) { game.waveNumber++; game.enemiesKilledInWave = 0; }
 void incrementEnemiesKilled(void) { game.enemiesKilledInWave++; }
 void addScore(UINT16 points) { game.score += points; }
 
+// Initialize game subsystems and load assets into VRAM
 void Game_init(void)
 {
     // Load sprite data
@@ -57,6 +59,7 @@ void Game_init(void)
     game.highScore = 0;
 }
 
+// Start loop: shows start screen, resets game, then runs the main game loop
 void Game_start(void)
 {
     while (1)
@@ -83,7 +86,7 @@ void Game_start(void)
         set_sprite_tile(2, 1);
         set_sprite_tile(3, 3);
 
-        // Game loop
+        // Game loop: update game state, draw frame, wait a few VBLs
         while (game.lives > 0)
         {
             Game_update();
@@ -245,7 +248,7 @@ void loseQuarterLife(void)
         if (game.lives > 0) {
             game.lives--;
         }
-        quarterLife = 0; // Reset partial heart when a life is lost
+        quarterLife = 0; 
     }
     drawHearts();
 }

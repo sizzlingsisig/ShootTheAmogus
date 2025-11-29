@@ -4,7 +4,7 @@
 
 #include <gb/gb.h>
 
-// GBDK type definitions (if missing)
+// GBDK type definitions
 typedef unsigned char UINT8;
 typedef signed char INT8;
 typedef unsigned int UINT16;

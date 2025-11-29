@@ -45,17 +45,17 @@
 ; code
 ;--------------------------------------------------------
 	.area _CODE
-;src/collision.c:9: void checkBulletEnemyCollisions(void)
+;src/collision.c:11: void checkBulletEnemyCollisions(void)
 ;	---------------------------------
 ; Function checkBulletEnemyCollisions
 ; ---------------------------------
 _checkBulletEnemyCollisions::
 	add	sp, #-11
-;src/collision.c:12: for (i = 0; i < MAX_BULLETS; i++)
+;src/collision.c:14: for (i = 0; i < MAX_BULLETS; i++)
 	ldhl	sp,	#9
 	ld	(hl), #0x00
 00123$:
-;src/collision.c:14: if (bullets[i].y == 0)
+;src/collision.c:16: if (bullets[i].y == 0)
 	ldhl	sp,	#9
 	ld	a, (hl)
 	ld	d, #0x00
@@ -93,10 +93,10 @@ _checkBulletEnemyCollisions::
 	ld	a, (hl)
 	or	a, a
 	jp	Z, 00119$
-;src/collision.c:17: for (j = 0; j < MAX_ENEMIES; j++)
+;src/collision.c:19: for (j = 0; j < MAX_ENEMIES; j++)
 	ld	(hl), #0x00
 00122$:
-;src/collision.c:19: Enemy *e = &enemies[j];
+;src/collision.c:21: Enemy *e = &enemies[j];
 	ldhl	sp,	#10
 	ld	c, (hl)
 	ld	b, #0x00
@@ -115,7 +115,7 @@ _checkBulletEnemyCollisions::
 	ldhl	sp,	#4
 	ld	(hl), c
 	inc	hl
-;src/collision.c:20: if (!e->isActive || e->deathTimer > 0)
+;src/collision.c:22: if (!e->isActive || e->deathTimer > 0)
 	ld	(hl-), a
 	ld	a, (hl+)
 	ld	e, a
@@ -147,7 +147,7 @@ _checkBulletEnemyCollisions::
 	ld	a, (de)
 	or	a, a
 	jp	NZ, 00117$
-;src/collision.c:24: e->x + 2, e->y + 2, 12, 12))
+;src/collision.c:26: e->x + 2, e->y + 2, 12, 12))
 	ldhl	sp,	#4
 	ld	a, (hl+)
 	ld	h, (hl)
@@ -160,7 +160,7 @@ _checkBulletEnemyCollisions::
 	ldhl	sp,#4
 	ld	a, (hl+)
 	ld	e, a
-;src/collision.c:23: if (checkCollision(bullets[i].x + 1, bullets[i].y + 1, 6, 6,
+;src/collision.c:25: if (checkCollision(bullets[i].x + 1, bullets[i].y + 1, 6, 6,
 	ld	a, (hl-)
 	dec	hl
 	dec	hl
@@ -201,13 +201,13 @@ _checkBulletEnemyCollisions::
 	call	_checkCollision
 	or	a, a
 	jp	Z, 00117$
-;src/collision.c:26: bullets[i].y = 0;
+;src/collision.c:28: bullets[i].y = 0;
 	ldhl	sp,	#2
 	ld	a, (hl+)
 	ld	h, (hl)
 	ld	l, a
 	ld	(hl), #0x00
-;src/collision.c:27: move_sprite(bullets[i].spritids[0], OFFSCREEN_X, OFFSCREEN_Y);
+;src/collision.c:29: move_sprite(bullets[i].spritids[0], OFFSCREEN_X, OFFSCREEN_Y);
 	pop	de
 	push	de
 	ld	hl, #0x0004
@@ -274,7 +274,7 @@ _checkBulletEnemyCollisions::
 	ld	h, (hl)
 	ld	l, a
 	ld	(hl), #0xc8
-;src/collision.c:29: e->health--;
+;src/collision.c:31: e->health--;
 	ldhl	sp,#4
 	ld	a, (hl+)
 	ld	e, a
@@ -300,7 +300,7 @@ _checkBulletEnemyCollisions::
 	ld	h, (hl)
 	ld	l, e
 	ld	(hl), a
-;src/collision.c:30: e->hitFlashTimer = 6;
+;src/collision.c:32: e->hitFlashTimer = 6;
 	ldhl	sp,#4
 	ld	a, (hl+)
 	ld	e, a
@@ -311,7 +311,7 @@ _checkBulletEnemyCollisions::
 	inc	sp
 	ld	(hl), #0x06
 	push	hl
-;src/collision.c:32: if (e->health == 0)
+;src/collision.c:34: if (e->health == 0)
 	ldhl	sp,#2
 	ld	a, (hl+)
 	ld	e, a
@@ -322,10 +322,10 @@ _checkBulletEnemyCollisions::
 	ld	a, (hl)
 	or	a, a
 	jr	NZ, 00119$
-;src/collision.c:34: playSound(SOUND_ENEMY_DEATH);
+;src/collision.c:36: playSound(SOUND_ENEMY_DEATH);
 	ld	a, #0x05
 	call	_playSound
-;src/collision.c:36: if (e->type == ENEMY_TYPE_BOSS)
+;src/collision.c:38: if (e->type == ENEMY_TYPE_BOSS)
 	ldhl	sp,#4
 	ld	a, (hl+)
 	ld	e, a
@@ -349,14 +349,14 @@ _checkBulletEnemyCollisions::
 	ld	a, (hl)
 	sub	a, #0x05
 	jr	NZ, 00111$
-;src/collision.c:38: addScore(100);
+;src/collision.c:40: addScore(100);
 	ld	de, #0x0064
 	call	_addScore
-;src/collision.c:39: incrementWave();
+;src/collision.c:41: incrementWave();
 	call	_incrementWave
 	jr	00112$
 00111$:
-;src/collision.c:41: else if (e->type == ENEMY_TYPE_FLYING || e->type == ENEMY_TYPE_TARGETING)
+;src/collision.c:43: else if (e->type == ENEMY_TYPE_FLYING || e->type == ENEMY_TYPE_TARGETING)
 	ldhl	sp,	#10
 	ld	a, (hl)
 	sub	a, #0x03
@@ -366,62 +366,62 @@ _checkBulletEnemyCollisions::
 	sub	a, #0x04
 	jr	NZ, 00107$
 00106$:
-;src/collision.c:43: addScore(20);
+;src/collision.c:45: addScore(20);
 	ld	de, #0x0014
 	call	_addScore
-;src/collision.c:44: incrementEnemiesKilled();
+;src/collision.c:46: incrementEnemiesKilled();
 	call	_incrementEnemiesKilled
 	jr	00112$
 00107$:
-;src/collision.c:48: addScore(10);
+;src/collision.c:50: addScore(10);
 	ld	de, #0x000a
 	call	_addScore
-;src/collision.c:49: incrementEnemiesKilled();
+;src/collision.c:51: incrementEnemiesKilled();
 	call	_incrementEnemiesKilled
 00112$:
-;src/collision.c:52: e->deathTimer = 12;
+;src/collision.c:54: e->deathTimer = 12;
 	ldhl	sp,	#6
 	ld	a, (hl+)
 	ld	h, (hl)
 	ld	l, a
 	ld	(hl), #0x0c
-;src/collision.c:55: break;
+;src/collision.c:57: break;
 	jr	00119$
 00117$:
-;src/collision.c:17: for (j = 0; j < MAX_ENEMIES; j++)
+;src/collision.c:19: for (j = 0; j < MAX_ENEMIES; j++)
 	ldhl	sp,	#10
 	inc	(hl)
 	ld	a, (hl)
 	sub	a, #0x04
 	jp	C, 00122$
 00119$:
-;src/collision.c:12: for (i = 0; i < MAX_BULLETS; i++)
+;src/collision.c:14: for (i = 0; i < MAX_BULLETS; i++)
 	ldhl	sp,	#9
 	inc	(hl)
 	ld	a, (hl)
 	sub	a, #0x06
 	jp	C, 00123$
-;src/collision.c:59: }
+;src/collision.c:61: }
 	add	sp, #11
 	ret
-;src/collision.c:61: void checkPlayerEnemyCollisions(void)
+;src/collision.c:64: void checkPlayerEnemyCollisions(void)
 ;	---------------------------------
 ; Function checkPlayerEnemyCollisions
 ; ---------------------------------
 _checkPlayerEnemyCollisions::
 	add	sp, #-8
-;src/collision.c:63: if (player.invincibilityTimer > 0)
+;src/collision.c:66: if (player.invincibilityTimer > 0)
 	ld	a, (#(_player + 6) + 0)
 	ldhl	sp,#7
 	ld	(hl), a
 	or	a, a
-;src/collision.c:64: return;
-;src/collision.c:67: for (i = 0; i < MAX_ENEMIES; i++)
+;src/collision.c:67: return;
+;src/collision.c:70: for (i = 0; i < MAX_ENEMIES; i++)
 	jp	NZ, 00117$
 	ldhl	sp,	#7
 	ld	(hl), #0x00
 00116$:
-;src/collision.c:69: Enemy *e = &enemies[i];
+;src/collision.c:72: Enemy *e = &enemies[i];
 	ldhl	sp,	#7
 	ld	c, (hl)
 	ld	b, #0x00
@@ -460,7 +460,7 @@ _checkPlayerEnemyCollisions::
 	ld	a, (hl)
 	ldhl	sp,	#1
 	ld	(hl), a
-;src/collision.c:70: if (!e->isActive || e->deathTimer > 0)
+;src/collision.c:73: if (!e->isActive || e->deathTimer > 0)
 	pop	de
 	push	de
 	ld	hl, #0x0005
@@ -497,7 +497,7 @@ _checkPlayerEnemyCollisions::
 	ld	a, (de)
 	or	a, a
 	jp	NZ, 00114$
-;src/collision.c:74: e->x + 2, e->y + 2, 12, 12))
+;src/collision.c:77: e->x + 2, e->y + 2, 12, 12))
 	pop	bc
 	push	bc
 	inc	bc
@@ -513,7 +513,7 @@ _checkPlayerEnemyCollisions::
 	ld	a, (de)
 	add	a, #0x02
 	ld	(hl), a
-;src/collision.c:73: if (checkCollision(player.x + 2, player.y + 2, 12, 12,
+;src/collision.c:76: if (checkCollision(player.x + 2, player.y + 2, 12, 12,
 	ld	a, (#(_player + 1) + 0)
 	ldhl	sp,#6
 	ld	(hl), a
@@ -546,18 +546,18 @@ _checkPlayerEnemyCollisions::
 	call	_checkCollision
 	or	a, a
 	jr	Z, 00114$
-;src/collision.c:76: game.lives--;
+;src/collision.c:79: game.lives--;
 	ld	bc, #_game+0
 	ld	a, (bc)
 	dec	a
 	ld	(bc), a
-;src/collision.c:77: playSound(SOUND_HIT);
+;src/collision.c:80: playSound(SOUND_HIT);
 	ld	a, #0x04
 	call	_playSound
-;src/collision.c:78: player.invincibilityTimer = INVINCIBILITY_TIME;
+;src/collision.c:81: player.invincibilityTimer = INVINCIBILITY_TIME;
 	ld	hl, #(_player + 6)
 	ld	(hl), #0x3c
-;src/collision.c:80: if (e->type == ENEMY_TYPE_BOSS)
+;src/collision.c:83: if (e->type == ENEMY_TYPE_BOSS)
 	pop	de
 	push	de
 	ld	hl, #0x0009
@@ -567,7 +567,7 @@ _checkPlayerEnemyCollisions::
 	ld	a, (bc)
 	sub	a, #0x05
 	jr	NZ, 00110$
-;src/collision.c:82: e->health--;
+;src/collision.c:85: e->health--;
 	pop	de
 	push	de
 	ld	hl, #0x000e
@@ -577,51 +577,51 @@ _checkPlayerEnemyCollisions::
 	ld	a, (bc)
 	dec	a
 	ld	(bc), a
-;src/collision.c:83: e->hitFlashTimer = 6;
+;src/collision.c:86: e->hitFlashTimer = 6;
 	pop	de
 	push	de
 	ld	hl, #0x0010
 	add	hl, de
 	ld	(hl), #0x06
-;src/collision.c:85: if (e->health == 0)
+;src/collision.c:88: if (e->health == 0)
 	ld	a, (bc)
 	or	a, a
 	jr	NZ, 00107$
-;src/collision.c:87: e->deathTimer = 12;
+;src/collision.c:90: e->deathTimer = 12;
 	ldhl	sp,	#2
 	ld	a, (hl+)
 	ld	h, (hl)
 	ld	l, a
 	ld	(hl), #0x0c
-;src/collision.c:88: incrementWave();
+;src/collision.c:91: incrementWave();
 	call	_incrementWave
-;src/collision.c:89: playSound(SOUND_ENEMY_DEATH);
+;src/collision.c:92: playSound(SOUND_ENEMY_DEATH);
 	ld	a, #0x05
 	call	_playSound
 	jr	00117$
 00107$:
-;src/collision.c:93: playSound(SOUND_HIT);
+;src/collision.c:96: playSound(SOUND_HIT);
 	ld	a, #0x04
 	call	_playSound
 	jr	00117$
 00110$:
-;src/collision.c:98: e->deathTimer = 12;
+;src/collision.c:101: e->deathTimer = 12;
 	ldhl	sp,	#2
 	ld	a, (hl+)
 	ld	h, (hl)
 	ld	l, a
 	ld	(hl), #0x0c
-;src/collision.c:100: return;
+;src/collision.c:103: return;
 	jr	00117$
 00114$:
-;src/collision.c:67: for (i = 0; i < MAX_ENEMIES; i++)
+;src/collision.c:70: for (i = 0; i < MAX_ENEMIES; i++)
 	ldhl	sp,	#7
 	inc	(hl)
 	ld	a, (hl)
 	sub	a, #0x04
 	jp	C, 00116$
 00117$:
-;src/collision.c:103: }
+;src/collision.c:106: }
 	add	sp, #8
 	ret
 	.area _CODE

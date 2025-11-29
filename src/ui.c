@@ -1,3 +1,4 @@
+// UI rendering: hearts, score, wave, and start/game-over screens
 #include <gb/gb.h>
 #include <gbdk/console.h>
 #include "gametypes.h"
@@ -7,6 +8,7 @@
 #include "utils.h"
 #include "sound.h"
 
+// Draw heart sprites representing player lives and partial life state
 void drawHearts(void)
 {
     extern UINT8 quarterLife;
@@ -54,18 +56,21 @@ void drawHearts(void)
     }
 }
 
+// Display the current score on screen
 void drawScore(void)
 {
     gotoxy(13, 0);
     printf("%05d", game.score);
 }
 
+// Display current wave number
 void drawWave(void)
 {
     gotoxy(0, 0);
     printf(" Wave:%d", game.waveNumber);
 }
 
+// Show title / start screen and wait for START button
 void showStartScreen(void)
 {
     UINT8 blinkCounter = 0;
@@ -108,6 +113,7 @@ void showStartScreen(void)
     }
 }
 
+// Show game over screen; returns 1 if player requests restart
 UINT8 showGameOverScreen(void)
 {
     UINT8 blinkCounter = 0;

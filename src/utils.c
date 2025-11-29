@@ -1,20 +1,24 @@
+// Utility functions: RNG, sprite helpers, timing helpers, and collision check
 #include "utils.h"
 #include "gametypes.h"
 #include "gbt_player.h"
 
 static UINT16 randSeed;
 
+// Simple pseudo-random generator for gameplay randomness
 UINT8 simpleRand(void)
 {
     randSeed = (randSeed * 1103515245U + 12345U) & 0x7FFFU;
     return (UINT8)(randSeed >> 8);
 }
 
+// Seed the RNG
 void initRand(UINT16 seed)
 {
     randSeed = seed;
 }
 
+// Move four sprites that form a single 16x16 object
 void moveSprite4(UINT8 sprite1, UINT8 sprite2, UINT8 sprite3, UINT8 sprite4,
                  INT16 x, UINT8 y)
 {
@@ -24,6 +28,7 @@ void moveSprite4(UINT8 sprite1, UINT8 sprite2, UINT8 sprite3, UINT8 sprite4,
     move_sprite(sprite4, x + SPRITE_SIZE, y + SPRITE_SIZE);
 }
 
+// Hide a 16x16 sprite by moving its constituent sprites offscreen
 void hideSprite4(UINT8 base)
 {
     move_sprite(base, OFFSCREEN_X, OFFSCREEN_Y);
@@ -32,16 +37,18 @@ void hideSprite4(UINT8 base)
     move_sprite(base + 3, OFFSCREEN_X, OFFSCREEN_Y);
 }
 
+// Wait a number of VBlank frames while updating music playback
 void waitFrames(UINT8 frames)
 {
     UINT8 i;
     for (i = 0; i < frames; i++)
     {
-        wait_vbl_done();
+        vsync();
         gbt_update();
     }
 }
 
+// Axis-aligned bounding box collision check
 UINT8 checkCollision(UINT8 x1, UINT8 y1, UINT8 w1, UINT8 h1,
                        UINT8 x2, UINT8 y2, UINT8 w2, UINT8 h2)
 {

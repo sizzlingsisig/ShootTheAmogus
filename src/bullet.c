@@ -1,3 +1,4 @@
+// Bullet system: spawn, update, and render projectile sprites
 #include "bullet.h"
 #include "utils.h"
 #include "sound.h"
@@ -5,6 +6,7 @@
 
 GameCharacter bullets[MAX_BULLETS];
 
+// Initialize bullet pool and hide sprites offscreen
 void initBullets(void)
 {
     UINT8 i;
@@ -18,6 +20,7 @@ void initBullets(void)
     }
 }
 
+// Try to fire a bullet; returns 1 on success, 0 if none available
 UINT8 fireBullet(void)
 {
     UINT8 i;
@@ -34,6 +37,7 @@ UINT8 fireBullet(void)
     return 0;
 }
 
+// Move active bullets and hide them when they leave the screen
 void updateBullets(void)
 {
     UINT8 i;

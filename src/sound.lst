@@ -40,13 +40,13 @@
                                      40 ; code
                                      41 ;--------------------------------------------------------
                                      42 	.area _CODE
-                                     43 ;src/sound.c:4: void playSound(SoundType type)
+                                     43 ;src/sound.c:6: void playSound(SoundType type)
                                      44 ;	---------------------------------
                                      45 ; Function playSound
                                      46 ; ---------------------------------
     00000000                         47 _playSound::
     00000000 4F               [ 4]   48 	ld	c, a
-                                     49 ;src/sound.c:6: switch (type)
+                                     49 ;src/sound.c:8: switch (type)
     00000001 3E 05            [ 8]   50 	ld	a, #0x05
     00000003 91               [ 4]   51 	sub	a, c
     00000004 D8               [20]   52 	ret	C
@@ -66,89 +66,89 @@
     00000017r70r00                   66 	.dw	00105$
     00000019r46r00                   67 	.dw	00103$
     0000001Br5Br00                   68 	.dw	00104$
-                                     69 ;src/sound.c:8: case SOUND_JUMP:
+                                     69 ;src/sound.c:10: case SOUND_JUMP:
     0000001D                         70 00101$:
-                                     71 ;src/sound.c:9: NR10_REG = 0x16;
+                                     71 ;src/sound.c:11: NR10_REG = 0x16;
     0000001D 3E 16            [ 8]   72 	ld	a, #0x16
     0000001F E0r00            [12]   73 	ldh	(_NR10_REG + 0), a
-                                     74 ;src/sound.c:10: NR11_REG = 0x40;
+                                     74 ;src/sound.c:12: NR11_REG = 0x40;
     00000021 3E 40            [ 8]   75 	ld	a, #0x40
     00000023 E0r00            [12]   76 	ldh	(_NR11_REG + 0), a
-                                     77 ;src/sound.c:11: NR12_REG = 0x73;
+                                     77 ;src/sound.c:13: NR12_REG = 0x73;
     00000025 3E 73            [ 8]   78 	ld	a, #0x73
     00000027 E0r00            [12]   79 	ldh	(_NR12_REG + 0), a
-                                     80 ;src/sound.c:12: NR13_REG = 0x00;
+                                     80 ;src/sound.c:14: NR13_REG = 0x00;
     00000029 AF               [ 4]   81 	xor	a, a
     0000002A E0r00            [12]   82 	ldh	(_NR13_REG + 0), a
-                                     83 ;src/sound.c:13: NR14_REG = 0xC3;
+                                     83 ;src/sound.c:15: NR14_REG = 0xC3;
     0000002C 3E C3            [ 8]   84 	ld	a, #0xc3
     0000002E E0r00            [12]   85 	ldh	(_NR14_REG + 0), a
-                                     86 ;src/sound.c:14: break;
+                                     86 ;src/sound.c:16: break;
     00000030 C9               [16]   87 	ret
-                                     88 ;src/sound.c:15: case SOUND_SHOOT:
+                                     88 ;src/sound.c:17: case SOUND_SHOOT:
     00000031                         89 00102$:
-                                     90 ;src/sound.c:16: NR10_REG = 0x06;
+                                     90 ;src/sound.c:18: NR10_REG = 0x06;
     00000031 3E 06            [ 8]   91 	ld	a, #0x06
     00000033 E0r00            [12]   92 	ldh	(_NR10_REG + 0), a
-                                     93 ;src/sound.c:17: NR11_REG = 0x60;
+                                     93 ;src/sound.c:19: NR11_REG = 0x60;
     00000035 3E 60            [ 8]   94 	ld	a, #0x60
     00000037 E0r00            [12]   95 	ldh	(_NR11_REG + 0), a
-                                     96 ;src/sound.c:18: NR12_REG = 0x83;
+                                     96 ;src/sound.c:20: NR12_REG = 0x83;
     00000039 3E 83            [ 8]   97 	ld	a, #0x83
     0000003B E0r00            [12]   98 	ldh	(_NR12_REG + 0), a
-                                     99 ;src/sound.c:19: NR13_REG = 0x80;
+                                     99 ;src/sound.c:21: NR13_REG = 0x80;
     0000003D 3E 80            [ 8]  100 	ld	a, #0x80
     0000003F E0r00            [12]  101 	ldh	(_NR13_REG + 0), a
-                                    102 ;src/sound.c:20: NR14_REG = 0x87;
+                                    102 ;src/sound.c:22: NR14_REG = 0x87;
     00000041 3E 87            [ 8]  103 	ld	a, #0x87
     00000043 E0r00            [12]  104 	ldh	(_NR14_REG + 0), a
-                                    105 ;src/sound.c:21: break;
+                                    105 ;src/sound.c:23: break;
     00000045 C9               [16]  106 	ret
-                                    107 ;src/sound.c:22: case SOUND_HIT:
+                                    107 ;src/sound.c:24: case SOUND_HIT:
     00000046                        108 00103$:
-                                    109 ;src/sound.c:23: NR10_REG = 0x26;
+                                    109 ;src/sound.c:25: NR10_REG = 0x26;
     00000046 3E 26            [ 8]  110 	ld	a, #0x26
     00000048 E0r00            [12]  111 	ldh	(_NR10_REG + 0), a
-                                    112 ;src/sound.c:24: NR11_REG = 0x50;
+                                    112 ;src/sound.c:26: NR11_REG = 0x50;
     0000004A 3E 50            [ 8]  113 	ld	a, #0x50
     0000004C E0r00            [12]  114 	ldh	(_NR11_REG + 0), a
-                                    115 ;src/sound.c:25: NR12_REG = 0xF4;
+                                    115 ;src/sound.c:27: NR12_REG = 0xF4;
     0000004E 3E F4            [ 8]  116 	ld	a, #0xf4
     00000050 E0r00            [12]  117 	ldh	(_NR12_REG + 0), a
-                                    118 ;src/sound.c:26: NR13_REG = 0x40;
+                                    118 ;src/sound.c:28: NR13_REG = 0x40;
     00000052 3E 40            [ 8]  119 	ld	a, #0x40
     00000054 E0r00            [12]  120 	ldh	(_NR13_REG + 0), a
-                                    121 ;src/sound.c:27: NR14_REG = 0xC5;
+                                    121 ;src/sound.c:29: NR14_REG = 0xC5;
     00000056 3E C5            [ 8]  122 	ld	a, #0xc5
     00000058 E0r00            [12]  123 	ldh	(_NR14_REG + 0), a
-                                    124 ;src/sound.c:28: break;
+                                    124 ;src/sound.c:30: break;
     0000005A C9               [16]  125 	ret
-                                    126 ;src/sound.c:29: case SOUND_ENEMY_DEATH:
+                                    126 ;src/sound.c:31: case SOUND_ENEMY_DEATH:
     0000005B                        127 00104$:
-                                    128 ;src/sound.c:30: NR10_REG = 0x36;
+                                    128 ;src/sound.c:32: NR10_REG = 0x36;
     0000005B 3E 36            [ 8]  129 	ld	a, #0x36
     0000005D E0r00            [12]  130 	ldh	(_NR10_REG + 0), a
-                                    131 ;src/sound.c:31: NR11_REG = 0x60;
+                                    131 ;src/sound.c:33: NR11_REG = 0x60;
     0000005F 3E 60            [ 8]  132 	ld	a, #0x60
     00000061 E0r00            [12]  133 	ldh	(_NR11_REG + 0), a
-                                    134 ;src/sound.c:32: NR12_REG = 0xC3;
+                                    134 ;src/sound.c:34: NR12_REG = 0xC3;
     00000063 3E C3            [ 8]  135 	ld	a, #0xc3
     00000065 E0r00            [12]  136 	ldh	(_NR12_REG + 0), a
-                                    137 ;src/sound.c:33: NR13_REG = 0x30;
+                                    137 ;src/sound.c:35: NR13_REG = 0x30;
     00000067 3E 30            [ 8]  138 	ld	a, #0x30
     00000069 E0r00            [12]  139 	ldh	(_NR13_REG + 0), a
-                                    140 ;src/sound.c:34: NR14_REG = 0xC4;
+                                    140 ;src/sound.c:36: NR14_REG = 0xC4;
     0000006B 3E C4            [ 8]  141 	ld	a, #0xc4
     0000006D E0r00            [12]  142 	ldh	(_NR14_REG + 0), a
-                                    143 ;src/sound.c:35: break;
+                                    143 ;src/sound.c:37: break;
     0000006F C9               [16]  144 	ret
-                                    145 ;src/sound.c:36: case SOUND_GAME_OVER:
+                                    145 ;src/sound.c:38: case SOUND_GAME_OVER:
     00000070                        146 00105$:
-                                    147 ;src/sound.c:37: gbt_stop();
+                                    147 ;src/sound.c:40: gbt_stop();
     00000070 C3r00r00         [16]  148 	jp	_gbt_stop
-                                    149 ;src/sound.c:39: }
+                                    149 ;src/sound.c:42: }
     00000073                        150 00107$:
-                                    151 ;src/sound.c:40: }
+                                    151 ;src/sound.c:43: }
     00000073 C9               [16]  152 	ret
                                     153 	.area _CODE
                                     154 	.area _INITIALIZER

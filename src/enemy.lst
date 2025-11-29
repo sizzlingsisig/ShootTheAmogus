@@ -55,15 +55,15 @@
                                      55 ; code
                                      56 ;--------------------------------------------------------
                                      57 	.area _CODE
-                                     58 ;src/enemy.c:8: void initEnemies(void)
+                                     58 ;src/enemy.c:10: void initEnemies(void)
                                      59 ;	---------------------------------
                                      60 ; Function initEnemies
                                      61 ; ---------------------------------
     00000000                         62 _initEnemies::
-                                     63 ;src/enemy.c:11: for (i = 0; i < MAX_ENEMIES; i++)
+                                     63 ;src/enemy.c:13: for (i = 0; i < MAX_ENEMIES; i++)
     00000000 0E 00            [ 8]   64 	ld	c, #0x00
     00000002                         65 00102$:
-                                     66 ;src/enemy.c:13: enemies[i].isActive = 0;
+                                     66 ;src/enemy.c:15: enemies[i].isActive = 0;
     00000002 06 00            [ 8]   67 	ld	b, #0x00
     00000004 69               [ 4]   68 	ld	l, c
     00000005 60               [ 4]   69 	ld	h, b
@@ -81,33 +81,33 @@
     00000013 21 05 00         [12]   81 	ld	hl, #0x0005
     00000016 19               [ 8]   82 	add	hl, de
     00000017 36 00            [12]   83 	ld	(hl), #0x00
-                                     84 ;src/enemy.c:14: enemies[i].spriteBase = 8 + (i * 4);
+                                     84 ;src/enemy.c:16: enemies[i].spriteBase = 8 + (i * 4);
     00000019 21 0A 00         [12]   85 	ld	hl, #0x000a
     0000001C 19               [ 8]   86 	add	hl, de
     0000001D 79               [ 4]   87 	ld	a, c
     0000001E 87               [ 4]   88 	add	a, a
     0000001F 87               [ 4]   89 	add	a, a
     00000020 C6 08            [ 8]   90 	add	a, #0x08
-                                     91 ;src/enemy.c:15: hideSprite4(enemies[i].spriteBase);
+                                     91 ;src/enemy.c:17: hideSprite4(enemies[i].spriteBase);
     00000022 77               [ 8]   92 	ld	(hl), a
     00000023 C5               [16]   93 	push	bc
     00000024 CDr00r00         [24]   94 	call	_hideSprite4
     00000027 C1               [12]   95 	pop	bc
-                                     96 ;src/enemy.c:11: for (i = 0; i < MAX_ENEMIES; i++)
+                                     96 ;src/enemy.c:13: for (i = 0; i < MAX_ENEMIES; i++)
     00000028 0C               [ 4]   97 	inc	c
     00000029 79               [ 4]   98 	ld	a, c
     0000002A D6 04            [ 8]   99 	sub	a, #0x04
     0000002C 38 D4            [12]  100 	jr	C, 00102$
-                                    101 ;src/enemy.c:17: }
+                                    101 ;src/enemy.c:19: }
     0000002E C9               [16]  102 	ret
-                                    103 ;src/enemy.c:19: void spawnEnemy(UINT8 index)
+                                    103 ;src/enemy.c:22: void spawnEnemy(UINT8 index)
                                     104 ;	---------------------------------
                                     105 ; Function spawnEnemy
                                     106 ; ---------------------------------
     0000002F                        107 _spawnEnemy::
     0000002F E8 EF            [16]  108 	add	sp, #-17
     00000031 4F               [ 4]  109 	ld	c, a
-                                    110 ;src/enemy.c:21: Enemy *e = &enemies[index];
+                                    110 ;src/enemy.c:24: Enemy *e = &enemies[index];
     00000032 06 00            [ 8]  111 	ld	b, #0x00
     00000034 69               [ 4]  112 	ld	l, c
     00000035 60               [ 4]  113 	ld	h, b
@@ -143,7 +143,7 @@
     0000005A F8 10            [12]  143 	ldhl	sp,	#16
     0000005C 7E               [ 8]  144 	ld	a, (hl)
     0000005D F8 01            [12]  145 	ldhl	sp,	#1
-                                    146 ;src/enemy.c:23: e->x = ENEMY_START_X + (simpleRand() % 60);
+                                    146 ;src/enemy.c:26: e->x = ENEMY_START_X + (simpleRand() % 60);
     0000005F 32               [ 8]  147 	ld	(hl-), a
     00000060 2A               [ 8]  148 	ld	a, (hl+)
     00000061 23               [ 8]  149 	inc	hl
@@ -184,13 +184,13 @@
     00000091 13               [ 8]  184 	inc	de
     00000092 7E               [ 8]  185 	ld	a, (hl)
     00000093 12               [ 8]  186 	ld	(de), a
-                                    187 ;src/enemy.c:24: e->isActive = 1;
+                                    187 ;src/enemy.c:27: e->isActive = 1;
     00000094 D1               [12]  188 	pop	de
     00000095 D5               [16]  189 	push	de
     00000096 21 05 00         [12]  190 	ld	hl, #0x0005
     00000099 19               [ 8]  191 	add	hl, de
     0000009A 36 01            [12]  192 	ld	(hl), #0x01
-                                    193 ;src/enemy.c:25: e->animCounter = 0;
+                                    193 ;src/enemy.c:28: e->animCounter = 0;
     0000009C D1               [12]  194 	pop	de
     0000009D D5               [16]  195 	push	de
     0000009E 21 06 00         [12]  196 	ld	hl, #0x0006
@@ -199,7 +199,7 @@
     000000A3 44               [ 4]  199 	ld	b, h
     000000A4 AF               [ 4]  200 	xor	a, a
     000000A5 02               [ 8]  201 	ld	(bc), a
-                                    202 ;src/enemy.c:26: e->currentFrame = 0;
+                                    202 ;src/enemy.c:29: e->currentFrame = 0;
     000000A6 D1               [12]  203 	pop	de
     000000A7 D5               [16]  204 	push	de
     000000A8 21 07 00         [12]  205 	ld	hl, #0x0007
@@ -208,7 +208,7 @@
     000000AD 44               [ 4]  208 	ld	b, h
     000000AE AF               [ 4]  209 	xor	a, a
     000000AF 02               [ 8]  210 	ld	(bc), a
-                                    211 ;src/enemy.c:27: e->deathTimer = 0;
+                                    211 ;src/enemy.c:30: e->deathTimer = 0;
     000000B0 D1               [12]  212 	pop	de
     000000B1 D5               [16]  213 	push	de
     000000B2 21 0D 00         [12]  214 	ld	hl, #0x000d
@@ -217,7 +217,7 @@
     000000B7 44               [ 4]  217 	ld	b, h
     000000B8 AF               [ 4]  218 	xor	a, a
     000000B9 02               [ 8]  219 	ld	(bc), a
-                                    220 ;src/enemy.c:28: e->hitFlashTimer = 0;
+                                    220 ;src/enemy.c:31: e->hitFlashTimer = 0;
     000000BA D1               [12]  221 	pop	de
     000000BB D5               [16]  222 	push	de
     000000BC 21 10 00         [12]  223 	ld	hl, #0x0010
@@ -226,13 +226,13 @@
     000000C1 44               [ 4]  226 	ld	b, h
     000000C2 AF               [ 4]  227 	xor	a, a
     000000C3 02               [ 8]  228 	ld	(bc), a
-                                    229 ;src/enemy.c:29: e->health = 1;
+                                    229 ;src/enemy.c:32: e->health = 1;
     000000C4 D1               [12]  230 	pop	de
     000000C5 D5               [16]  231 	push	de
     000000C6 21 0E 00         [12]  232 	ld	hl, #0x000e
     000000C9 19               [ 8]  233 	add	hl, de
     000000CA 36 01            [12]  234 	ld	(hl), #0x01
-                                    235 ;src/enemy.c:30: e->maxHealth = 2;
+                                    235 ;src/enemy.c:33: e->maxHealth = 2;
     000000CC D1               [12]  236 	pop	de
     000000CD D5               [16]  237 	push	de
     000000CE 21 0F 00         [12]  238 	ld	hl, #0x000f
@@ -249,35 +249,35 @@
     000000DD 66               [ 8]  249 	ld	h, (hl)
     000000DE 6F               [ 4]  250 	ld	l, a
     000000DF 36 02            [12]  251 	ld	(hl), #0x02
-                                    252 ;src/enemy.c:32: UINT8 wave = getWaveNumber();
+                                    252 ;src/enemy.c:35: UINT8 wave = getWaveNumber();
     000000E1 CDr00r00         [24]  253 	call	_getWaveNumber
-                                    254 ;src/enemy.c:33: UINT8 availableTypes = 1;
+                                    254 ;src/enemy.c:36: UINT8 availableTypes = 1;
     000000E4 1E 01            [ 8]  255 	ld	e, #0x01
-                                    256 ;src/enemy.c:34: if (wave >= 5) {
+                                    256 ;src/enemy.c:37: if (wave >= 5) {
     000000E6 FE 05            [ 8]  257 	cp	a, #0x05
     000000E8 38 04            [12]  258 	jr	C, 00107$
-                                    259 ;src/enemy.c:35: availableTypes = 4;
+                                    259 ;src/enemy.c:38: availableTypes = 4;
     000000EA 1E 04            [ 8]  260 	ld	e, #0x04
     000000EC 18 0E            [12]  261 	jr	00108$
     000000EE                        262 00107$:
-                                    263 ;src/enemy.c:36: } else if (wave >= 4) {
+                                    263 ;src/enemy.c:39: } else if (wave >= 4) {
     000000EE FE 04            [ 8]  264 	cp	a, #0x04
     000000F0 38 04            [12]  265 	jr	C, 00104$
-                                    266 ;src/enemy.c:37: availableTypes = 3;
+                                    266 ;src/enemy.c:40: availableTypes = 3;
     000000F2 1E 03            [ 8]  267 	ld	e, #0x03
     000000F4 18 06            [12]  268 	jr	00108$
     000000F6                        269 00104$:
-                                    270 ;src/enemy.c:38: } else if (wave >= 3) {
+                                    270 ;src/enemy.c:41: } else if (wave >= 3) {
     000000F6 D6 03            [ 8]  271 	sub	a, #0x03
     000000F8 38 02            [12]  272 	jr	C, 00108$
-                                    273 ;src/enemy.c:39: availableTypes = 2;
+                                    273 ;src/enemy.c:42: availableTypes = 2;
     000000FA 1E 02            [ 8]  274 	ld	e, #0x02
     000000FC                        275 00108$:
-                                    276 ;src/enemy.c:42: UINT8 spawnType = simpleRand() % availableTypes;
+                                    276 ;src/enemy.c:45: UINT8 spawnType = simpleRand() % availableTypes;
     000000FC D5               [16]  277 	push	de
     000000FD CDr00r00         [24]  278 	call	_simpleRand
     00000100 D1               [12]  279 	pop	de
-                                    280 ;src/enemy.c:47: e->type = ENEMY_TYPE_GROUND;
+                                    280 ;src/enemy.c:50: e->type = ENEMY_TYPE_GROUND;
     00000101 CDr00r00         [24]  281 	call	__moduchar
     00000104 F8 06            [12]  282 	ldhl	sp,	#6
     00000106 71               [ 8]  283 	ld	(hl), c
@@ -293,7 +293,7 @@
     00000113 7C               [ 4]  293 	ld	a, h
     00000114 F8 08            [12]  294 	ldhl	sp,	#8
     00000116 77               [ 8]  295 	ld	(hl), a
-                                    296 ;src/enemy.c:48: e->y = ENEMY_START_Y;
+                                    296 ;src/enemy.c:51: e->y = ENEMY_START_Y;
     00000117 D1               [12]  297 	pop	de
     00000118 D5               [16]  298 	push	de
     00000119 21 02 00         [12]  299 	ld	hl, #0x0002
@@ -306,7 +306,7 @@
     00000123 7C               [ 4]  306 	ld	a, h
     00000124 F8 0A            [12]  307 	ldhl	sp,	#10
     00000126 77               [ 8]  308 	ld	(hl), a
-                                    309 ;src/enemy.c:49: e->isJumping = 0;
+                                    309 ;src/enemy.c:52: e->isJumping = 0;
     00000127 D1               [12]  310 	pop	de
     00000128 D5               [16]  311 	push	de
     00000129 21 04 00         [12]  312 	ld	hl, #0x0004
@@ -319,7 +319,7 @@
     00000133 7C               [ 4]  319 	ld	a, h
     00000134 F8 0C            [12]  320 	ldhl	sp,	#12
     00000136 77               [ 8]  321 	ld	(hl), a
-                                    322 ;src/enemy.c:50: e->velocityY = 0;
+                                    322 ;src/enemy.c:53: e->velocityY = 0;
     00000137 D1               [12]  323 	pop	de
     00000138 D5               [16]  324 	push	de
     00000139 21 03 00         [12]  325 	ld	hl, #0x0003
@@ -332,7 +332,7 @@
     00000143 7C               [ 4]  332 	ld	a, h
     00000144 F8 0E            [12]  333 	ldhl	sp,	#14
     00000146 77               [ 8]  334 	ld	(hl), a
-                                    335 ;src/enemy.c:51: e->jumpTimer = 30 + (simpleRand() % 50);
+                                    335 ;src/enemy.c:54: e->jumpTimer = 30 + (simpleRand() % 50);
     00000147 D1               [12]  336 	pop	de
     00000148 D5               [16]  337 	push	de
     00000149 21 08 00         [12]  338 	ld	hl, #0x0008
@@ -345,7 +345,7 @@
     00000153 7C               [ 4]  345 	ld	a, h
     00000154 F8 10            [12]  346 	ldhl	sp,	#16
     00000156 77               [ 8]  347 	ld	(hl), a
-                                    348 ;src/enemy.c:44: switch (spawnType)
+                                    348 ;src/enemy.c:47: switch (spawnType)
     00000157 F8 06            [12]  349 	ldhl	sp,	#6
     00000159 4E               [ 8]  350 	ld	c, (hl)
     0000015A 06 00            [ 8]  351 	ld	b, #0x00
@@ -362,33 +362,33 @@
     00000168r9Fr01                  362 	.dw	00110$
     0000016ArD1r01                  363 	.dw	00111$
     0000016Cr30r02                  364 	.dw	00112$
-                                    365 ;src/enemy.c:46: case 0: // Ground
+                                    365 ;src/enemy.c:49: case 0: // Ground
     0000016E                        366 00109$:
-                                    367 ;src/enemy.c:47: e->type = ENEMY_TYPE_GROUND;
+                                    367 ;src/enemy.c:50: e->type = ENEMY_TYPE_GROUND;
     0000016E F8 07            [12]  368 	ldhl	sp,	#7
     00000170 2A               [ 8]  369 	ld	a, (hl+)
     00000171 66               [ 8]  370 	ld	h, (hl)
     00000172 6F               [ 4]  371 	ld	l, a
     00000173 36 00            [12]  372 	ld	(hl), #0x00
-                                    373 ;src/enemy.c:48: e->y = ENEMY_START_Y;
+                                    373 ;src/enemy.c:51: e->y = ENEMY_START_Y;
     00000175 F8 09            [12]  374 	ldhl	sp,	#9
     00000177 2A               [ 8]  375 	ld	a, (hl+)
     00000178 66               [ 8]  376 	ld	h, (hl)
     00000179 6F               [ 4]  377 	ld	l, a
     0000017A 36 69            [12]  378 	ld	(hl), #0x69
-                                    379 ;src/enemy.c:49: e->isJumping = 0;
+                                    379 ;src/enemy.c:52: e->isJumping = 0;
     0000017C F8 0B            [12]  380 	ldhl	sp,	#11
     0000017E 2A               [ 8]  381 	ld	a, (hl+)
     0000017F 66               [ 8]  382 	ld	h, (hl)
     00000180 6F               [ 4]  383 	ld	l, a
     00000181 36 00            [12]  384 	ld	(hl), #0x00
-                                    385 ;src/enemy.c:50: e->velocityY = 0;
+                                    385 ;src/enemy.c:53: e->velocityY = 0;
     00000183 F8 0D            [12]  386 	ldhl	sp,	#13
     00000185 2A               [ 8]  387 	ld	a, (hl+)
     00000186 66               [ 8]  388 	ld	h, (hl)
     00000187 6F               [ 4]  389 	ld	l, a
     00000188 36 00            [12]  390 	ld	(hl), #0x00
-                                    391 ;src/enemy.c:51: e->jumpTimer = 30 + (simpleRand() % 50);
+                                    391 ;src/enemy.c:54: e->jumpTimer = 30 + (simpleRand() % 50);
     0000018A CDr00r00         [24]  392 	call	_simpleRand
     0000018D 1E 32            [ 8]  393 	ld	e, #0x32
     0000018F CDr00r00         [24]  394 	call	__moduchar
@@ -400,35 +400,35 @@
     00000199 66               [ 8]  400 	ld	h, (hl)
     0000019A 6B               [ 4]  401 	ld	l, e
     0000019B 77               [ 8]  402 	ld	(hl), a
-                                    403 ;src/enemy.c:52: break;
+                                    403 ;src/enemy.c:55: break;
     0000019C C3r68r02         [16]  404 	jp	00114$
-                                    405 ;src/enemy.c:54: case 1: // Jumping
+                                    405 ;src/enemy.c:57: case 1: // Jumping
     0000019F                        406 00110$:
-                                    407 ;src/enemy.c:55: e->type = ENEMY_TYPE_JUMPING;
+                                    407 ;src/enemy.c:58: e->type = ENEMY_TYPE_JUMPING;
     0000019F F8 07            [12]  408 	ldhl	sp,	#7
     000001A1 2A               [ 8]  409 	ld	a, (hl+)
     000001A2 66               [ 8]  410 	ld	h, (hl)
     000001A3 6F               [ 4]  411 	ld	l, a
     000001A4 36 01            [12]  412 	ld	(hl), #0x01
-                                    413 ;src/enemy.c:56: e->y = ENEMY_START_Y;
+                                    413 ;src/enemy.c:59: e->y = ENEMY_START_Y;
     000001A6 F8 09            [12]  414 	ldhl	sp,	#9
     000001A8 2A               [ 8]  415 	ld	a, (hl+)
     000001A9 66               [ 8]  416 	ld	h, (hl)
     000001AA 6F               [ 4]  417 	ld	l, a
     000001AB 36 69            [12]  418 	ld	(hl), #0x69
-                                    419 ;src/enemy.c:57: e->isJumping = 1;
+                                    419 ;src/enemy.c:60: e->isJumping = 1;
     000001AD F8 0B            [12]  420 	ldhl	sp,	#11
     000001AF 2A               [ 8]  421 	ld	a, (hl+)
     000001B0 66               [ 8]  422 	ld	h, (hl)
     000001B1 6F               [ 4]  423 	ld	l, a
     000001B2 36 01            [12]  424 	ld	(hl), #0x01
-                                    425 ;src/enemy.c:58: e->velocityY = ENEMY_JUMP_STRENGTH;
+                                    425 ;src/enemy.c:61: e->velocityY = ENEMY_JUMP_STRENGTH;
     000001B4 F8 0D            [12]  426 	ldhl	sp,	#13
     000001B6 2A               [ 8]  427 	ld	a, (hl+)
     000001B7 66               [ 8]  428 	ld	h, (hl)
     000001B8 6F               [ 4]  429 	ld	l, a
     000001B9 36 0C            [12]  430 	ld	(hl), #0x0c
-                                    431 ;src/enemy.c:59: e->jumpTimer = 40 + (simpleRand() % 70);
+                                    431 ;src/enemy.c:62: e->jumpTimer = 40 + (simpleRand() % 70);
     000001BB CDr00r00         [24]  432 	call	_simpleRand
     000001BE 1E 46            [ 8]  433 	ld	e, #0x46
     000001C0 CDr00r00         [24]  434 	call	__moduchar
@@ -441,17 +441,17 @@
     000001CB 66               [ 8]  441 	ld	h, (hl)
     000001CC 6B               [ 4]  442 	ld	l, e
     000001CD 77               [ 8]  443 	ld	(hl), a
-                                    444 ;src/enemy.c:60: break;
+                                    444 ;src/enemy.c:63: break;
     000001CE C3r68r02         [16]  445 	jp	00114$
-                                    446 ;src/enemy.c:62: case 2: // Flying
+                                    446 ;src/enemy.c:65: case 2: // Flying
     000001D1                        447 00111$:
-                                    448 ;src/enemy.c:63: e->type = ENEMY_TYPE_FLYING;
+                                    448 ;src/enemy.c:66: e->type = ENEMY_TYPE_FLYING;
     000001D1 F8 07            [12]  449 	ldhl	sp,	#7
     000001D3 2A               [ 8]  450 	ld	a, (hl+)
     000001D4 66               [ 8]  451 	ld	h, (hl)
     000001D5 6F               [ 4]  452 	ld	l, a
     000001D6 36 03            [12]  453 	ld	(hl), #0x03
-                                    454 ;src/enemy.c:64: e->y = ENEMY_FLY_Y_HIGH + (simpleRand() % (ENEMY_FLY_Y_LOW - ENEMY_FLY_Y_HIGH));
+                                    454 ;src/enemy.c:67: e->y = ENEMY_FLY_Y_HIGH + (simpleRand() % (ENEMY_FLY_Y_LOW - ENEMY_FLY_Y_HIGH));
     000001D8 CDr00r00         [24]  455 	call	_simpleRand
     000001DB 1E 28            [ 8]  456 	ld	e, #0x28
     000001DD CDr00r00         [24]  457 	call	__moduchar
@@ -463,13 +463,13 @@
     000001E7 66               [ 8]  463 	ld	h, (hl)
     000001E8 6B               [ 4]  464 	ld	l, e
     000001E9 77               [ 8]  465 	ld	(hl), a
-                                    466 ;src/enemy.c:65: e->isJumping = 0;
+                                    466 ;src/enemy.c:68: e->isJumping = 0;
     000001EA F8 0B            [12]  467 	ldhl	sp,	#11
     000001EC 2A               [ 8]  468 	ld	a, (hl+)
     000001ED 66               [ 8]  469 	ld	h, (hl)
     000001EE 6F               [ 4]  470 	ld	l, a
     000001EF 36 00            [12]  471 	ld	(hl), #0x00
-                                    472 ;src/enemy.c:66: e->flyingBobTimer = simpleRand() % 16;
+                                    472 ;src/enemy.c:69: e->flyingBobTimer = simpleRand() % 16;
     000001F1 D1               [12]  473 	pop	de
     000001F2 D5               [16]  474 	push	de
     000001F3 21 0B 00         [12]  475 	ld	hl, #0x000b
@@ -479,7 +479,7 @@
     000001FB C1               [12]  479 	pop	bc
     000001FC E6 0F            [ 8]  480 	and	a, #0x0f
     000001FE 02               [ 8]  481 	ld	(bc), a
-                                    482 ;src/enemy.c:67: e->flyingDirection = (simpleRand() & 1) ? 1 : -1;
+                                    482 ;src/enemy.c:70: e->flyingDirection = (simpleRand() & 1) ? 1 : -1;
     000001FF D1               [12]  483 	pop	de
     00000200 D5               [16]  484 	push	de
     00000201 21 0C 00         [12]  485 	ld	hl, #0x000c
@@ -509,23 +509,23 @@
     00000224 66               [ 8]  509 	ld	h, (hl)
     00000225 6B               [ 4]  510 	ld	l, e
     00000226 77               [ 8]  511 	ld	(hl), a
-                                    512 ;src/enemy.c:69: e->maxHealth = 2; // reuse field for max speed if needed
+                                    512 ;src/enemy.c:72: e->maxHealth = 2; // reuse field for max speed if needed
     00000227 F8 04            [12]  513 	ldhl	sp,	#4
     00000229 2A               [ 8]  514 	ld	a, (hl+)
     0000022A 66               [ 8]  515 	ld	h, (hl)
     0000022B 6F               [ 4]  516 	ld	l, a
     0000022C 36 02            [12]  517 	ld	(hl), #0x02
-                                    518 ;src/enemy.c:70: break;
+                                    518 ;src/enemy.c:73: break;
     0000022E 18 38            [12]  519 	jr	00114$
-                                    520 ;src/enemy.c:72: case 3: // Targeting
+                                    520 ;src/enemy.c:75: case 3: // Targeting
     00000230                        521 00112$:
-                                    522 ;src/enemy.c:73: e->type = ENEMY_TYPE_TARGETING;
+                                    522 ;src/enemy.c:76: e->type = ENEMY_TYPE_TARGETING;
     00000230 F8 07            [12]  523 	ldhl	sp,	#7
     00000232 2A               [ 8]  524 	ld	a, (hl+)
     00000233 66               [ 8]  525 	ld	h, (hl)
     00000234 6F               [ 4]  526 	ld	l, a
     00000235 36 04            [12]  527 	ld	(hl), #0x04
-                                    528 ;src/enemy.c:74: e->targetX = player.x;
+                                    528 ;src/enemy.c:77: e->targetX = player.x;
     00000237 D1               [12]  529 	pop	de
     00000238 D5               [16]  530 	push	de
     00000239 21 11 00         [12]  531 	ld	hl, #0x0011
@@ -541,7 +541,7 @@
     00000248 13               [ 8]  541 	inc	de
     00000249 78               [ 4]  542 	ld	a, b
     0000024A 12               [ 8]  543 	ld	(de), a
-                                    544 ;src/enemy.c:75: e->x = e->targetX;
+                                    544 ;src/enemy.c:78: e->x = e->targetX;
     0000024B F8 02            [12]  545 	ldhl	sp,	#2
     0000024D 2A               [ 8]  546 	ld	a, (hl+)
     0000024E 66               [ 8]  547 	ld	h, (hl)
@@ -549,30 +549,30 @@
     00000250 79               [ 4]  549 	ld	a, c
     00000251 22               [ 8]  550 	ld	(hl+), a
     00000252 70               [ 8]  551 	ld	(hl), b
-                                    552 ;src/enemy.c:76: e->y = 10;
+                                    552 ;src/enemy.c:79: e->y = 10;
     00000253 F8 09            [12]  553 	ldhl	sp,	#9
     00000255 2A               [ 8]  554 	ld	a, (hl+)
     00000256 66               [ 8]  555 	ld	h, (hl)
     00000257 6F               [ 4]  556 	ld	l, a
     00000258 36 0A            [12]  557 	ld	(hl), #0x0a
-                                    558 ;src/enemy.c:77: e->isJumping = 1;
+                                    558 ;src/enemy.c:80: e->isJumping = 1;
     0000025A F8 0B            [12]  559 	ldhl	sp,	#11
     0000025C 2A               [ 8]  560 	ld	a, (hl+)
     0000025D 66               [ 8]  561 	ld	h, (hl)
     0000025E 6F               [ 4]  562 	ld	l, a
     0000025F 36 01            [12]  563 	ld	(hl), #0x01
-                                    564 ;src/enemy.c:78: e->velocityY = -2;
+                                    564 ;src/enemy.c:81: e->velocityY = -2;
     00000261 F8 0D            [12]  565 	ldhl	sp,	#13
     00000263 2A               [ 8]  566 	ld	a, (hl+)
     00000264 66               [ 8]  567 	ld	h, (hl)
     00000265 6F               [ 4]  568 	ld	l, a
     00000266 36 FE            [12]  569 	ld	(hl), #0xfe
-                                    570 ;src/enemy.c:80: }
+                                    570 ;src/enemy.c:83: }
     00000268                        571 00114$:
-                                    572 ;src/enemy.c:81: }
+                                    572 ;src/enemy.c:84: }
     00000268 E8 11            [16]  573 	add	sp, #17
     0000026A C9               [16]  574 	ret
-                                    575 ;src/enemy.c:83: void spawnBossEnemy(UINT8 index)
+                                    575 ;src/enemy.c:87: void spawnBossEnemy(UINT8 index)
                                     576 ;	---------------------------------
                                     577 ; Function spawnBossEnemy
                                     578 ; ---------------------------------
@@ -580,7 +580,7 @@
     0000026B 3B               [ 8]  580 	dec	sp
     0000026C F8 00            [12]  581 	ldhl	sp,	#0
     0000026E 77               [ 8]  582 	ld	(hl), a
-                                    583 ;src/enemy.c:85: Enemy *e = &enemies[index];
+                                    583 ;src/enemy.c:89: Enemy *e = &enemies[index];
     0000026F 01r00r00         [12]  584 	ld	bc, #_enemies+0
     00000272 5E               [ 8]  585 	ld	e, (hl)
     00000273 16 00            [ 8]  586 	ld	d, #0x00
@@ -592,62 +592,62 @@
     0000027A 29               [ 8]  592 	add	hl, hl
     0000027B 29               [ 8]  593 	add	hl, hl
     0000027C 09               [ 8]  594 	add	hl, bc
-                                    595 ;src/enemy.c:86: e->x = ENEMY_START_X;
+                                    595 ;src/enemy.c:90: e->x = ENEMY_START_X;
     0000027D 4D               [ 4]  596 	ld	c,l
     0000027E 44               [ 4]  597 	ld	b,h
     0000027F 36 A0            [12]  598 	ld	(hl), #0xa0
     00000281 23               [ 8]  599 	inc	hl
     00000282 36 00            [12]  600 	ld	(hl), #0x00
-                                    601 ;src/enemy.c:87: e->isActive = 1;
+                                    601 ;src/enemy.c:91: e->isActive = 1;
     00000284 21 05 00         [12]  602 	ld	hl, #0x0005
     00000287 09               [ 8]  603 	add	hl, bc
     00000288 36 01            [12]  604 	ld	(hl), #0x01
-                                    605 ;src/enemy.c:88: e->animCounter = 0;
+                                    605 ;src/enemy.c:92: e->animCounter = 0;
     0000028A 21 06 00         [12]  606 	ld	hl, #0x0006
     0000028D 09               [ 8]  607 	add	hl, bc
     0000028E 36 00            [12]  608 	ld	(hl), #0x00
-                                    609 ;src/enemy.c:89: e->currentFrame = 0;
+                                    609 ;src/enemy.c:93: e->currentFrame = 0;
     00000290 21 07 00         [12]  610 	ld	hl, #0x0007
     00000293 09               [ 8]  611 	add	hl, bc
     00000294 36 00            [12]  612 	ld	(hl), #0x00
-                                    613 ;src/enemy.c:90: e->deathTimer = 0;
+                                    613 ;src/enemy.c:94: e->deathTimer = 0;
     00000296 21 0D 00         [12]  614 	ld	hl, #0x000d
     00000299 09               [ 8]  615 	add	hl, bc
     0000029A 36 00            [12]  616 	ld	(hl), #0x00
-                                    617 ;src/enemy.c:91: e->hitFlashTimer = 0;
+                                    617 ;src/enemy.c:95: e->hitFlashTimer = 0;
     0000029C 21 10 00         [12]  618 	ld	hl, #0x0010
     0000029F 09               [ 8]  619 	add	hl, bc
     000002A0 36 00            [12]  620 	ld	(hl), #0x00
-                                    621 ;src/enemy.c:92: e->health = 10;
+                                    621 ;src/enemy.c:96: e->health = 10;
     000002A2 21 0E 00         [12]  622 	ld	hl, #0x000e
     000002A5 09               [ 8]  623 	add	hl, bc
     000002A6 36 0A            [12]  624 	ld	(hl), #0x0a
-                                    625 ;src/enemy.c:93: e->maxHealth = 10;
+                                    625 ;src/enemy.c:97: e->maxHealth = 10;
     000002A8 21 0F 00         [12]  626 	ld	hl, #0x000f
     000002AB 09               [ 8]  627 	add	hl, bc
     000002AC 36 0A            [12]  628 	ld	(hl), #0x0a
-                                    629 ;src/enemy.c:94: e->type = ENEMY_TYPE_BOSS;
+                                    629 ;src/enemy.c:98: e->type = ENEMY_TYPE_BOSS;
     000002AE 21 09 00         [12]  630 	ld	hl, #0x0009
     000002B1 09               [ 8]  631 	add	hl, bc
     000002B2 36 05            [12]  632 	ld	(hl), #0x05
-                                    633 ;src/enemy.c:95: e->y = ENEMY_START_Y;
+                                    633 ;src/enemy.c:99: e->y = ENEMY_START_Y;
     000002B4 69               [ 4]  634 	ld	l, c
     000002B5 60               [ 4]  635 	ld	h, b
     000002B6 23               [ 8]  636 	inc	hl
     000002B7 23               [ 8]  637 	inc	hl
     000002B8 36 69            [12]  638 	ld	(hl), #0x69
-                                    639 ;src/enemy.c:96: e->isJumping = 0;
+                                    639 ;src/enemy.c:100: e->isJumping = 0;
     000002BA 21 04 00         [12]  640 	ld	hl, #0x0004
     000002BD 09               [ 8]  641 	add	hl, bc
     000002BE 36 00            [12]  642 	ld	(hl), #0x00
-                                    643 ;src/enemy.c:97: e->velocityY = 0;
+                                    643 ;src/enemy.c:101: e->velocityY = 0;
     000002C0 69               [ 4]  644 	ld	l, c
     000002C1 60               [ 4]  645 	ld	h, b
     000002C2 23               [ 8]  646 	inc	hl
     000002C3 23               [ 8]  647 	inc	hl
     000002C4 23               [ 8]  648 	inc	hl
     000002C5 36 00            [12]  649 	ld	(hl), #0x00
-                                    650 ;src/enemy.c:98: e->jumpTimer = 40 + (simpleRand() % 70);
+                                    650 ;src/enemy.c:102: e->jumpTimer = 40 + (simpleRand() % 70);
     000002C7 21 08 00         [12]  651 	ld	hl, #0x0008
     000002CA 09               [ 8]  652 	add	hl, bc
     000002CB E5               [16]  653 	push	hl
@@ -660,7 +660,7 @@
     000002D7 E1               [12]  660 	pop	hl
     000002D8 C6 28            [ 8]  661 	add	a, #0x28
     000002DA 77               [ 8]  662 	ld	(hl), a
-                                    663 ;src/enemy.c:99: e->spriteBase = 8 + (index * 4);
+                                    663 ;src/enemy.c:103: e->spriteBase = 8 + (index * 4);
     000002DB 21 0A 00         [12]  664 	ld	hl, #0x000a
     000002DE 09               [ 8]  665 	add	hl, bc
     000002DF 5D               [ 4]  666 	ld	e, l
@@ -671,14 +671,14 @@
     000002E5 87               [ 4]  671 	add	a, a
     000002E6 C6 08            [ 8]  672 	add	a, #0x08
     000002E8 12               [ 8]  673 	ld	(de), a
-                                    674 ;src/enemy.c:100: e->bossDirection = -1;
+                                    674 ;src/enemy.c:104: e->bossDirection = -1;
     000002E9 21 13 00         [12]  675 	ld	hl, #0x0013
     000002EC 09               [ 8]  676 	add	hl, bc
     000002ED 36 FF            [12]  677 	ld	(hl), #0xff
-                                    678 ;src/enemy.c:101: }
+                                    678 ;src/enemy.c:105: }
     000002EF 33               [ 8]  679 	inc	sp
     000002F0 C9               [16]  680 	ret
-                                    681 ;src/enemy.c:103: void updateBossPhysics(Enemy *e)
+                                    681 ;src/enemy.c:108: void updateBossPhysics(Enemy *e)
                                     682 ;	---------------------------------
                                     683 ; Function updateBossPhysics
                                     684 ; ---------------------------------
@@ -686,7 +686,7 @@
     000002F1 E8 F9            [16]  686 	add	sp, #-7
     000002F3 4B               [ 4]  687 	ld	c, e
     000002F4 42               [ 4]  688 	ld	b, d
-                                    689 ;src/enemy.c:105: if (!e->isActive)
+                                    689 ;src/enemy.c:110: if (!e->isActive)
     000002F5 21 05 00         [12]  690 	ld	hl, #0x0005
     000002F8 09               [ 8]  691 	add	hl, bc
     000002F9 5D               [ 4]  692 	ld	e, l
@@ -695,31 +695,31 @@
     000002FC F8 06            [12]  695 	ldhl	sp,	#6
     000002FE 77               [ 8]  696 	ld	(hl), a
     000002FF B7               [ 4]  697 	or	a, a
-                                    698 ;src/enemy.c:106: return;
+                                    698 ;src/enemy.c:111: return;
     00000300 CAr26r04         [16]  699 	jp	Z, 00122$
-                                    700 ;src/enemy.c:108: if (e->deathTimer > 0)
+                                    700 ;src/enemy.c:113: if (e->deathTimer > 0)
     00000303 21 0D 00         [12]  701 	ld	hl, #0x000d
     00000306 09               [ 8]  702 	add	hl, bc
     00000307 7E               [ 8]  703 	ld	a, (hl)
     00000308 B7               [ 4]  704 	or	a, a
     00000309 28 12            [12]  705 	jr	Z, 00106$
-                                    706 ;src/enemy.c:110: e->deathTimer--;
+                                    706 ;src/enemy.c:115: e->deathTimer--;
     0000030B 3D               [ 4]  707 	dec	a
     0000030C 77               [ 8]  708 	ld	(hl), a
-                                    709 ;src/enemy.c:111: if (e->deathTimer == 0)
-                                    710 ;src/enemy.c:113: e->isActive = 0;
+                                    709 ;src/enemy.c:116: if (e->deathTimer == 0)
+                                    710 ;src/enemy.c:118: e->isActive = 0;
     0000030D B7               [ 4]  711 	or	a,a
     0000030E C2r26r04         [16]  712 	jp	NZ,00122$
     00000311 12               [ 8]  713 	ld	(de), a
-                                    714 ;src/enemy.c:114: hideSprite4(e->spriteBase);
+                                    714 ;src/enemy.c:119: hideSprite4(e->spriteBase);
     00000312 21 0A 00         [12]  715 	ld	hl, #0x000a
     00000315 09               [ 8]  716 	add	hl, bc
     00000316 7E               [ 8]  717 	ld	a, (hl)
     00000317 CDr00r00         [24]  718 	call	_hideSprite4
-                                    719 ;src/enemy.c:116: return;
+                                    719 ;src/enemy.c:121: return;
     0000031A C3r26r04         [16]  720 	jp	00122$
     0000031D                        721 00106$:
-                                    722 ;src/enemy.c:119: if (e->isJumping)
+                                    722 ;src/enemy.c:124: if (e->isJumping)
     0000031D 21 04 00         [12]  723 	ld	hl, #0x0004
     00000320 09               [ 8]  724 	add	hl, bc
     00000321 33               [ 8]  725 	inc	sp
@@ -730,7 +730,7 @@
     00000326 1A               [ 8]  730 	ld	a, (de)
     00000327 F8 06            [12]  731 	ldhl	sp,	#6
     00000329 77               [ 8]  732 	ld	(hl), a
-                                    733 ;src/enemy.c:121: e->velocityY += GRAVITY;
+                                    733 ;src/enemy.c:126: e->velocityY += GRAVITY;
     0000032A 21 03 00         [12]  734 	ld	hl, #0x0003
     0000032D 09               [ 8]  735 	add	hl, bc
     0000032E E5               [16]  736 	push	hl
@@ -741,7 +741,7 @@
     00000334 7C               [ 4]  741 	ld	a, h
     00000335 F8 03            [12]  742 	ldhl	sp,	#3
     00000337 77               [ 8]  743 	ld	(hl), a
-                                    744 ;src/enemy.c:129: e->jumpTimer = 40 + (simpleRand() % 70);
+                                    744 ;src/enemy.c:134: e->jumpTimer = 40 + (simpleRand() % 70);
     00000338 21 08 00         [12]  745 	ld	hl, #0x0008
     0000033B 09               [ 8]  746 	add	hl, bc
     0000033C E5               [16]  747 	push	hl
@@ -751,12 +751,12 @@
     00000341 E1               [12]  751 	pop	hl
     00000342 7C               [ 4]  752 	ld	a, h
     00000343 F8 05            [12]  753 	ldhl	sp,	#5
-                                    754 ;src/enemy.c:119: if (e->isJumping)
+                                    754 ;src/enemy.c:124: if (e->isJumping)
     00000345 22               [ 8]  755 	ld	(hl+), a
     00000346 7E               [ 8]  756 	ld	a, (hl)
     00000347 B7               [ 4]  757 	or	a, a
     00000348 28 43            [12]  758 	jr	Z, 00114$
-                                    759 ;src/enemy.c:121: e->velocityY += GRAVITY;
+                                    759 ;src/enemy.c:126: e->velocityY += GRAVITY;
     0000034A F8 02            [12]  760 	ldhl	sp,#2
     0000034C 2A               [ 8]  761 	ld	a, (hl+)
     0000034D 5F               [ 4]  762 	ld	e, a
@@ -772,31 +772,31 @@
     0000035A F8 06            [12]  772 	ldhl	sp,	#6
     0000035C 7E               [ 8]  773 	ld	a, (hl)
     0000035D 12               [ 8]  774 	ld	(de), a
-                                    775 ;src/enemy.c:122: e->y -= e->velocityY;
+                                    775 ;src/enemy.c:127: e->y -= e->velocityY;
     0000035E 59               [ 4]  776 	ld	e, c
     0000035F 50               [ 4]  777 	ld	d, b
     00000360 13               [ 8]  778 	inc	de
     00000361 13               [ 8]  779 	inc	de
     00000362 1A               [ 8]  780 	ld	a, (de)
     00000363 96               [ 8]  781 	sub	a, (hl)
-                                    782 ;src/enemy.c:124: if (e->y >= FLOOR_Y)
+                                    782 ;src/enemy.c:129: if (e->y >= FLOOR_Y)
     00000364 12               [ 8]  783 	ld	(de), a
     00000365 D6 69            [ 8]  784 	sub	a, #0x69
     00000367 38 48            [12]  785 	jr	C, 00115$
-                                    786 ;src/enemy.c:126: e->y = FLOOR_Y;
+                                    786 ;src/enemy.c:131: e->y = FLOOR_Y;
     00000369 3E 69            [ 8]  787 	ld	a, #0x69
     0000036B 12               [ 8]  788 	ld	(de), a
-                                    789 ;src/enemy.c:127: e->isJumping = 0;
+                                    789 ;src/enemy.c:132: e->isJumping = 0;
     0000036C E1               [12]  790 	pop	hl
     0000036D 36 00            [12]  791 	ld	(hl), #0x00
     0000036F E5               [16]  792 	push	hl
-                                    793 ;src/enemy.c:128: e->velocityY = 0;
+                                    793 ;src/enemy.c:133: e->velocityY = 0;
     00000370 F8 02            [12]  794 	ldhl	sp,	#2
     00000372 2A               [ 8]  795 	ld	a, (hl+)
     00000373 66               [ 8]  796 	ld	h, (hl)
     00000374 6F               [ 4]  797 	ld	l, a
     00000375 36 00            [12]  798 	ld	(hl), #0x00
-                                    799 ;src/enemy.c:129: e->jumpTimer = 40 + (simpleRand() % 70);
+                                    799 ;src/enemy.c:134: e->jumpTimer = 40 + (simpleRand() % 70);
     00000377 C5               [16]  800 	push	bc
     00000378 CDr00r00         [24]  801 	call	_simpleRand
     0000037B 1E 46            [ 8]  802 	ld	e, #0x46
@@ -812,7 +812,7 @@
     0000038A 77               [ 8]  812 	ld	(hl), a
     0000038B 18 24            [12]  813 	jr	00115$
     0000038D                        814 00114$:
-                                    815 ;src/enemy.c:134: if (e->jumpTimer > 0)
+                                    815 ;src/enemy.c:139: if (e->jumpTimer > 0)
     0000038D F8 04            [12]  816 	ldhl	sp,#4
     0000038F 2A               [ 8]  817 	ld	a, (hl+)
     00000390 5F               [ 4]  818 	ld	e, a
@@ -820,7 +820,7 @@
     00000392 1A               [ 8]  820 	ld	a, (de)
     00000393 B7               [ 4]  821 	or	a, a
     00000394 28 07            [12]  822 	jr	Z, 00110$
-                                    823 ;src/enemy.c:136: e->jumpTimer--;
+                                    823 ;src/enemy.c:141: e->jumpTimer--;
     00000396 2B               [ 8]  824 	dec	hl
     00000397 3D               [ 4]  825 	dec	a
     00000398 5E               [ 8]  826 	ld	e, (hl)
@@ -829,7 +829,7 @@
     0000039B 6B               [ 4]  829 	ld	l, e
     0000039C 77               [ 8]  830 	ld	(hl), a
     0000039D                        831 00110$:
-                                    832 ;src/enemy.c:138: if (e->jumpTimer == 0)
+                                    832 ;src/enemy.c:143: if (e->jumpTimer == 0)
     0000039D F8 04            [12]  833 	ldhl	sp,#4
     0000039F 2A               [ 8]  834 	ld	a, (hl+)
     000003A0 5F               [ 4]  835 	ld	e, a
@@ -837,18 +837,18 @@
     000003A2 1A               [ 8]  837 	ld	a, (de)
     000003A3 B7               [ 4]  838 	or	a, a
     000003A4 20 0B            [12]  839 	jr	NZ, 00115$
-                                    840 ;src/enemy.c:140: e->isJumping = 1;
+                                    840 ;src/enemy.c:145: e->isJumping = 1;
     000003A6 E1               [12]  841 	pop	hl
     000003A7 36 01            [12]  842 	ld	(hl), #0x01
     000003A9 E5               [16]  843 	push	hl
-                                    844 ;src/enemy.c:141: e->velocityY = ENEMY_JUMP_STRENGTH;
+                                    844 ;src/enemy.c:146: e->velocityY = ENEMY_JUMP_STRENGTH;
     000003AA F8 02            [12]  845 	ldhl	sp,	#2
     000003AC 2A               [ 8]  846 	ld	a, (hl+)
     000003AD 66               [ 8]  847 	ld	h, (hl)
     000003AE 6F               [ 4]  848 	ld	l, a
     000003AF 36 0C            [12]  849 	ld	(hl), #0x0c
     000003B1                        850 00115$:
-                                    851 ;src/enemy.c:145: INT16 nextX = e->x + (e->bossDirection * getEnemySpeed());
+                                    851 ;src/enemy.c:150: INT16 nextX = e->x + (e->bossDirection * getEnemySpeed());
     000003B1 F8 01            [12]  852 	ldhl	sp,	#1
     000003B3 79               [ 4]  853 	ld	a, c
     000003B4 22               [ 8]  854 	ld	(hl+), a
@@ -891,7 +891,7 @@
     000003E2 09               [ 8]  891 	add	hl, bc
     000003E3 4D               [ 4]  892 	ld	c, l
     000003E4 44               [ 4]  893 	ld	b, h
-                                    894 ;src/enemy.c:147: if (nextX < 5)
+                                    894 ;src/enemy.c:152: if (nextX < 5)
     000003E5 79               [ 4]  895 	ld	a, c
     000003E6 D6 05            [ 8]  896 	sub	a, #0x05
     000003E8 78               [ 4]  897 	ld	a, b
@@ -900,7 +900,7 @@
     000003EB 1F               [ 4]  900 	rra
     000003EC DE 80            [ 8]  901 	sbc	a, #0x80
     000003EE 30 13            [12]  902 	jr	NC, 00120$
-                                    903 ;src/enemy.c:149: e->x = 5;
+                                    903 ;src/enemy.c:154: e->x = 5;
     000003F0 F8 01            [12]  904 	ldhl	sp,	#1
     000003F2 2A               [ 8]  905 	ld	a, (hl+)
     000003F3 66               [ 8]  906 	ld	h, (hl)
@@ -908,7 +908,7 @@
     000003F5 3E 05            [ 8]  908 	ld	a, #0x05
     000003F7 22               [ 8]  909 	ld	(hl+), a
     000003F8 36 00            [12]  910 	ld	(hl), #0x00
-                                    911 ;src/enemy.c:150: e->bossDirection = 1;
+                                    911 ;src/enemy.c:155: e->bossDirection = 1;
     000003FA F8 05            [12]  912 	ldhl	sp,	#5
     000003FC 2A               [ 8]  913 	ld	a, (hl+)
     000003FD 66               [ 8]  914 	ld	h, (hl)
@@ -916,13 +916,13 @@
     000003FF 36 01            [12]  916 	ld	(hl), #0x01
     00000401 18 23            [12]  917 	jr	00122$
     00000403                        918 00120$:
-                                    919 ;src/enemy.c:152: else if (nextX > 145)
+                                    919 ;src/enemy.c:157: else if (nextX > 145)
     00000403 3E 91            [ 8]  920 	ld	a, #0x91
     00000405 B9               [ 4]  921 	cp	a, c
     00000406 3E 00            [ 8]  922 	ld	a, #0x00
     00000408 98               [ 4]  923 	sbc	a, b
     00000409 30 13            [12]  924 	jr	NC, 00117$
-                                    925 ;src/enemy.c:154: e->x = 145;
+                                    925 ;src/enemy.c:159: e->x = 145;
     0000040B F8 01            [12]  926 	ldhl	sp,	#1
     0000040D 2A               [ 8]  927 	ld	a, (hl+)
     0000040E 66               [ 8]  928 	ld	h, (hl)
@@ -930,7 +930,7 @@
     00000410 3E 91            [ 8]  930 	ld	a, #0x91
     00000412 22               [ 8]  931 	ld	(hl+), a
     00000413 36 00            [12]  932 	ld	(hl), #0x00
-                                    933 ;src/enemy.c:155: e->bossDirection = -1;
+                                    933 ;src/enemy.c:160: e->bossDirection = -1;
     00000415 F8 05            [12]  934 	ldhl	sp,	#5
     00000417 2A               [ 8]  935 	ld	a, (hl+)
     00000418 66               [ 8]  936 	ld	h, (hl)
@@ -938,7 +938,7 @@
     0000041A 36 FF            [12]  938 	ld	(hl), #0xff
     0000041C 18 08            [12]  939 	jr	00122$
     0000041E                        940 00117$:
-                                    941 ;src/enemy.c:159: e->x = nextX;
+                                    941 ;src/enemy.c:164: e->x = nextX;
     0000041E F8 01            [12]  942 	ldhl	sp,	#1
     00000420 2A               [ 8]  943 	ld	a, (hl+)
     00000421 66               [ 8]  944 	ld	h, (hl)
@@ -947,10 +947,10 @@
     00000424 23               [ 8]  947 	inc	hl
     00000425 70               [ 8]  948 	ld	(hl), b
     00000426                        949 00122$:
-                                    950 ;src/enemy.c:161: }
+                                    950 ;src/enemy.c:166: }
     00000426 E8 07            [16]  951 	add	sp, #7
     00000428 C9               [16]  952 	ret
-                                    953 ;src/enemy.c:163: void updateEnemyPhysics(Enemy *e)
+                                    953 ;src/enemy.c:169: void updateEnemyPhysics(Enemy *e)
                                     954 ;	---------------------------------
                                     955 ; Function updateEnemyPhysics
                                     956 ; ---------------------------------
@@ -959,7 +959,7 @@
     0000042B F8 12            [12]  959 	ldhl	sp,	#18
     0000042D 7B               [ 4]  960 	ld	a, e
     0000042E 22               [ 8]  961 	ld	(hl+), a
-                                    962 ;src/enemy.c:165: if (!e->isActive)
+                                    962 ;src/enemy.c:171: if (!e->isActive)
     0000042F 7A               [ 4]  963 	ld	a, d
     00000430 32               [ 8]  964 	ld	(hl-), a
     00000431 2A               [ 8]  965 	ld	a, (hl+)
@@ -976,9 +976,9 @@
     0000043E F8 11            [12]  976 	ldhl	sp,	#17
     00000440 77               [ 8]  977 	ld	(hl), a
     00000441 B7               [ 4]  978 	or	a, a
-                                    979 ;src/enemy.c:166: return;
+                                    979 ;src/enemy.c:172: return;
     00000442 CAr09r08         [16]  980 	jp	Z, 00155$
-                                    981 ;src/enemy.c:168: if (e->type == ENEMY_TYPE_BOSS)
+                                    981 ;src/enemy.c:174: if (e->type == ENEMY_TYPE_BOSS)
     00000445 F8 12            [12]  982 	ldhl	sp,#18
     00000447 2A               [ 8]  983 	ld	a, (hl+)
     00000448 5F               [ 4]  984 	ld	e, a
@@ -1001,16 +1001,16 @@
     0000045E 77               [ 8] 1001 	ld	(hl), a
     0000045F D6 05            [ 8] 1002 	sub	a, #0x05
     00000461 20 0B            [12] 1003 	jr	NZ, 00104$
-                                   1004 ;src/enemy.c:170: updateBossPhysics(e);
+                                   1004 ;src/enemy.c:176: updateBossPhysics(e);
     00000463 F8 12            [12] 1005 	ldhl	sp,	#18
     00000465 2A               [ 8] 1006 	ld	a, (hl+)
     00000466 5F               [ 4] 1007 	ld	e, a
     00000467 56               [ 8] 1008 	ld	d, (hl)
     00000468 CDrF1r02         [24] 1009 	call	_updateBossPhysics
-                                   1010 ;src/enemy.c:171: return;
+                                   1010 ;src/enemy.c:177: return;
     0000046B C3r09r08         [16] 1011 	jp	00155$
     0000046E                       1012 00104$:
-                                   1013 ;src/enemy.c:174: if (e->deathTimer > 0)
+                                   1013 ;src/enemy.c:180: if (e->deathTimer > 0)
     0000046E F8 12            [12] 1014 	ldhl	sp,#18
     00000470 2A               [ 8] 1015 	ld	a, (hl+)
     00000471 5F               [ 4] 1016 	ld	e, a
@@ -1021,7 +1021,7 @@
     00000478 44               [ 4] 1021 	ld	b, h
     00000479 0A               [ 8] 1022 	ld	a, (bc)
     0000047A 5F               [ 4] 1023 	ld	e, a
-                                   1024 ;src/enemy.c:180: hideSprite4(e->spriteBase);
+                                   1024 ;src/enemy.c:186: hideSprite4(e->spriteBase);
     0000047B D5               [16] 1025 	push	de
     0000047C F8 14            [12] 1026 	ldhl	sp,#20
     0000047E 2A               [ 8] 1027 	ld	a, (hl+)
@@ -1038,32 +1038,32 @@
     0000048C 7C               [ 4] 1038 	ld	a, h
     0000048D F8 05            [12] 1039 	ldhl	sp,	#5
     0000048F 77               [ 8] 1040 	ld	(hl), a
-                                   1041 ;src/enemy.c:174: if (e->deathTimer > 0)
+                                   1041 ;src/enemy.c:180: if (e->deathTimer > 0)
     00000490 7B               [ 4] 1042 	ld	a, e
     00000491 B7               [ 4] 1043 	or	a, a
     00000492 28 17            [12] 1044 	jr	Z, 00108$
-                                   1045 ;src/enemy.c:176: e->deathTimer--;
+                                   1045 ;src/enemy.c:182: e->deathTimer--;
     00000494 7B               [ 4] 1046 	ld	a, e
     00000495 3D               [ 4] 1047 	dec	a
     00000496 02               [ 8] 1048 	ld	(bc), a
-                                   1049 ;src/enemy.c:177: if (e->deathTimer == 0)
+                                   1049 ;src/enemy.c:183: if (e->deathTimer == 0)
     00000497 B7               [ 4] 1050 	or	a, a
     00000498 C2r09r08         [16] 1051 	jp	NZ, 00155$
-                                   1052 ;src/enemy.c:179: e->isActive = 0;
+                                   1052 ;src/enemy.c:185: e->isActive = 0;
     0000049B E1               [12] 1053 	pop	hl
     0000049C 36 00            [12] 1054 	ld	(hl), #0x00
     0000049E E5               [16] 1055 	push	hl
-                                   1056 ;src/enemy.c:180: hideSprite4(e->spriteBase);
+                                   1056 ;src/enemy.c:186: hideSprite4(e->spriteBase);
     0000049F F8 04            [12] 1057 	ldhl	sp,#4
     000004A1 2A               [ 8] 1058 	ld	a, (hl+)
     000004A2 5F               [ 4] 1059 	ld	e, a
     000004A3 56               [ 8] 1060 	ld	d, (hl)
     000004A4 1A               [ 8] 1061 	ld	a, (de)
     000004A5 CDr00r00         [24] 1062 	call	_hideSprite4
-                                   1063 ;src/enemy.c:182: return;
+                                   1063 ;src/enemy.c:188: return;
     000004A8 C3r09r08         [16] 1064 	jp	00155$
     000004AB                       1065 00108$:
-                                   1066 ;src/enemy.c:187: e->velocityY += GRAVITY;
+                                   1066 ;src/enemy.c:193: e->velocityY += GRAVITY;
     000004AB F8 12            [12] 1067 	ldhl	sp,#18
     000004AD 2A               [ 8] 1068 	ld	a, (hl+)
     000004AE 5F               [ 4] 1069 	ld	e, a
@@ -1078,7 +1078,7 @@
     000004BA 7C               [ 4] 1078 	ld	a, h
     000004BB F8 07            [12] 1079 	ldhl	sp,	#7
     000004BD 77               [ 8] 1080 	ld	(hl), a
-                                   1081 ;src/enemy.c:188: e->y -= e->velocityY;
+                                   1081 ;src/enemy.c:194: e->y -= e->velocityY;
     000004BE F8 12            [12] 1082 	ldhl	sp,#18
     000004C0 2A               [ 8] 1083 	ld	a, (hl+)
     000004C1 5F               [ 4] 1084 	ld	e, a
@@ -1093,7 +1093,7 @@
     000004CD 7C               [ 4] 1093 	ld	a, h
     000004CE F8 09            [12] 1094 	ldhl	sp,	#9
     000004D0 77               [ 8] 1095 	ld	(hl), a
-                                   1096 ;src/enemy.c:190: if (e->x > e->targetX + 2)
+                                   1096 ;src/enemy.c:196: if (e->x > e->targetX + 2)
     000004D1 F8 12            [12] 1097 	ldhl	sp,	#18
     000004D3 7E               [ 8] 1098 	ld	a, (hl)
     000004D4 F8 0A            [12] 1099 	ldhl	sp,	#10
@@ -1102,7 +1102,7 @@
     000004D9 7E               [ 8] 1102 	ld	a, (hl)
     000004DA F8 0B            [12] 1103 	ldhl	sp,	#11
     000004DC 77               [ 8] 1104 	ld	(hl), a
-                                   1105 ;src/enemy.c:202: e->isJumping = 0;
+                                   1105 ;src/enemy.c:208: e->isJumping = 0;
     000004DD F8 12            [12] 1106 	ldhl	sp,#18
     000004DF 2A               [ 8] 1107 	ld	a, (hl+)
     000004E0 5F               [ 4] 1108 	ld	e, a
@@ -1116,13 +1116,13 @@
     000004EB E1               [12] 1116 	pop	hl
     000004EC 7C               [ 4] 1117 	ld	a, h
     000004ED F8 0D            [12] 1118 	ldhl	sp,	#13
-                                   1119 ;src/enemy.c:185: if (e->type == ENEMY_TYPE_TARGETING)
+                                   1119 ;src/enemy.c:191: if (e->type == ENEMY_TYPE_TARGETING)
     000004EF 22               [ 8] 1120 	ld	(hl+), a
     000004F0 23               [ 8] 1121 	inc	hl
     000004F1 7E               [ 8] 1122 	ld	a, (hl)
     000004F2 D6 04            [ 8] 1123 	sub	a, #0x04
     000004F4 C2rA0r05         [16] 1124 	jp	NZ, 00151$
-                                   1125 ;src/enemy.c:187: e->velocityY += GRAVITY;
+                                   1125 ;src/enemy.c:193: e->velocityY += GRAVITY;
     000004F7 F8 06            [12] 1126 	ldhl	sp,#6
     000004F9 2A               [ 8] 1127 	ld	a, (hl+)
     000004FA 5F               [ 4] 1128 	ld	e, a
@@ -1134,7 +1134,7 @@
     00000501 6E               [ 8] 1134 	ld	l, (hl)
     00000502 67               [ 4] 1135 	ld	h, a
     00000503 71               [ 8] 1136 	ld	(hl), c
-                                   1137 ;src/enemy.c:188: e->y -= e->velocityY;
+                                   1137 ;src/enemy.c:194: e->y -= e->velocityY;
     00000504 F8 08            [12] 1138 	ldhl	sp,#8
     00000506 2A               [ 8] 1139 	ld	a, (hl+)
     00000507 5F               [ 4] 1140 	ld	e, a
@@ -1147,7 +1147,7 @@
     0000050E 66               [ 8] 1147 	ld	h, (hl)
     0000050F 6B               [ 4] 1148 	ld	l, e
     00000510 77               [ 8] 1149 	ld	(hl), a
-                                   1150 ;src/enemy.c:190: if (e->x > e->targetX + 2)
+                                   1150 ;src/enemy.c:196: if (e->x > e->targetX + 2)
     00000511 F8 0A            [12] 1151 	ldhl	sp,#10
     00000513 2A               [ 8] 1152 	ld	a, (hl+)
     00000514 5F               [ 4] 1153 	ld	e, a
@@ -1184,7 +1184,7 @@
     00000538 7A               [ 4] 1184 	ld	a, d
     00000539 9E               [ 8] 1185 	sbc	a, (hl)
     0000053A 30 1C            [12] 1186 	jr	NC, 00112$
-                                   1187 ;src/enemy.c:192: e->x -= getEnemySpeed();
+                                   1187 ;src/enemy.c:198: e->x -= getEnemySpeed();
     0000053C CDr00r00         [24] 1188 	call	_getEnemySpeed
     0000053F 4F               [ 4] 1189 	ld	c, a
     00000540 06 00            [ 8] 1190 	ld	b, #0x00
@@ -1208,7 +1208,7 @@
     00000555 70               [ 8] 1208 	ld	(hl), b
     00000556 18 20            [12] 1209 	jr	00113$
     00000558                       1210 00112$:
-                                   1211 ;src/enemy.c:194: else if (e->x < e->targetX - 2)
+                                   1211 ;src/enemy.c:200: else if (e->x < e->targetX - 2)
     00000558 0B               [ 8] 1212 	dec	bc
     00000559 0B               [ 8] 1213 	dec	bc
     0000055A F8 10            [12] 1214 	ldhl	sp,	#16
@@ -1217,7 +1217,7 @@
     0000055E 7E               [ 8] 1217 	ld	a, (hl)
     0000055F 98               [ 4] 1218 	sbc	a, b
     00000560 30 16            [12] 1219 	jr	NC, 00113$
-                                   1220 ;src/enemy.c:196: e->x += getEnemySpeed();
+                                   1220 ;src/enemy.c:202: e->x += getEnemySpeed();
     00000562 CDr00r00         [24] 1221 	call	_getEnemySpeed
     00000565 16 00            [ 8] 1222 	ld	d, #0x00
     00000567 5F               [ 4] 1223 	ld	e, a
@@ -1236,7 +1236,7 @@
     00000576 22               [ 8] 1236 	ld	(hl+), a
     00000577 70               [ 8] 1237 	ld	(hl), b
     00000578                       1238 00113$:
-                                   1239 ;src/enemy.c:199: if (e->y >= FLOOR_Y)
+                                   1239 ;src/enemy.c:205: if (e->y >= FLOOR_Y)
     00000578 F8 08            [12] 1240 	ldhl	sp,#8
     0000057A 2A               [ 8] 1241 	ld	a, (hl+)
     0000057B 5F               [ 4] 1242 	ld	e, a
@@ -1244,24 +1244,24 @@
     0000057D 1A               [ 8] 1244 	ld	a, (de)
     0000057E D6 69            [ 8] 1245 	sub	a, #0x69
     00000580 DArE4r07         [16] 1246 	jp	C, 00152$
-                                   1247 ;src/enemy.c:201: e->y = FLOOR_Y;
+                                   1247 ;src/enemy.c:207: e->y = FLOOR_Y;
     00000583 3A               [ 8] 1248 	ld	a, (hl-)
     00000584 6E               [ 8] 1249 	ld	l, (hl)
     00000585 67               [ 4] 1250 	ld	h, a
     00000586 36 69            [12] 1251 	ld	(hl), #0x69
-                                   1252 ;src/enemy.c:202: e->isJumping = 0;
+                                   1252 ;src/enemy.c:208: e->isJumping = 0;
     00000588 F8 0C            [12] 1253 	ldhl	sp,	#12
     0000058A 2A               [ 8] 1254 	ld	a, (hl+)
     0000058B 66               [ 8] 1255 	ld	h, (hl)
     0000058C 6F               [ 4] 1256 	ld	l, a
     0000058D 36 00            [12] 1257 	ld	(hl), #0x00
-                                   1258 ;src/enemy.c:203: e->velocityY = 0;
+                                   1258 ;src/enemy.c:209: e->velocityY = 0;
     0000058F F8 06            [12] 1259 	ldhl	sp,	#6
     00000591 2A               [ 8] 1260 	ld	a, (hl+)
     00000592 66               [ 8] 1261 	ld	h, (hl)
     00000593 6F               [ 4] 1262 	ld	l, a
     00000594 36 00            [12] 1263 	ld	(hl), #0x00
-                                   1264 ;src/enemy.c:204: e->type = ENEMY_TYPE_GROUND;
+                                   1264 ;src/enemy.c:210: e->type = ENEMY_TYPE_GROUND;
     00000596 F8 02            [12] 1265 	ldhl	sp,	#2
     00000598 2A               [ 8] 1266 	ld	a, (hl+)
     00000599 66               [ 8] 1267 	ld	h, (hl)
@@ -1269,12 +1269,12 @@
     0000059B 36 00            [12] 1269 	ld	(hl), #0x00
     0000059D C3rE4r07         [16] 1270 	jp	00152$
     000005A0                       1271 00151$:
-                                   1272 ;src/enemy.c:207: else if (e->type == ENEMY_TYPE_FLYING)
+                                   1272 ;src/enemy.c:213: else if (e->type == ENEMY_TYPE_FLYING)
     000005A0 F8 0F            [12] 1273 	ldhl	sp,	#15
     000005A2 7E               [ 8] 1274 	ld	a, (hl)
     000005A3 D6 03            [ 8] 1275 	sub	a, #0x03
     000005A5 C2r4Fr06         [16] 1276 	jp	NZ, 00148$
-                                   1277 ;src/enemy.c:209: e->flyingBobTimer++;
+                                   1277 ;src/enemy.c:215: e->flyingBobTimer++;
     000005A8 F8 12            [12] 1278 	ldhl	sp,#18
     000005AA 2A               [ 8] 1279 	ld	a, (hl+)
     000005AB 5F               [ 4] 1280 	ld	e, a
@@ -1287,7 +1287,7 @@
     000005B4 3C               [ 4] 1287 	inc	a
     000005B5 4F               [ 4] 1288 	ld	c, a
     000005B6 12               [ 8] 1289 	ld	(de), a
-                                   1290 ;src/enemy.c:213: e->flyingDirection = -e->flyingDirection;
+                                   1290 ;src/enemy.c:219: e->flyingDirection = -e->flyingDirection;
     000005B7 D5               [16] 1291 	push	de
     000005B8 F8 14            [12] 1292 	ldhl	sp,#20
     000005BA 2A               [ 8] 1293 	ld	a, (hl+)
@@ -1304,12 +1304,12 @@
     000005C8 7C               [ 4] 1304 	ld	a, h
     000005C9 F8 10            [12] 1305 	ldhl	sp,	#16
     000005CB 77               [ 8] 1306 	ld	(hl), a
-                                   1307 ;src/enemy.c:210: if (e->flyingBobTimer > 15)
+                                   1307 ;src/enemy.c:216: if (e->flyingBobTimer > 15)
     000005CC 3E 0F            [ 8] 1308 	ld	a, #0x0f
     000005CE 91               [ 4] 1309 	sub	a, c
     000005CF 30 0F            [12] 1310 	jr	NC, 00117$
-                                   1311 ;src/enemy.c:212: e->flyingBobTimer = 0;
-                                   1312 ;src/enemy.c:213: e->flyingDirection = -e->flyingDirection;
+                                   1311 ;src/enemy.c:218: e->flyingBobTimer = 0;
+                                   1312 ;src/enemy.c:219: e->flyingDirection = -e->flyingDirection;
     000005D1 2B               [ 8] 1313 	dec	hl
     000005D2 AF               [ 4] 1314 	xor	a, a
     000005D3 12               [ 8] 1315 	ld	(de), a
@@ -1326,7 +1326,7 @@
     000005DE 67               [ 4] 1326 	ld	h, a
     000005DF 71               [ 8] 1327 	ld	(hl), c
     000005E0                       1328 00117$:
-                                   1329 ;src/enemy.c:215: e->y += e->flyingDirection;
+                                   1329 ;src/enemy.c:221: e->y += e->flyingDirection;
     000005E0 F8 08            [12] 1330 	ldhl	sp,#8
     000005E2 2A               [ 8] 1331 	ld	a, (hl+)
     000005E3 5F               [ 4] 1332 	ld	e, a
@@ -1345,7 +1345,7 @@
     000005F2 66               [ 8] 1345 	ld	h, (hl)
     000005F3 6B               [ 4] 1346 	ld	l, e
     000005F4 77               [ 8] 1347 	ld	(hl), a
-                                   1348 ;src/enemy.c:217: if (e->y < ENEMY_FLY_Y_HIGH)
+                                   1348 ;src/enemy.c:223: if (e->y < ENEMY_FLY_Y_HIGH)
     000005F5 F8 08            [12] 1349 	ldhl	sp,#8
     000005F7 2A               [ 8] 1350 	ld	a, (hl+)
     000005F8 5F               [ 4] 1351 	ld	e, a
@@ -1355,13 +1355,13 @@
     000005FD 77               [ 8] 1355 	ld	(hl), a
     000005FE D6 32            [ 8] 1356 	sub	a, #0x32
     00000600 30 10            [12] 1357 	jr	NC, 00121$
-                                   1358 ;src/enemy.c:219: e->y = ENEMY_FLY_Y_HIGH;
+                                   1358 ;src/enemy.c:225: e->y = ENEMY_FLY_Y_HIGH;
     00000602 F8 08            [12] 1359 	ldhl	sp,	#8
     00000604 2A               [ 8] 1360 	ld	a, (hl+)
     00000605 66               [ 8] 1361 	ld	h, (hl)
     00000606 6F               [ 4] 1362 	ld	l, a
     00000607 36 32            [12] 1363 	ld	(hl), #0x32
-                                   1364 ;src/enemy.c:220: e->flyingDirection = 1;
+                                   1364 ;src/enemy.c:226: e->flyingDirection = 1;
     00000609 F8 0F            [12] 1365 	ldhl	sp,	#15
     0000060B 2A               [ 8] 1366 	ld	a, (hl+)
     0000060C 66               [ 8] 1367 	ld	h, (hl)
@@ -1369,34 +1369,34 @@
     0000060E 36 01            [12] 1369 	ld	(hl), #0x01
     00000610 18 15            [12] 1370 	jr	00122$
     00000612                       1371 00121$:
-                                   1372 ;src/enemy.c:222: else if (e->y > ENEMY_FLY_Y_LOW)
+                                   1372 ;src/enemy.c:228: else if (e->y > ENEMY_FLY_Y_LOW)
     00000612 3E 5A            [ 8] 1373 	ld	a, #0x5a
     00000614 F8 11            [12] 1374 	ldhl	sp,	#17
     00000616 96               [ 8] 1375 	sub	a, (hl)
     00000617 30 0E            [12] 1376 	jr	NC, 00122$
-                                   1377 ;src/enemy.c:224: e->y = ENEMY_FLY_Y_LOW;
+                                   1377 ;src/enemy.c:230: e->y = ENEMY_FLY_Y_LOW;
     00000619 F8 08            [12] 1378 	ldhl	sp,	#8
     0000061B 2A               [ 8] 1379 	ld	a, (hl+)
     0000061C 66               [ 8] 1380 	ld	h, (hl)
     0000061D 6F               [ 4] 1381 	ld	l, a
     0000061E 36 5A            [12] 1382 	ld	(hl), #0x5a
-                                   1383 ;src/enemy.c:225: e->flyingDirection = -1;
+                                   1383 ;src/enemy.c:231: e->flyingDirection = -1;
     00000620 F8 0F            [12] 1384 	ldhl	sp,	#15
     00000622 2A               [ 8] 1385 	ld	a, (hl+)
     00000623 66               [ 8] 1386 	ld	h, (hl)
     00000624 6F               [ 4] 1387 	ld	l, a
     00000625 36 FF            [12] 1388 	ld	(hl), #0xff
     00000627                       1389 00122$:
-                                   1390 ;src/enemy.c:229: UINT8 speed = getEnemySpeed();
+                                   1390 ;src/enemy.c:235: UINT8 speed = getEnemySpeed();
     00000627 CDr00r00         [24] 1391 	call	_getEnemySpeed
     0000062A 4F               [ 4] 1392 	ld	c, a
-                                   1393 ;src/enemy.c:231: if (speed > maxGhostSpeed) speed = maxGhostSpeed;
+                                   1393 ;src/enemy.c:237: if (speed > maxGhostSpeed) speed = maxGhostSpeed;
     0000062B 3E 04            [ 8] 1394 	ld	a, #0x04
     0000062D 91               [ 4] 1395 	sub	a, c
     0000062E 30 02            [12] 1396 	jr	NC, 00124$
     00000630 0E 04            [ 8] 1397 	ld	c, #0x04
     00000632                       1398 00124$:
-                                   1399 ;src/enemy.c:232: e->x -= speed;
+                                   1399 ;src/enemy.c:238: e->x -= speed;
     00000632 F8 0A            [12] 1400 	ldhl	sp,#10
     00000634 2A               [ 8] 1401 	ld	a, (hl+)
     00000635 5F               [ 4] 1402 	ld	e, a
@@ -1422,14 +1422,14 @@
     0000064B 70               [ 8] 1422 	ld	(hl), b
     0000064C C3rE4r07         [16] 1423 	jp	00152$
     0000064F                       1424 00148$:
-                                   1425 ;src/enemy.c:234: else if (e->isJumping)
+                                   1425 ;src/enemy.c:240: else if (e->isJumping)
     0000064F F8 0C            [12] 1426 	ldhl	sp,#12
     00000651 2A               [ 8] 1427 	ld	a, (hl+)
     00000652 5F               [ 4] 1428 	ld	e, a
     00000653 56               [ 8] 1429 	ld	d, (hl)
     00000654 1A               [ 8] 1430 	ld	a, (de)
     00000655 4F               [ 4] 1431 	ld	c, a
-                                   1432 ;src/enemy.c:247: e->jumpTimer = 20 + (simpleRand() % 30);
+                                   1432 ;src/enemy.c:253: e->jumpTimer = 20 + (simpleRand() % 30);
     00000656 F8 12            [12] 1433 	ldhl	sp,#18
     00000658 2A               [ 8] 1434 	ld	a, (hl+)
     00000659 5F               [ 4] 1435 	ld	e, a
@@ -1444,11 +1444,11 @@
     00000665 7C               [ 4] 1444 	ld	a, h
     00000666 F8 11            [12] 1445 	ldhl	sp,	#17
     00000668 77               [ 8] 1446 	ld	(hl), a
-                                   1447 ;src/enemy.c:234: else if (e->isJumping)
+                                   1447 ;src/enemy.c:240: else if (e->isJumping)
     00000669 79               [ 4] 1448 	ld	a, c
     0000066A B7               [ 4] 1449 	or	a, a
     0000066B CAr03r07         [16] 1450 	jp	Z, 00145$
-                                   1451 ;src/enemy.c:236: e->velocityY += GRAVITY;
+                                   1451 ;src/enemy.c:242: e->velocityY += GRAVITY;
     0000066E F8 06            [12] 1452 	ldhl	sp,#6
     00000670 2A               [ 8] 1453 	ld	a, (hl+)
     00000671 5F               [ 4] 1454 	ld	e, a
@@ -1460,7 +1460,7 @@
     00000678 6E               [ 8] 1460 	ld	l, (hl)
     00000679 67               [ 4] 1461 	ld	h, a
     0000067A 71               [ 8] 1462 	ld	(hl), c
-                                   1463 ;src/enemy.c:237: e->y -= e->velocityY;
+                                   1463 ;src/enemy.c:243: e->y -= e->velocityY;
     0000067B F8 08            [12] 1464 	ldhl	sp,#8
     0000067D 2A               [ 8] 1465 	ld	a, (hl+)
     0000067E 5F               [ 4] 1466 	ld	e, a
@@ -1473,7 +1473,7 @@
     00000685 66               [ 8] 1473 	ld	h, (hl)
     00000686 6B               [ 4] 1474 	ld	l, e
     00000687 77               [ 8] 1475 	ld	(hl), a
-                                   1476 ;src/enemy.c:239: if (e->y >= FLOOR_Y)
+                                   1476 ;src/enemy.c:245: if (e->y >= FLOOR_Y)
     00000688 F8 08            [12] 1477 	ldhl	sp,#8
     0000068A 2A               [ 8] 1478 	ld	a, (hl+)
     0000068B 5F               [ 4] 1479 	ld	e, a
@@ -1481,24 +1481,24 @@
     0000068D 1A               [ 8] 1481 	ld	a, (de)
     0000068E D6 69            [ 8] 1482 	sub	a, #0x69
     00000690 38 3D            [12] 1483 	jr	C, 00130$
-                                   1484 ;src/enemy.c:241: e->y = FLOOR_Y;
+                                   1484 ;src/enemy.c:247: e->y = FLOOR_Y;
     00000692 3A               [ 8] 1485 	ld	a, (hl-)
     00000693 6E               [ 8] 1486 	ld	l, (hl)
     00000694 67               [ 4] 1487 	ld	h, a
     00000695 36 69            [12] 1488 	ld	(hl), #0x69
-                                   1489 ;src/enemy.c:242: e->isJumping = 0;
+                                   1489 ;src/enemy.c:248: e->isJumping = 0;
     00000697 F8 0C            [12] 1490 	ldhl	sp,	#12
     00000699 2A               [ 8] 1491 	ld	a, (hl+)
     0000069A 66               [ 8] 1492 	ld	h, (hl)
     0000069B 6F               [ 4] 1493 	ld	l, a
     0000069C 36 00            [12] 1494 	ld	(hl), #0x00
-                                   1495 ;src/enemy.c:243: e->velocityY = 0;
+                                   1495 ;src/enemy.c:249: e->velocityY = 0;
     0000069E F8 06            [12] 1496 	ldhl	sp,	#6
     000006A0 2A               [ 8] 1497 	ld	a, (hl+)
     000006A1 66               [ 8] 1498 	ld	h, (hl)
     000006A2 6F               [ 4] 1499 	ld	l, a
     000006A3 36 00            [12] 1500 	ld	(hl), #0x00
-                                   1501 ;src/enemy.c:245: if (e->type == ENEMY_TYPE_JUMPING)
+                                   1501 ;src/enemy.c:251: if (e->type == ENEMY_TYPE_JUMPING)
     000006A5 F8 02            [12] 1502 	ldhl	sp,#2
     000006A7 2A               [ 8] 1503 	ld	a, (hl+)
     000006A8 5F               [ 4] 1504 	ld	e, a
@@ -1506,7 +1506,7 @@
     000006AA 1A               [ 8] 1506 	ld	a, (de)
     000006AB 3D               [ 4] 1507 	dec	a
     000006AC 20 12            [12] 1508 	jr	NZ, 00126$
-                                   1509 ;src/enemy.c:247: e->jumpTimer = 20 + (simpleRand() % 30);
+                                   1509 ;src/enemy.c:253: e->jumpTimer = 20 + (simpleRand() % 30);
     000006AE CDr00r00         [24] 1510 	call	_simpleRand
     000006B1 1E 1E            [ 8] 1511 	ld	e, #0x1e
     000006B3 CDr00r00         [24] 1512 	call	__moduchar
@@ -1519,7 +1519,7 @@
     000006BE 6B               [ 4] 1519 	ld	l, e
     000006BF 77               [ 8] 1520 	ld	(hl), a
     000006C0                       1521 00126$:
-                                   1522 ;src/enemy.c:250: if (e->type == ENEMY_TYPE_FALLING)
+                                   1522 ;src/enemy.c:256: if (e->type == ENEMY_TYPE_FALLING)
     000006C0 F8 02            [12] 1523 	ldhl	sp,#2
     000006C2 2A               [ 8] 1524 	ld	a, (hl+)
     000006C3 5F               [ 4] 1525 	ld	e, a
@@ -1527,13 +1527,13 @@
     000006C5 1A               [ 8] 1527 	ld	a, (de)
     000006C6 D6 02            [ 8] 1528 	sub	a, #0x02
     000006C8 20 05            [12] 1529 	jr	NZ, 00130$
-                                   1530 ;src/enemy.c:252: e->type = ENEMY_TYPE_GROUND;
+                                   1530 ;src/enemy.c:258: e->type = ENEMY_TYPE_GROUND;
     000006CA 3A               [ 8] 1531 	ld	a, (hl-)
     000006CB 6E               [ 8] 1532 	ld	l, (hl)
     000006CC 67               [ 4] 1533 	ld	h, a
     000006CD 36 00            [12] 1534 	ld	(hl), #0x00
     000006CF                       1535 00130$:
-                                   1536 ;src/enemy.c:256: e->x -= getEnemySpeed();
+                                   1536 ;src/enemy.c:262: e->x -= getEnemySpeed();
     000006CF F8 0A            [12] 1537 	ldhl	sp,#10
     000006D1 2A               [ 8] 1538 	ld	a, (hl+)
     000006D2 5F               [ 4] 1539 	ld	e, a
@@ -1578,12 +1578,12 @@
     000006FF 12               [ 8] 1578 	ld	(de), a
     00000700 C3rE4r07         [16] 1579 	jp	00152$
     00000703                       1580 00145$:
-                                   1581 ;src/enemy.c:258: else if (e->type == ENEMY_TYPE_GROUND)
+                                   1581 ;src/enemy.c:264: else if (e->type == ENEMY_TYPE_GROUND)
     00000703 F8 0F            [12] 1582 	ldhl	sp,	#15
     00000705 7E               [ 8] 1583 	ld	a, (hl)
     00000706 B7               [ 4] 1584 	or	a, a
     00000707 20 6B            [12] 1585 	jr	NZ, 00142$
-                                   1586 ;src/enemy.c:260: if (e->jumpTimer > 0)
+                                   1586 ;src/enemy.c:266: if (e->jumpTimer > 0)
     00000709 23               [ 8] 1587 	inc	hl
     0000070A 2A               [ 8] 1588 	ld	a, (hl+)
     0000070B 5F               [ 4] 1589 	ld	e, a
@@ -1591,7 +1591,7 @@
     0000070D 1A               [ 8] 1591 	ld	a, (de)
     0000070E B7               [ 4] 1592 	or	a, a
     0000070F 28 07            [12] 1593 	jr	Z, 00132$
-                                   1594 ;src/enemy.c:262: e->jumpTimer--;
+                                   1594 ;src/enemy.c:268: e->jumpTimer--;
     00000711 2B               [ 8] 1595 	dec	hl
     00000712 3D               [ 4] 1596 	dec	a
     00000713 5E               [ 8] 1597 	ld	e, (hl)
@@ -1600,7 +1600,7 @@
     00000716 6B               [ 4] 1600 	ld	l, e
     00000717 77               [ 8] 1601 	ld	(hl), a
     00000718                       1602 00132$:
-                                   1603 ;src/enemy.c:264: if (e->jumpTimer == 0)
+                                   1603 ;src/enemy.c:270: if (e->jumpTimer == 0)
     00000718 F8 10            [12] 1604 	ldhl	sp,#16
     0000071A 2A               [ 8] 1605 	ld	a, (hl+)
     0000071B 5F               [ 4] 1606 	ld	e, a
@@ -1608,19 +1608,19 @@
     0000071D 1A               [ 8] 1608 	ld	a, (de)
     0000071E B7               [ 4] 1609 	or	a, a
     0000071F 20 20            [12] 1610 	jr	NZ, 00134$
-                                   1611 ;src/enemy.c:266: e->isJumping = 1;
+                                   1611 ;src/enemy.c:272: e->isJumping = 1;
     00000721 F8 0C            [12] 1612 	ldhl	sp,	#12
     00000723 2A               [ 8] 1613 	ld	a, (hl+)
     00000724 66               [ 8] 1614 	ld	h, (hl)
     00000725 6F               [ 4] 1615 	ld	l, a
     00000726 36 01            [12] 1616 	ld	(hl), #0x01
-                                   1617 ;src/enemy.c:267: e->velocityY = ENEMY_JUMP_STRENGTH;
+                                   1617 ;src/enemy.c:273: e->velocityY = ENEMY_JUMP_STRENGTH;
     00000728 F8 06            [12] 1618 	ldhl	sp,	#6
     0000072A 2A               [ 8] 1619 	ld	a, (hl+)
     0000072B 66               [ 8] 1620 	ld	h, (hl)
     0000072C 6F               [ 4] 1621 	ld	l, a
     0000072D 36 0C            [12] 1622 	ld	(hl), #0x0c
-                                   1623 ;src/enemy.c:268: e->jumpTimer = 40 + (simpleRand() % 70);
+                                   1623 ;src/enemy.c:274: e->jumpTimer = 40 + (simpleRand() % 70);
     0000072F CDr00r00         [24] 1624 	call	_simpleRand
     00000732 1E 46            [ 8] 1625 	ld	e, #0x46
     00000734 CDr00r00         [24] 1626 	call	__moduchar
@@ -1633,7 +1633,7 @@
     0000073F 6B               [ 4] 1633 	ld	l, e
     00000740 77               [ 8] 1634 	ld	(hl), a
     00000741                       1635 00134$:
-                                   1636 ;src/enemy.c:271: e->x -= getEnemySpeed();
+                                   1636 ;src/enemy.c:277: e->x -= getEnemySpeed();
     00000741 F8 0A            [12] 1637 	ldhl	sp,#10
     00000743 2A               [ 8] 1638 	ld	a, (hl+)
     00000744 5F               [ 4] 1639 	ld	e, a
@@ -1678,12 +1678,12 @@
     00000771 12               [ 8] 1678 	ld	(de), a
     00000772 18 70            [12] 1679 	jr	00152$
     00000774                       1680 00142$:
-                                   1681 ;src/enemy.c:273: else if (e->type == ENEMY_TYPE_JUMPING)
+                                   1681 ;src/enemy.c:279: else if (e->type == ENEMY_TYPE_JUMPING)
     00000774 F8 0F            [12] 1682 	ldhl	sp,	#15
     00000776 7E               [ 8] 1683 	ld	a, (hl)
     00000777 3D               [ 4] 1684 	dec	a
     00000778 20 6A            [12] 1685 	jr	NZ, 00152$
-                                   1686 ;src/enemy.c:275: if (e->jumpTimer > 0)
+                                   1686 ;src/enemy.c:281: if (e->jumpTimer > 0)
     0000077A F8 10            [12] 1687 	ldhl	sp,#16
     0000077C 2A               [ 8] 1688 	ld	a, (hl+)
     0000077D 5F               [ 4] 1689 	ld	e, a
@@ -1691,7 +1691,7 @@
     0000077F 1A               [ 8] 1691 	ld	a, (de)
     00000780 B7               [ 4] 1692 	or	a, a
     00000781 28 07            [12] 1693 	jr	Z, 00136$
-                                   1694 ;src/enemy.c:277: e->jumpTimer--;
+                                   1694 ;src/enemy.c:283: e->jumpTimer--;
     00000783 2B               [ 8] 1695 	dec	hl
     00000784 3D               [ 4] 1696 	dec	a
     00000785 5E               [ 8] 1697 	ld	e, (hl)
@@ -1700,7 +1700,7 @@
     00000788 6B               [ 4] 1700 	ld	l, e
     00000789 77               [ 8] 1701 	ld	(hl), a
     0000078A                       1702 00136$:
-                                   1703 ;src/enemy.c:279: if (e->jumpTimer == 0)
+                                   1703 ;src/enemy.c:285: if (e->jumpTimer == 0)
     0000078A F8 10            [12] 1704 	ldhl	sp,#16
     0000078C 2A               [ 8] 1705 	ld	a, (hl+)
     0000078D 5F               [ 4] 1706 	ld	e, a
@@ -1708,19 +1708,19 @@
     0000078F 1A               [ 8] 1708 	ld	a, (de)
     00000790 B7               [ 4] 1709 	or	a, a
     00000791 20 20            [12] 1710 	jr	NZ, 00138$
-                                   1711 ;src/enemy.c:281: e->isJumping = 1;
+                                   1711 ;src/enemy.c:287: e->isJumping = 1;
     00000793 F8 0C            [12] 1712 	ldhl	sp,	#12
     00000795 2A               [ 8] 1713 	ld	a, (hl+)
     00000796 66               [ 8] 1714 	ld	h, (hl)
     00000797 6F               [ 4] 1715 	ld	l, a
     00000798 36 01            [12] 1716 	ld	(hl), #0x01
-                                   1717 ;src/enemy.c:282: e->velocityY = ENEMY_JUMP_STRENGTH;
+                                   1717 ;src/enemy.c:288: e->velocityY = ENEMY_JUMP_STRENGTH;
     0000079A F8 06            [12] 1718 	ldhl	sp,	#6
     0000079C 2A               [ 8] 1719 	ld	a, (hl+)
     0000079D 66               [ 8] 1720 	ld	h, (hl)
     0000079E 6F               [ 4] 1721 	ld	l, a
     0000079F 36 0C            [12] 1722 	ld	(hl), #0x0c
-                                   1723 ;src/enemy.c:283: e->jumpTimer = 20 + (simpleRand() % 30);
+                                   1723 ;src/enemy.c:289: e->jumpTimer = 20 + (simpleRand() % 30);
     000007A1 CDr00r00         [24] 1724 	call	_simpleRand
     000007A4 1E 1E            [ 8] 1725 	ld	e, #0x1e
     000007A6 CDr00r00         [24] 1726 	call	__moduchar
@@ -1733,7 +1733,7 @@
     000007B1 6B               [ 4] 1733 	ld	l, e
     000007B2 77               [ 8] 1734 	ld	(hl), a
     000007B3                       1735 00138$:
-                                   1736 ;src/enemy.c:286: e->x -= getEnemySpeed();
+                                   1736 ;src/enemy.c:292: e->x -= getEnemySpeed();
     000007B3 F8 0A            [12] 1737 	ldhl	sp,#10
     000007B5 2A               [ 8] 1738 	ld	a, (hl+)
     000007B6 5F               [ 4] 1739 	ld	e, a
@@ -1777,7 +1777,7 @@
     000007E2 7E               [ 8] 1777 	ld	a, (hl)
     000007E3 12               [ 8] 1778 	ld	(de), a
     000007E4                       1779 00152$:
-                                   1780 ;src/enemy.c:289: if (e->x < -20)
+                                   1780 ;src/enemy.c:295: if (e->x < -20)
     000007E4 F8 0A            [12] 1781 	ldhl	sp,#10
     000007E6 2A               [ 8] 1782 	ld	a, (hl+)
     000007E7 5F               [ 4] 1783 	ld	e, a
@@ -1795,24 +1795,24 @@
     000007F4 1F               [ 4] 1795 	rra
     000007F5 DE 7F            [ 8] 1796 	sbc	a, #0x7f
     000007F7 30 10            [12] 1797 	jr	NC, 00155$
-                                   1798 ;src/enemy.c:291: e->isActive = 0;
+                                   1798 ;src/enemy.c:297: e->isActive = 0;
     000007F9 E1               [12] 1799 	pop	hl
     000007FA 36 00            [12] 1800 	ld	(hl), #0x00
     000007FC E5               [16] 1801 	push	hl
-                                   1802 ;src/enemy.c:292: hideSprite4(e->spriteBase);
+                                   1802 ;src/enemy.c:298: hideSprite4(e->spriteBase);
     000007FD F8 04            [12] 1803 	ldhl	sp,#4
     000007FF 2A               [ 8] 1804 	ld	a, (hl+)
     00000800 5F               [ 4] 1805 	ld	e, a
     00000801 56               [ 8] 1806 	ld	d, (hl)
     00000802 1A               [ 8] 1807 	ld	a, (de)
     00000803 CDr00r00         [24] 1808 	call	_hideSprite4
-                                   1809 ;src/enemy.c:294: loseQuarterLife();
+                                   1809 ;src/enemy.c:300: loseQuarterLife();
     00000806 CDr00r00         [24] 1810 	call	_loseQuarterLife
     00000809                       1811 00155$:
-                                   1812 ;src/enemy.c:296: }
+                                   1812 ;src/enemy.c:302: }
     00000809 E8 14            [16] 1813 	add	sp, #20
     0000080B C9               [16] 1814 	ret
-                                   1815 ;src/enemy.c:298: void updateEnemyAnimation(Enemy *e)
+                                   1815 ;src/enemy.c:305: void updateEnemyAnimation(Enemy *e)
                                    1816 ;	---------------------------------
                                    1817 ; Function updateEnemyAnimation
                                    1818 ; ---------------------------------
@@ -1821,7 +1821,7 @@
     0000080E F8 0B            [12] 1821 	ldhl	sp,	#11
     00000810 7B               [ 4] 1822 	ld	a, e
     00000811 22               [ 8] 1823 	ld	(hl+), a
-                                   1824 ;src/enemy.c:300: if (!e->isActive)
+                                   1824 ;src/enemy.c:307: if (!e->isActive)
     00000812 7A               [ 4] 1825 	ld	a, d
     00000813 32               [ 8] 1826 	ld	(hl-), a
     00000814 2A               [ 8] 1827 	ld	a, (hl+)
@@ -1836,9 +1836,9 @@
     00000820 77               [ 8] 1836 	ld	(hl), a
     00000821 7E               [ 8] 1837 	ld	a, (hl)
     00000822 B7               [ 4] 1838 	or	a, a
-                                   1839 ;src/enemy.c:301: return;
+                                   1839 ;src/enemy.c:308: return;
     00000823 CArCBr0A         [16] 1840 	jp	Z, 00125$
-                                   1841 ;src/enemy.c:303: if (e->deathTimer > 0)
+                                   1841 ;src/enemy.c:310: if (e->deathTimer > 0)
     00000826 F8 0B            [12] 1842 	ldhl	sp,#11
     00000828 2A               [ 8] 1843 	ld	a, (hl+)
     00000829 5F               [ 4] 1844 	ld	e, a
@@ -1857,7 +1857,7 @@
     0000083A 5F               [ 4] 1857 	ld	e, a
     0000083B 56               [ 8] 1858 	ld	d, (hl)
     0000083C 1A               [ 8] 1859 	ld	a, (de)
-                                   1860 ;src/enemy.c:307: hideSprite4(e->spriteBase);
+                                   1860 ;src/enemy.c:314: hideSprite4(e->spriteBase);
     0000083D 22               [ 8] 1861 	ld	(hl+), a
     0000083E 2A               [ 8] 1862 	ld	a, (hl+)
     0000083F 5F               [ 4] 1863 	ld	e, a
@@ -1872,29 +1872,29 @@
     0000084B 7C               [ 4] 1872 	ld	a, h
     0000084C F8 03            [12] 1873 	ldhl	sp,	#3
     0000084E 77               [ 8] 1874 	ld	(hl), a
-                                   1875 ;src/enemy.c:303: if (e->deathTimer > 0)
+                                   1875 ;src/enemy.c:310: if (e->deathTimer > 0)
     0000084F F8 0A            [12] 1876 	ldhl	sp,	#10
     00000851 7E               [ 8] 1877 	ld	a, (hl)
     00000852 B7               [ 4] 1878 	or	a, a
     00000853 28 16            [12] 1879 	jr	Z, 00106$
-                                   1880 ;src/enemy.c:305: if (e->deathTimer % 4 < 2)
+                                   1880 ;src/enemy.c:312: if (e->deathTimer % 4 < 2)
     00000855 7E               [ 8] 1881 	ld	a, (hl)
     00000856 E6 03            [ 8] 1882 	and	a, #0x03
     00000858 77               [ 8] 1883 	ld	(hl), a
     00000859 7E               [ 8] 1884 	ld	a, (hl)
     0000085A D6 02            [ 8] 1885 	sub	a, #0x02
     0000085C D2rCBr0A         [16] 1886 	jp	NC, 00125$
-                                   1887 ;src/enemy.c:307: hideSprite4(e->spriteBase);
+                                   1887 ;src/enemy.c:314: hideSprite4(e->spriteBase);
     0000085F F8 02            [12] 1888 	ldhl	sp,#2
     00000861 2A               [ 8] 1889 	ld	a, (hl+)
     00000862 5F               [ 4] 1890 	ld	e, a
     00000863 56               [ 8] 1891 	ld	d, (hl)
     00000864 1A               [ 8] 1892 	ld	a, (de)
     00000865 CDr00r00         [24] 1893 	call	_hideSprite4
-                                   1894 ;src/enemy.c:309: return;
+                                   1894 ;src/enemy.c:316: return;
     00000868 C3rCBr0A         [16] 1895 	jp	00125$
     0000086B                       1896 00106$:
-                                   1897 ;src/enemy.c:312: if (e->hitFlashTimer > 0)
+                                   1897 ;src/enemy.c:319: if (e->hitFlashTimer > 0)
     0000086B F8 0B            [12] 1898 	ldhl	sp,#11
     0000086D 2A               [ 8] 1899 	ld	a, (hl+)
     0000086E 5F               [ 4] 1900 	ld	e, a
@@ -1906,23 +1906,23 @@
     00000876 0A               [ 8] 1906 	ld	a, (bc)
     00000877 B7               [ 4] 1907 	or	a, a
     00000878 28 12            [12] 1908 	jr	Z, 00110$
-                                   1909 ;src/enemy.c:314: e->hitFlashTimer--;
+                                   1909 ;src/enemy.c:321: e->hitFlashTimer--;
     0000087A 3D               [ 4] 1910 	dec	a
     0000087B 02               [ 8] 1911 	ld	(bc), a
-                                   1912 ;src/enemy.c:315: if (e->hitFlashTimer % 2 == 0)
+                                   1912 ;src/enemy.c:322: if (e->hitFlashTimer % 2 == 0)
     0000087C E6 01            [ 8] 1913 	and	a, #0x01
     0000087E 20 0C            [12] 1914 	jr	NZ, 00110$
-                                   1915 ;src/enemy.c:317: hideSprite4(e->spriteBase);
+                                   1915 ;src/enemy.c:324: hideSprite4(e->spriteBase);
     00000880 F8 02            [12] 1916 	ldhl	sp,#2
     00000882 2A               [ 8] 1917 	ld	a, (hl+)
     00000883 5F               [ 4] 1918 	ld	e, a
     00000884 56               [ 8] 1919 	ld	d, (hl)
     00000885 1A               [ 8] 1920 	ld	a, (de)
     00000886 CDr00r00         [24] 1921 	call	_hideSprite4
-                                   1922 ;src/enemy.c:318: return;
+                                   1922 ;src/enemy.c:325: return;
     00000889 C3rCBr0A         [16] 1923 	jp	00125$
     0000088C                       1924 00110$:
-                                   1925 ;src/enemy.c:322: e->animCounter++;
+                                   1925 ;src/enemy.c:329: e->animCounter++;
     0000088C F8 0B            [12] 1926 	ldhl	sp,#11
     0000088E 2A               [ 8] 1927 	ld	a, (hl+)
     0000088F 5F               [ 4] 1928 	ld	e, a
@@ -1947,7 +1947,7 @@
     000008A6 6E               [ 8] 1947 	ld	l, (hl)
     000008A7 67               [ 4] 1948 	ld	h, a
     000008A8 71               [ 8] 1949 	ld	(hl), c
-                                   1950 ;src/enemy.c:326: e->currentFrame = (e->currentFrame + 1) % 3;
+                                   1950 ;src/enemy.c:333: e->currentFrame = (e->currentFrame + 1) % 3;
     000008A9 F8 0B            [12] 1951 	ldhl	sp,#11
     000008AB 2A               [ 8] 1952 	ld	a, (hl+)
     000008AC 5F               [ 4] 1953 	ld	e, a
@@ -1962,17 +1962,17 @@
     000008B8 7C               [ 4] 1962 	ld	a, h
     000008B9 F8 05            [12] 1963 	ldhl	sp,	#5
     000008BB 77               [ 8] 1964 	ld	(hl), a
-                                   1965 ;src/enemy.c:323: if (e->animCounter >= ANIM_SPEED)
+                                   1965 ;src/enemy.c:330: if (e->animCounter >= ANIM_SPEED)
     000008BC 79               [ 4] 1966 	ld	a, c
     000008BD D6 0A            [ 8] 1967 	sub	a, #0x0a
     000008BF 38 1D            [12] 1968 	jr	C, 00112$
-                                   1969 ;src/enemy.c:325: e->animCounter = 0;
+                                   1969 ;src/enemy.c:332: e->animCounter = 0;
     000008C1 F8 08            [12] 1970 	ldhl	sp,	#8
     000008C3 2A               [ 8] 1971 	ld	a, (hl+)
     000008C4 66               [ 8] 1972 	ld	h, (hl)
     000008C5 6F               [ 4] 1973 	ld	l, a
     000008C6 36 00            [12] 1974 	ld	(hl), #0x00
-                                   1975 ;src/enemy.c:326: e->currentFrame = (e->currentFrame + 1) % 3;
+                                   1975 ;src/enemy.c:333: e->currentFrame = (e->currentFrame + 1) % 3;
     000008C8 F8 04            [12] 1976 	ldhl	sp,#4
     000008CA 2A               [ 8] 1977 	ld	a, (hl+)
     000008CB 5F               [ 4] 1978 	ld	e, a
@@ -1989,12 +1989,12 @@
     000008DC 6F               [ 4] 1989 	ld	l, a
     000008DD 71               [ 8] 1990 	ld	(hl), c
     000008DE                       1991 00112$:
-                                   1992 ;src/enemy.c:329: UINT8 baseTile = 0;
+                                   1992 ;src/enemy.c:336: UINT8 baseTile = 0;
     000008DE F8 06            [12] 1993 	ldhl	sp,	#6
     000008E0 36 00            [12] 1994 	ld	(hl), #0x00
-                                   1995 ;src/enemy.c:330: UINT8 frame_count = 1;
+                                   1995 ;src/enemy.c:337: UINT8 frame_count = 1;
     000008E2 F8 0A            [12] 1996 	ldhl	sp,	#10
-                                   1997 ;src/enemy.c:332: switch (e->type)
+                                   1997 ;src/enemy.c:339: switch (e->type)
     000008E4 3E 01            [ 8] 1998 	ld	a, #0x01
     000008E6 22               [ 8] 1999 	ld	(hl+), a
     000008E7 2A               [ 8] 2000 	ld	a, (hl+)
@@ -2025,12 +2025,12 @@
     00000909r33r09                 2025 	.dw	00115$
     0000090Br3Dr09                 2026 	.dw	00116$
     0000090Dr4Fr09                 2027 	.dw	00117$
-                                   2028 ;src/enemy.c:334: case ENEMY_TYPE_GROUND:
+                                   2028 ;src/enemy.c:341: case ENEMY_TYPE_GROUND:
     0000090F                       2029 00113$:
-                                   2030 ;src/enemy.c:335: frame_count = 3;
+                                   2030 ;src/enemy.c:342: frame_count = 3;
     0000090F F8 0A            [12] 2031 	ldhl	sp,	#10
     00000911 36 03            [12] 2032 	ld	(hl), #0x03
-                                   2033 ;src/enemy.c:336: baseTile = 8 + (e->currentFrame * 4);
+                                   2033 ;src/enemy.c:343: baseTile = 8 + (e->currentFrame * 4);
     00000913 F8 04            [12] 2034 	ldhl	sp,#4
     00000915 2A               [ 8] 2035 	ld	a, (hl+)
     00000916 5F               [ 4] 2036 	ld	e, a
@@ -2041,14 +2041,14 @@
     0000091B 87               [ 4] 2041 	add	a, a
     0000091C C6 08            [ 8] 2042 	add	a, #0x08
     0000091E 77               [ 8] 2043 	ld	(hl), a
-                                   2044 ;src/enemy.c:337: break;
+                                   2044 ;src/enemy.c:344: break;
     0000091F 18 3E            [12] 2045 	jr	00118$
-                                   2046 ;src/enemy.c:338: case ENEMY_TYPE_JUMPING:
+                                   2046 ;src/enemy.c:345: case ENEMY_TYPE_JUMPING:
     00000921                       2047 00114$:
-                                   2048 ;src/enemy.c:339: frame_count = 3;
+                                   2048 ;src/enemy.c:346: frame_count = 3;
     00000921 F8 0A            [12] 2049 	ldhl	sp,	#10
     00000923 36 03            [12] 2050 	ld	(hl), #0x03
-                                   2051 ;src/enemy.c:340: baseTile = 20 + (e->currentFrame * 4);
+                                   2051 ;src/enemy.c:347: baseTile = 20 + (e->currentFrame * 4);
     00000925 F8 04            [12] 2052 	ldhl	sp,#4
     00000927 2A               [ 8] 2053 	ld	a, (hl+)
     00000928 5F               [ 4] 2054 	ld	e, a
@@ -2059,24 +2059,24 @@
     0000092D 87               [ 4] 2059 	add	a, a
     0000092E C6 14            [ 8] 2060 	add	a, #0x14
     00000930 77               [ 8] 2061 	ld	(hl), a
-                                   2062 ;src/enemy.c:341: break;
+                                   2062 ;src/enemy.c:348: break;
     00000931 18 2C            [12] 2063 	jr	00118$
-                                   2064 ;src/enemy.c:342: case ENEMY_TYPE_FLYING:
+                                   2064 ;src/enemy.c:349: case ENEMY_TYPE_FLYING:
     00000933                       2065 00115$:
-                                   2066 ;src/enemy.c:343: frame_count = 1;
+                                   2066 ;src/enemy.c:350: frame_count = 1;
     00000933 F8 0A            [12] 2067 	ldhl	sp,	#10
     00000935 36 01            [12] 2068 	ld	(hl), #0x01
-                                   2069 ;src/enemy.c:344: baseTile = 32;
+                                   2069 ;src/enemy.c:351: baseTile = 32;
     00000937 F8 06            [12] 2070 	ldhl	sp,	#6
     00000939 36 20            [12] 2071 	ld	(hl), #0x20
-                                   2072 ;src/enemy.c:345: break;
+                                   2072 ;src/enemy.c:352: break;
     0000093B 18 22            [12] 2073 	jr	00118$
-                                   2074 ;src/enemy.c:346: case ENEMY_TYPE_TARGETING:
+                                   2074 ;src/enemy.c:353: case ENEMY_TYPE_TARGETING:
     0000093D                       2075 00116$:
-                                   2076 ;src/enemy.c:347: frame_count = 3;
+                                   2076 ;src/enemy.c:354: frame_count = 3;
     0000093D F8 0A            [12] 2077 	ldhl	sp,	#10
     0000093F 36 03            [12] 2078 	ld	(hl), #0x03
-                                   2079 ;src/enemy.c:348: baseTile = 8 + (e->currentFrame * 4);
+                                   2079 ;src/enemy.c:355: baseTile = 8 + (e->currentFrame * 4);
     00000941 F8 04            [12] 2080 	ldhl	sp,#4
     00000943 2A               [ 8] 2081 	ld	a, (hl+)
     00000944 5F               [ 4] 2082 	ld	e, a
@@ -2087,14 +2087,14 @@
     00000949 87               [ 4] 2087 	add	a, a
     0000094A C6 08            [ 8] 2088 	add	a, #0x08
     0000094C 77               [ 8] 2089 	ld	(hl), a
-                                   2090 ;src/enemy.c:349: break;
+                                   2090 ;src/enemy.c:356: break;
     0000094D 18 10            [12] 2091 	jr	00118$
-                                   2092 ;src/enemy.c:350: case ENEMY_TYPE_BOSS:
+                                   2092 ;src/enemy.c:357: case ENEMY_TYPE_BOSS:
     0000094F                       2093 00117$:
-                                   2094 ;src/enemy.c:351: frame_count = 3;
+                                   2094 ;src/enemy.c:358: frame_count = 3;
     0000094F F8 0A            [12] 2095 	ldhl	sp,	#10
     00000951 36 03            [12] 2096 	ld	(hl), #0x03
-                                   2097 ;src/enemy.c:352: baseTile = 36 + (e->currentFrame * 4);
+                                   2097 ;src/enemy.c:359: baseTile = 36 + (e->currentFrame * 4);
     00000953 F8 04            [12] 2098 	ldhl	sp,#4
     00000955 2A               [ 8] 2099 	ld	a, (hl+)
     00000956 5F               [ 4] 2100 	ld	e, a
@@ -2105,9 +2105,9 @@
     0000095B 87               [ 4] 2105 	add	a, a
     0000095C C6 24            [ 8] 2106 	add	a, #0x24
     0000095E 77               [ 8] 2107 	ld	(hl), a
-                                   2108 ;src/enemy.c:354: }
+                                   2108 ;src/enemy.c:361: }
     0000095F                       2109 00118$:
-                                   2110 ;src/enemy.c:356: if (e->animCounter >= ANIM_SPEED)
+                                   2110 ;src/enemy.c:363: if (e->animCounter >= ANIM_SPEED)
     0000095F F8 08            [12] 2111 	ldhl	sp,#8
     00000961 2A               [ 8] 2112 	ld	a, (hl+)
     00000962 5F               [ 4] 2113 	ld	e, a
@@ -2115,12 +2115,12 @@
     00000964 1A               [ 8] 2115 	ld	a, (de)
     00000965 D6 0A            [ 8] 2116 	sub	a, #0x0a
     00000967 38 39            [12] 2117 	jr	C, 00120$
-                                   2118 ;src/enemy.c:358: e->animCounter = 0;
+                                   2118 ;src/enemy.c:365: e->animCounter = 0;
     00000969 3A               [ 8] 2119 	ld	a, (hl-)
     0000096A 6E               [ 8] 2120 	ld	l, (hl)
     0000096B 67               [ 4] 2121 	ld	h, a
     0000096C 36 00            [12] 2122 	ld	(hl), #0x00
-                                   2123 ;src/enemy.c:359: e->currentFrame = (e->currentFrame + 1) % frame_count;
+                                   2123 ;src/enemy.c:366: e->currentFrame = (e->currentFrame + 1) % frame_count;
     0000096E F8 04            [12] 2124 	ldhl	sp,#4
     00000970 2A               [ 8] 2125 	ld	a, (hl+)
     00000971 5F               [ 4] 2126 	ld	e, a
@@ -2164,7 +2164,7 @@
     000009A0 6F               [ 4] 2164 	ld	l, a
     000009A1 71               [ 8] 2165 	ld	(hl), c
     000009A2                       2166 00120$:
-                                   2167 ;src/enemy.c:362: set_sprite_tile(e->spriteBase, baseTile);
+                                   2167 ;src/enemy.c:369: set_sprite_tile(e->spriteBase, baseTile);
     000009A2 F8 02            [12] 2168 	ldhl	sp,#2
     000009A4 2A               [ 8] 2169 	ld	a, (hl+)
     000009A5 5F               [ 4] 2170 	ld	e, a
@@ -2217,7 +2217,7 @@
     000009E1 F8 06            [12] 2217 	ldhl	sp,	#6
     000009E3 7E               [ 8] 2218 	ld	a, (hl)
     000009E4 12               [ 8] 2219 	ld	(de), a
-                                   2220 ;src/enemy.c:363: set_sprite_tile(e->spriteBase + 1, baseTile + 2);
+                                   2220 ;src/enemy.c:370: set_sprite_tile(e->spriteBase + 1, baseTile + 2);
     000009E5 7E               [ 8] 2221 	ld	a, (hl)
     000009E6 F8 0A            [12] 2222 	ldhl	sp,	#10
     000009E8 77               [ 8] 2223 	ld	(hl), a
@@ -2279,7 +2279,7 @@
     00000A2F F8 05            [12] 2279 	ldhl	sp,	#5
     00000A31 7E               [ 8] 2280 	ld	a, (hl)
     00000A32 12               [ 8] 2281 	ld	(de), a
-                                   2282 ;src/enemy.c:364: set_sprite_tile(e->spriteBase + 2, baseTile + 1);
+                                   2282 ;src/enemy.c:371: set_sprite_tile(e->spriteBase + 2, baseTile + 1);
     00000A33 F8 0A            [12] 2283 	ldhl	sp,	#10
     00000A35 7E               [ 8] 2284 	ld	a, (hl)
     00000A36 3C               [ 4] 2285 	inc	a
@@ -2339,7 +2339,7 @@
     00000A7B F8 05            [12] 2339 	ldhl	sp,	#5
     00000A7D 7E               [ 8] 2340 	ld	a, (hl)
     00000A7E 12               [ 8] 2341 	ld	(de), a
-                                   2342 ;src/enemy.c:365: set_sprite_tile(e->spriteBase + 3, baseTile + 3);
+                                   2342 ;src/enemy.c:372: set_sprite_tile(e->spriteBase + 3, baseTile + 3);
     00000A7F F8 0A            [12] 2343 	ldhl	sp,	#10
     00000A81 34               [12] 2344 	inc	(hl)
     00000A82 34               [12] 2345 	inc	(hl)
@@ -2401,12 +2401,12 @@
     00000AC8 57               [ 4] 2401 	ld	d, a
     00000AC9 7E               [ 8] 2402 	ld	a, (hl)
     00000ACA 12               [ 8] 2403 	ld	(de), a
-                                   2404 ;src/enemy.c:365: set_sprite_tile(e->spriteBase + 3, baseTile + 3);
+                                   2404 ;src/enemy.c:372: set_sprite_tile(e->spriteBase + 3, baseTile + 3);
     00000ACB                       2405 00125$:
-                                   2406 ;src/enemy.c:366: }
+                                   2406 ;src/enemy.c:373: }
     00000ACB E8 0D            [16] 2407 	add	sp, #13
     00000ACD C9               [16] 2408 	ret
-                                   2409 ;src/enemy.c:368: void drawEnemy(Enemy *e)
+                                   2409 ;src/enemy.c:376: void drawEnemy(Enemy *e)
                                    2410 ;	---------------------------------
                                    2411 ; Function drawEnemy
                                    2412 ; ---------------------------------
@@ -2414,7 +2414,7 @@
     00000ACE E8 FD            [16] 2414 	add	sp, #-3
     00000AD0 4B               [ 4] 2415 	ld	c, e
     00000AD1 42               [ 4] 2416 	ld	b, d
-                                   2417 ;src/enemy.c:370: if (e->isActive && e->deathTimer == 0)
+                                   2417 ;src/enemy.c:378: if (e->isActive && e->deathTimer == 0)
     00000AD2 21 05 00         [12] 2418 	ld	hl, #0x0005
     00000AD5 09               [ 8] 2419 	add	hl, bc
     00000AD6 7E               [ 8] 2420 	ld	a, (hl)
@@ -2425,7 +2425,7 @@
     00000ADE 7E               [ 8] 2425 	ld	a, (hl)
     00000ADF B7               [ 4] 2426 	or	a, a
     00000AE0 20 32            [12] 2427 	jr	NZ, 00104$
-                                   2428 ;src/enemy.c:374: e->x, e->y);
+                                   2428 ;src/enemy.c:382: e->x, e->y);
     00000AE2 59               [ 4] 2429 	ld	e, c
     00000AE3 50               [ 4] 2430 	ld	d, b
     00000AE4 13               [ 8] 2431 	inc	de
@@ -2440,7 +2440,7 @@
     00000AEE 13               [ 8] 2440 	inc	de
     00000AEF 1A               [ 8] 2441 	ld	a, (de)
     00000AF0 77               [ 8] 2442 	ld	(hl), a
-                                   2443 ;src/enemy.c:373: e->spriteBase + 2, e->spriteBase + 3,
+                                   2443 ;src/enemy.c:381: e->spriteBase + 2, e->spriteBase + 3,
     00000AF1 21 0A 00         [12] 2444 	ld	hl, #0x000a
     00000AF4 09               [ 8] 2445 	add	hl, bc
     00000AF5 4E               [ 8] 2446 	ld	c, (hl)
@@ -2452,7 +2452,7 @@
     00000AFB 7B               [ 4] 2452 	ld	a, e
     00000AFC 3C               [ 4] 2453 	inc	a
     00000AFD 3C               [ 4] 2454 	inc	a
-                                   2455 ;src/enemy.c:372: moveSprite4(e->spriteBase, e->spriteBase + 1,
+                                   2455 ;src/enemy.c:380: moveSprite4(e->spriteBase, e->spriteBase + 1,
     00000AFE 1C               [ 4] 2456 	inc	e
     00000AFF F8 00            [12] 2457 	ldhl	sp,	#0
     00000B01 66               [ 8] 2458 	ld	h, (hl)
@@ -2472,21 +2472,21 @@
     00000B10 79               [ 4] 2472 	ld	a, c
     00000B11 CDr00r00         [24] 2473 	call	_moveSprite4
     00000B14                       2474 00104$:
-                                   2475 ;src/enemy.c:376: }
+                                   2475 ;src/enemy.c:384: }
     00000B14 E8 03            [16] 2476 	add	sp, #3
     00000B16 C9               [16] 2477 	ret
-                                   2478 ;src/enemy.c:378: UINT8 countActiveEnemies(void)
+                                   2478 ;src/enemy.c:386: UINT8 countActiveEnemies(void)
                                    2479 ;	---------------------------------
                                    2480 ; Function countActiveEnemies
                                    2481 ; ---------------------------------
     00000B17                       2482 _countActiveEnemies::
     00000B17 3B               [ 8] 2483 	dec	sp
-                                   2484 ;src/enemy.c:382: for (i = 0; i < MAX_ENEMIES; i++)
+                                   2484 ;src/enemy.c:390: for (i = 0; i < MAX_ENEMIES; i++)
     00000B18 F8 00            [12] 2485 	ldhl	sp,	#0
     00000B1A 36 00            [12] 2486 	ld	(hl), #0x00
     00000B1C 0E 00            [ 8] 2487 	ld	c, #0x00
     00000B1E                       2488 00104$:
-                                   2489 ;src/enemy.c:384: if (enemies[i].isActive)
+                                   2489 ;src/enemy.c:392: if (enemies[i].isActive)
     00000B1E 06 00            [ 8] 2490 	ld	b, #0x00
     00000B20 69               [ 4] 2491 	ld	l, c
     00000B21 60               [ 4] 2492 	ld	h, b
@@ -2505,19 +2505,19 @@
     00000B30 7E               [ 8] 2505 	ld	a, (hl)
     00000B31 B7               [ 4] 2506 	or	a, a
     00000B32 28 03            [12] 2507 	jr	Z, 00105$
-                                   2508 ;src/enemy.c:385: count++;
+                                   2508 ;src/enemy.c:393: count++;
     00000B34 F8 00            [12] 2509 	ldhl	sp,	#0
     00000B36 34               [12] 2510 	inc	(hl)
     00000B37                       2511 00105$:
-                                   2512 ;src/enemy.c:382: for (i = 0; i < MAX_ENEMIES; i++)
+                                   2512 ;src/enemy.c:390: for (i = 0; i < MAX_ENEMIES; i++)
     00000B37 0C               [ 4] 2513 	inc	c
     00000B38 79               [ 4] 2514 	ld	a, c
     00000B39 D6 04            [ 8] 2515 	sub	a, #0x04
     00000B3B 38 E1            [12] 2516 	jr	C, 00104$
-                                   2517 ;src/enemy.c:387: return count;
+                                   2517 ;src/enemy.c:395: return count;
     00000B3D F8 00            [12] 2518 	ldhl	sp,	#0
     00000B3F 7E               [ 8] 2519 	ld	a, (hl)
-                                   2520 ;src/enemy.c:388: }
+                                   2520 ;src/enemy.c:396: }
     00000B40 33               [ 8] 2521 	inc	sp
     00000B41 C9               [16] 2522 	ret
                                    2523 	.area _CODE

@@ -41,15 +41,15 @@
 ; code
 ;--------------------------------------------------------
 	.area _CODE
-;src/main.c:4: void main(void)
+;src/main.c:5: void main(void)
 ;	---------------------------------
 ; Function main
 ; ---------------------------------
 _main::
-;src/main.c:6: Game_init();
+;src/main.c:7: Game_init();
 	call	_Game_init
-;src/main.c:7: Game_start();
-;src/main.c:8: }
+;src/main.c:8: Game_start();
+;src/main.c:9: }
 	jp	_Game_start
 	.area _CODE
 	.area _INITIALIZER

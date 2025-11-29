@@ -1,9 +1,11 @@
+// Player logic: input handling, physics, animation, and drawing
 #include "player.h"
 #include "utils.h"
 #include "sound.h"
 
 Player player;
 
+// Initialize player position and state
 void initPlayer(void)
 {
     player.x = PLAYER_START_X;
@@ -16,6 +18,7 @@ void initPlayer(void)
     player.flashTimer = 0;
 }
 
+// Handle player movement and jump input
 void updatePlayerInput(UINT8 joy)
 {
     if (joy & J_LEFT)
@@ -43,6 +46,7 @@ void updatePlayerInput(UINT8 joy)
     }
 }
 
+// Apply gravity and update vertical position when jumping
 void updatePlayerPhysics(void)
 {
     if (player.isJumping)
@@ -59,6 +63,7 @@ void updatePlayerPhysics(void)
     }
 }
 
+// Update animation frames based on movement and invincibility
 void updatePlayerAnimation(void)
 {
     if (player.invincibilityTimer > 0)
@@ -100,6 +105,7 @@ void updatePlayerAnimation(void)
     }
 }
 
+// Draw the player sprite at current position
 void drawPlayer(void)
 {
     moveSprite4(0, 1, 2, 3, player.x, player.y);

@@ -15,8 +15,8 @@ Symbol Table
   1 _randSeed                                                       00000000 R
     _shadow_OAM                                                     ******** GX
   0 _simpleRand                                                     00000000 GR
+    _vsync                                                          ******** GX
   0 _waitFrames                                                     000000E3 GR
-    _wait_vbl_done                                                  ******** GX
 
 
 ASxxxx Assembler V02.00 + NoICE + SDCC mods  (GameBoy)                  Page 2

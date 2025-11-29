@@ -1,6 +1,8 @@
+// Sound effects and music control
 #include "sound.h"
 #include "gbt_player.h"
 
+// Play a short sound effect or control the music playback
 void playSound(SoundType type)
 {
     switch (type)
@@ -34,6 +36,7 @@ void playSound(SoundType type)
         NR14_REG = 0xC4;
         break;
     case SOUND_GAME_OVER:
+        // Stop music on game over
         gbt_stop();
         break;
     }

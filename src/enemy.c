@@ -1,3 +1,4 @@
+// Enemy system: spawning, physics, animation, and drawing
 #include "enemy.h"
 #include "utils.h"
 #include "player.h"
@@ -5,6 +6,7 @@
 
 Enemy enemies[MAX_ENEMIES];
 
+// Initialize the enemy pool and hide their sprites
 void initEnemies(void)
 {
     UINT8 i;
@@ -16,6 +18,7 @@ void initEnemies(void)
     }
 }
 
+// Spawn a new enemy in the pool at `index`, choosing a type based on wave
 void spawnEnemy(UINT8 index)
 {
     Enemy *e = &enemies[index];
@@ -80,6 +83,7 @@ void spawnEnemy(UINT8 index)
     }
 }
 
+// Spawn the boss enemy with larger health and different behavior
 void spawnBossEnemy(UINT8 index)
 {
     Enemy *e = &enemies[index];
@@ -100,6 +104,7 @@ void spawnBossEnemy(UINT8 index)
     e->bossDirection = -1;
 }
 
+// Update boss physics (jumping, horizontal patrol)
 void updateBossPhysics(Enemy *e)
 {
     if (!e->isActive)
@@ -160,6 +165,7 @@ void updateBossPhysics(Enemy *e)
     }
 }
 
+// Update physics for a single enemy according to its type
 void updateEnemyPhysics(Enemy *e)
 {
     if (!e->isActive)
@@ -295,6 +301,7 @@ void updateEnemyPhysics(Enemy *e)
     }
 }
 
+// Update animation frames and handle hit/death flash
 void updateEnemyAnimation(Enemy *e)
 {
     if (!e->isActive)
@@ -365,6 +372,7 @@ void updateEnemyAnimation(Enemy *e)
     set_sprite_tile(e->spriteBase + 3, baseTile + 3);
 }
 
+// Draw active enemies by moving their sprites
 void drawEnemy(Enemy *e)
 {
     if (e->isActive && e->deathTimer == 0)

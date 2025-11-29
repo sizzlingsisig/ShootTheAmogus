@@ -49,24 +49,24 @@
                                      49 ; code
                                      50 ;--------------------------------------------------------
                                      51 	.area _CODE
-                                     52 ;src/ui.c:10: void drawHearts(void)
+                                     52 ;src/ui.c:12: void drawHearts(void)
                                      53 ;	---------------------------------
                                      54 ; Function drawHearts
                                      55 ; ---------------------------------
     00000000                         56 _drawHearts::
     00000000 E8 FC            [16]   57 	add	sp, #-4
-                                     58 ;src/ui.c:14: for (i = 0; i < MAX_LIVES; i++)
+                                     58 ;src/ui.c:16: for (i = 0; i < MAX_LIVES; i++)
     00000002 F8 03            [12]   59 	ldhl	sp,	#3
     00000004 36 00            [12]   60 	ld	(hl), #0x00
     00000006                         61 00133$:
-                                     62 ;src/ui.c:16: UINT8 spriteBase = 28 + (i * 2);
+                                     62 ;src/ui.c:18: UINT8 spriteBase = 28 + (i * 2);
     00000006 F8 03            [12]   63 	ldhl	sp,	#3
     00000008 7E               [ 8]   64 	ld	a, (hl)
     00000009 87               [ 4]   65 	add	a, a
     0000000A C6 1C            [ 8]   66 	add	a, #0x1c
     0000000C F8 00            [12]   67 	ldhl	sp,	#0
     0000000E 77               [ 8]   68 	ld	(hl), a
-                                     69 ;src/ui.c:17: if (i < game.lives - 1)
+                                     69 ;src/ui.c:19: if (i < game.lives - 1)
     0000000F 21r00r00         [12]   70 	ld	hl, #_game
     00000012 4E               [ 8]   71 	ld	c, (hl)
     00000013 06 00            [ 8]   72 	ld	b, #0x00
@@ -108,7 +108,7 @@
     00000045 19               [ 8]  108 	add	hl,de
     00000046 23               [ 8]  109 	inc	hl
     00000047 36 31            [12]  110 	ld	(hl), #0x31
-                                    111 ;src/ui.c:20: set_sprite_tile(spriteBase + 1, 49); // full heart
+                                    111 ;src/ui.c:22: set_sprite_tile(spriteBase + 1, 49); // full heart
     00000049 F8 00            [12]  112 	ldhl	sp,	#0
     0000004B 2A               [ 8]  113 	ld	a, (hl+)
     0000004C 23               [ 8]  114 	inc	hl
@@ -126,7 +126,7 @@
     00000059 23               [ 8]  126 	inc	hl
     0000005A 23               [ 8]  127 	inc	hl
     0000005B 36 31            [12]  128 	ld	(hl), #0x31
-                                    129 ;src/ui.c:21: move_sprite(spriteBase, 8 + (i * 16), 8);
+                                    129 ;src/ui.c:23: move_sprite(spriteBase, 8 + (i * 16), 8);
     0000005D F8 03            [12]  130 	ldhl	sp,	#3
     0000005F 7E               [ 8]  131 	ld	a, (hl)
     00000060 CB 37            [ 8]  132 	swap	a
@@ -141,7 +141,7 @@
     0000006C 3E 08            [ 8]  141 	ld	a, #0x08
     0000006E 22               [ 8]  142 	ld	(hl+), a
     0000006F 70               [ 8]  143 	ld	(hl), b
-                                    144 ;src/ui.c:22: move_sprite(spriteBase + 1, 8 + (i * 16), 16);
+                                    144 ;src/ui.c:24: move_sprite(spriteBase + 1, 8 + (i * 16), 16);
     00000070 F8 02            [12]  145 	ldhl	sp,	#2
                                     146 ;c:\gbdk\include\gb\gb.h:1973: OAM_item_t * itm = &shadow_OAM[nb];
     00000072 6E               [ 8]  147 	ld	l, (hl)
@@ -154,10 +154,10 @@
     0000007B 3E 10            [ 8]  154 	ld	a, #0x10
     0000007D 22               [ 8]  155 	ld	(hl+), a
     0000007E 71               [ 8]  156 	ld	(hl), c
-                                    157 ;src/ui.c:22: move_sprite(spriteBase + 1, 8 + (i * 16), 16);
+                                    157 ;src/ui.c:24: move_sprite(spriteBase + 1, 8 + (i * 16), 16);
     0000007F C3r7Dr01         [16]  158 	jp	00134$
     00000082                        159 00114$:
-                                    160 ;src/ui.c:24: else if (i == game.lives - 1)
+                                    160 ;src/ui.c:26: else if (i == game.lives - 1)
     00000082 F8 01            [12]  161 	ldhl	sp,	#1
     00000084 7E               [ 8]  162 	ld	a, (hl)
     00000085 91               [ 4]  163 	sub	a, c
@@ -165,7 +165,7 @@
     00000089 AF               [ 4]  165 	xor	a, a
     0000008A 90               [ 4]  166 	sub	a, b
     0000008B C2r5Ar01         [16]  167 	jp	NZ, 00111$
-                                    168 ;src/ui.c:26: if (quarterLife == 1)
+                                    168 ;src/ui.c:28: if (quarterLife == 1)
     0000008E FAr00r00         [16]  169 	ld	a, (#_quarterLife)
     00000091 3D               [ 4]  170 	dec	a
     00000092 20 23            [12]  171 	jr	NZ, 00108$
@@ -182,7 +182,7 @@
     000000A0 23               [ 8]  182 	inc	hl
     000000A1 23               [ 8]  183 	inc	hl
     000000A2 36 32            [12]  184 	ld	(hl), #0x32
-                                    185 ;src/ui.c:29: set_sprite_tile(spriteBase + 1, 50);
+                                    185 ;src/ui.c:31: set_sprite_tile(spriteBase + 1, 50);
     000000A4 F8 00            [12]  186 	ldhl	sp,	#0
     000000A6 4E               [ 8]  187 	ld	c, (hl)
     000000A7 0C               [ 4]  188 	inc	c
@@ -197,10 +197,10 @@
     000000B1 23               [ 8]  197 	inc	hl
     000000B2 23               [ 8]  198 	inc	hl
     000000B3 36 32            [12]  199 	ld	(hl), #0x32
-                                    200 ;src/ui.c:29: set_sprite_tile(spriteBase + 1, 50);
+                                    200 ;src/ui.c:31: set_sprite_tile(spriteBase + 1, 50);
     000000B5 18 75            [12]  201 	jr	00109$
     000000B7                        202 00108$:
-                                    203 ;src/ui.c:31: else if (quarterLife == 2)
+                                    203 ;src/ui.c:33: else if (quarterLife == 2)
     000000B7 FAr00r00         [16]  204 	ld	a, (#_quarterLife)
     000000BA D6 02            [ 8]  205 	sub	a, #0x02
     000000BC 20 23            [12]  206 	jr	NZ, 00105$
@@ -217,7 +217,7 @@
     000000CA 23               [ 8]  217 	inc	hl
     000000CB 23               [ 8]  218 	inc	hl
     000000CC 36 33            [12]  219 	ld	(hl), #0x33
-                                    220 ;src/ui.c:34: set_sprite_tile(spriteBase + 1, 51);
+                                    220 ;src/ui.c:36: set_sprite_tile(spriteBase + 1, 51);
     000000CE F8 00            [12]  221 	ldhl	sp,	#0
     000000D0 5E               [ 8]  222 	ld	e, (hl)
     000000D1 1C               [ 4]  223 	inc	e
@@ -232,10 +232,10 @@
     000000DB 23               [ 8]  232 	inc	hl
     000000DC 23               [ 8]  233 	inc	hl
     000000DD 36 33            [12]  234 	ld	(hl), #0x33
-                                    235 ;src/ui.c:34: set_sprite_tile(spriteBase + 1, 51);
+                                    235 ;src/ui.c:36: set_sprite_tile(spriteBase + 1, 51);
     000000DF 18 4B            [12]  236 	jr	00109$
     000000E1                        237 00105$:
-                                    238 ;src/ui.c:36: else if (quarterLife == 3)
+                                    238 ;src/ui.c:38: else if (quarterLife == 3)
     000000E1 FAr00r00         [16]  239 	ld	a, (#_quarterLife)
     000000E4 D6 03            [ 8]  240 	sub	a, #0x03
     000000E6 20 23            [12]  241 	jr	NZ, 00102$
@@ -252,7 +252,7 @@
     000000F4 23               [ 8]  252 	inc	hl
     000000F5 23               [ 8]  253 	inc	hl
     000000F6 36 34            [12]  254 	ld	(hl), #0x34
-                                    255 ;src/ui.c:39: set_sprite_tile(spriteBase + 1, 52);
+                                    255 ;src/ui.c:41: set_sprite_tile(spriteBase + 1, 52);
     000000F8 F8 00            [12]  256 	ldhl	sp,	#0
     000000FA 4E               [ 8]  257 	ld	c, (hl)
     000000FB 0C               [ 4]  258 	inc	c
@@ -267,7 +267,7 @@
     00000105 23               [ 8]  267 	inc	hl
     00000106 23               [ 8]  268 	inc	hl
     00000107 36 34            [12]  269 	ld	(hl), #0x34
-                                    270 ;src/ui.c:39: set_sprite_tile(spriteBase + 1, 52);
+                                    270 ;src/ui.c:41: set_sprite_tile(spriteBase + 1, 52);
     00000109 18 21            [12]  271 	jr	00109$
     0000010B                        272 00102$:
                                     273 ;c:\gbdk\include\gb\gb.h:1887: shadow_OAM[nb].tile=tile;
@@ -283,7 +283,7 @@
     00000117 23               [ 8]  283 	inc	hl
     00000118 23               [ 8]  284 	inc	hl
     00000119 36 31            [12]  285 	ld	(hl), #0x31
-                                    286 ;src/ui.c:44: set_sprite_tile(spriteBase + 1, 49);
+                                    286 ;src/ui.c:46: set_sprite_tile(spriteBase + 1, 49);
     0000011B F8 00            [12]  287 	ldhl	sp,	#0
     0000011D 4E               [ 8]  288 	ld	c, (hl)
     0000011E 0C               [ 4]  289 	inc	c
@@ -298,9 +298,9 @@
     00000128 23               [ 8]  298 	inc	hl
     00000129 23               [ 8]  299 	inc	hl
     0000012A 36 31            [12]  300 	ld	(hl), #0x31
-                                    301 ;src/ui.c:44: set_sprite_tile(spriteBase + 1, 49);
+                                    301 ;src/ui.c:46: set_sprite_tile(spriteBase + 1, 49);
     0000012C                        302 00109$:
-                                    303 ;src/ui.c:46: move_sprite(spriteBase, 8 + (i * 16), 8);
+                                    303 ;src/ui.c:48: move_sprite(spriteBase, 8 + (i * 16), 8);
     0000012C F8 03            [12]  304 	ldhl	sp,	#3
     0000012E 7E               [ 8]  305 	ld	a, (hl)
     0000012F CB 37            [ 8]  306 	swap	a
@@ -322,7 +322,7 @@
     00000143 3E 08            [ 8]  322 	ld	a, #0x08
     00000145 22               [ 8]  323 	ld	(hl+), a
     00000146 73               [ 8]  324 	ld	(hl), e
-                                    325 ;src/ui.c:47: move_sprite(spriteBase + 1, 8 + (i * 16), 16);
+                                    325 ;src/ui.c:49: move_sprite(spriteBase + 1, 8 + (i * 16), 16);
     00000147 F8 00            [12]  326 	ldhl	sp,	#0
     00000149 5E               [ 8]  327 	ld	e, (hl)
     0000014A 1C               [ 4]  328 	inc	e
@@ -338,7 +338,7 @@
     00000154 3E 10            [ 8]  338 	ld	a, #0x10
     00000156 22               [ 8]  339 	ld	(hl+), a
     00000157 72               [ 8]  340 	ld	(hl), d
-                                    341 ;src/ui.c:47: move_sprite(spriteBase + 1, 8 + (i * 16), 16);
+                                    341 ;src/ui.c:49: move_sprite(spriteBase + 1, 8 + (i * 16), 16);
     00000158 18 23            [12]  342 	jr	00134$
     0000015A                        343 00111$:
                                     344 ;c:\gbdk\include\gb\gb.h:1973: OAM_item_t * itm = &shadow_OAM[nb];
@@ -355,7 +355,7 @@
     00000166 3E C8            [ 8]  355 	ld	a, #0xc8
     00000168 22               [ 8]  356 	ld	(hl+), a
     00000169 36 C8            [12]  357 	ld	(hl), #0xc8
-                                    358 ;src/ui.c:52: move_sprite(spriteBase + 1, OFFSCREEN_X, OFFSCREEN_Y);
+                                    358 ;src/ui.c:54: move_sprite(spriteBase + 1, OFFSCREEN_X, OFFSCREEN_Y);
     0000016B F8 00            [12]  359 	ldhl	sp,	#0
     0000016D 4E               [ 8]  360 	ld	c, (hl)
     0000016E 0C               [ 4]  361 	inc	c
@@ -371,28 +371,28 @@
     00000178 3E C8            [ 8]  371 	ld	a, #0xc8
     0000017A 22               [ 8]  372 	ld	(hl+), a
     0000017B 36 C8            [12]  373 	ld	(hl), #0xc8
-                                    374 ;src/ui.c:52: move_sprite(spriteBase + 1, OFFSCREEN_X, OFFSCREEN_Y);
+                                    374 ;src/ui.c:54: move_sprite(spriteBase + 1, OFFSCREEN_X, OFFSCREEN_Y);
     0000017D                        375 00134$:
-                                    376 ;src/ui.c:14: for (i = 0; i < MAX_LIVES; i++)
+                                    376 ;src/ui.c:16: for (i = 0; i < MAX_LIVES; i++)
     0000017D F8 03            [12]  377 	ldhl	sp,	#3
     0000017F 34               [12]  378 	inc	(hl)
     00000180 7E               [ 8]  379 	ld	a, (hl)
     00000181 D6 03            [ 8]  380 	sub	a, #0x03
     00000183 DAr06r00         [16]  381 	jp	C, 00133$
-                                    382 ;src/ui.c:55: }
+                                    382 ;src/ui.c:57: }
     00000186 E8 04            [16]  383 	add	sp, #4
     00000188 C9               [16]  384 	ret
-                                    385 ;src/ui.c:57: void drawScore(void)
+                                    385 ;src/ui.c:60: void drawScore(void)
                                     386 ;	---------------------------------
                                     387 ; Function drawScore
                                     388 ; ---------------------------------
     00000189                        389 _drawScore::
-                                    390 ;src/ui.c:59: gotoxy(13, 0);
+                                    390 ;src/ui.c:62: gotoxy(13, 0);
     00000189 21 0D 00         [12]  391 	ld	hl, #0x0d
     0000018C E5               [16]  392 	push	hl
     0000018D CDr00r00         [24]  393 	call	_gotoxy
     00000190 E1               [12]  394 	pop	hl
-                                    395 ;src/ui.c:60: printf("%05d", game.score);
+                                    395 ;src/ui.c:63: printf("%05d", game.score);
     00000191 21r01r00         [12]  396 	ld	hl, #(_game + 1)
     00000194 2A               [ 8]  397 	ld	a, (hl+)
     00000195 4F               [ 4]  398 	ld	c, a
@@ -402,23 +402,23 @@
     0000019B D5               [16]  402 	push	de
     0000019C CDr00r00         [24]  403 	call	_printf
     0000019F E8 04            [16]  404 	add	sp, #4
-                                    405 ;src/ui.c:61: }
+                                    405 ;src/ui.c:64: }
     000001A1 C9               [16]  406 	ret
     000001A2                        407 ___str_0:
     000001A2 25 30 35 64            408 	.ascii "%05d"
     000001A6 00                     409 	.db 0x00
-                                    410 ;src/ui.c:63: void drawWave(void)
+                                    410 ;src/ui.c:67: void drawWave(void)
                                     411 ;	---------------------------------
                                     412 ; Function drawWave
                                     413 ; ---------------------------------
     000001A7                        414 _drawWave::
-                                    415 ;src/ui.c:65: gotoxy(0, 0);
+                                    415 ;src/ui.c:69: gotoxy(0, 0);
     000001A7 AF               [ 4]  416 	xor	a, a
     000001A8 0F               [ 4]  417 	rrca
     000001A9 F5               [16]  418 	push	af
     000001AA CDr00r00         [24]  419 	call	_gotoxy
     000001AD E1               [12]  420 	pop	hl
-                                    421 ;src/ui.c:66: printf(" Wave:%d", game.waveNumber);
+                                    421 ;src/ui.c:70: printf(" Wave:%d", game.waveNumber);
     000001AE 21r05r00         [12]  422 	ld	hl, #(_game + 5)
     000001B1 4E               [ 8]  423 	ld	c, (hl)
     000001B2 06 00            [ 8]  424 	ld	b, #0x00
@@ -427,39 +427,39 @@
     000001B8 D5               [16]  427 	push	de
     000001B9 CDr00r00         [24]  428 	call	_printf
     000001BC E8 04            [16]  429 	add	sp, #4
-                                    430 ;src/ui.c:67: }
+                                    430 ;src/ui.c:71: }
     000001BE C9               [16]  431 	ret
     000001BF                        432 ___str_1:
     000001BF 20 57 61 76 65 3A 25   433 	.ascii " Wave:%d"
              64
     000001C7 00                     434 	.db 0x00
-                                    435 ;src/ui.c:69: void showStartScreen(void)
+                                    435 ;src/ui.c:74: void showStartScreen(void)
                                     436 ;	---------------------------------
                                     437 ; Function showStartScreen
                                     438 ; ---------------------------------
     000001C8                        439 _showStartScreen::
     000001C8 3B               [ 8]  440 	dec	sp
     000001C9 3B               [ 8]  441 	dec	sp
-                                    442 ;src/ui.c:71: UINT8 blinkCounter = 0;
+                                    442 ;src/ui.c:76: UINT8 blinkCounter = 0;
     000001CA F8 01            [12]  443 	ldhl	sp,	#1
-                                    444 ;src/ui.c:72: UINT8 showText = 1;
+                                    444 ;src/ui.c:77: UINT8 showText = 1;
     000001CC AF               [ 4]  445 	xor	a, a
     000001CD 32               [ 8]  446 	ld	(hl-), a
     000001CE 36 01            [12]  447 	ld	(hl), #0x01
-                                    448 ;src/ui.c:74: SCX_REG = 0;
+                                    448 ;src/ui.c:79: SCX_REG = 0;
     000001D0 AF               [ 4]  449 	xor	a, a
     000001D1 E0r00            [12]  450 	ldh	(_SCX_REG + 0), a
-                                    451 ;src/ui.c:75: SCY_REG = 0;
+                                    451 ;src/ui.c:80: SCY_REG = 0;
     000001D3 AF               [ 4]  452 	xor	a, a
     000001D4 E0r00            [12]  453 	ldh	(_SCY_REG + 0), a
-                                    454 ;src/ui.c:76: HIDE_SPRITES;
+                                    454 ;src/ui.c:81: HIDE_SPRITES;
     000001D6 F0r00            [12]  455 	ldh	a, (_LCDC_REG + 0)
     000001D8 E6 FD            [ 8]  456 	and	a, #0xfd
     000001DA E0r00            [12]  457 	ldh	(_LCDC_REG + 0), a
-                                    458 ;src/ui.c:77: BGP_REG = 0x1B;
+                                    458 ;src/ui.c:82: BGP_REG = 0x1B;
     000001DC 3E 1B            [ 8]  459 	ld	a, #0x1b
     000001DE E0r00            [12]  460 	ldh	(_BGP_REG + 0), a
-                                    461 ;src/ui.c:78: fill_bkg_rect(0, 0, 20, 18, 0x00);
+                                    461 ;src/ui.c:83: fill_bkg_rect(0, 0, 20, 18, 0x00);
     000001E0 AF               [ 4]  462 	xor	a, a
     000001E1 67               [ 4]  463 	ld	h, a
     000001E2 2E 12            [ 8]  464 	ld	l, #0x12
@@ -472,57 +472,57 @@
     000001EB F5               [16]  471 	push	af
     000001EC CDr00r00         [24]  472 	call	_fill_bkg_rect
     000001EF E8 05            [16]  473 	add	sp, #5
-                                    474 ;src/ui.c:80: gotoxy(4, 5);
+                                    474 ;src/ui.c:85: gotoxy(4, 5);
     000001F1 21 04 05         [12]  475 	ld	hl, #0x504
     000001F4 E5               [16]  476 	push	hl
     000001F5 CDr00r00         [24]  477 	call	_gotoxy
     000001F8 E1               [12]  478 	pop	hl
-                                    479 ;src/ui.c:81: printf("SHOOT 'THE");
+                                    479 ;src/ui.c:86: printf("SHOOT 'THE");
     000001F9 11r8Ar02         [12]  480 	ld	de, #___str_2
     000001FC D5               [16]  481 	push	de
     000001FD CDr00r00         [24]  482 	call	_printf
     00000200 E1               [12]  483 	pop	hl
-                                    484 ;src/ui.c:82: gotoxy(6, 6);
+                                    484 ;src/ui.c:87: gotoxy(6, 6);
     00000201 21 06 06         [12]  485 	ld	hl, #0x606
     00000204 E5               [16]  486 	push	hl
     00000205 CDr00r00         [24]  487 	call	_gotoxy
     00000208 E1               [12]  488 	pop	hl
-                                    489 ;src/ui.c:83: printf("AMOGUS!");
+                                    489 ;src/ui.c:88: printf("AMOGUS!");
     00000209 11r95r02         [12]  490 	ld	de, #___str_3
     0000020C D5               [16]  491 	push	de
     0000020D CDr00r00         [24]  492 	call	_printf
     00000210 E1               [12]  493 	pop	hl
-                                    494 ;src/ui.c:84: gotoxy(8, 9);
+                                    494 ;src/ui.c:89: gotoxy(8, 9);
     00000211 21 08 09         [12]  495 	ld	hl, #0x908
     00000214 E5               [16]  496 	push	hl
     00000215 CDr00r00         [24]  497 	call	_gotoxy
     00000218 E1               [12]  498 	pop	hl
-                                    499 ;src/ui.c:85: printf("BY");
+                                    499 ;src/ui.c:90: printf("BY");
     00000219 11r9Dr02         [12]  500 	ld	de, #___str_4
     0000021C D5               [16]  501 	push	de
     0000021D CDr00r00         [24]  502 	call	_printf
     00000220 E1               [12]  503 	pop	hl
-                                    504 ;src/ui.c:86: gotoxy(3, 10);
+                                    504 ;src/ui.c:91: gotoxy(3, 10);
     00000221 21 03 0A         [12]  505 	ld	hl, #0xa03
     00000224 E5               [16]  506 	push	hl
     00000225 CDr00r00         [24]  507 	call	_gotoxy
     00000228 E1               [12]  508 	pop	hl
-                                    509 ;src/ui.c:87: printf("SIZZLING SISIG");
+                                    509 ;src/ui.c:92: printf("SIZZLING SISIG");
     00000229 11rA0r02         [12]  510 	ld	de, #___str_5
     0000022C D5               [16]  511 	push	de
     0000022D CDr00r00         [24]  512 	call	_printf
     00000230 E1               [12]  513 	pop	hl
-                                    514 ;src/ui.c:89: if (game.highScore > 0)
+                                    514 ;src/ui.c:94: if (game.highScore > 0)
     00000231 21r03r00         [12]  515 	ld	hl, #(_game + 3)
     00000234 2A               [ 8]  516 	ld	a, (hl+)
     00000235 B6               [ 8]  517 	or	a, (hl)
     00000236 28 18            [12]  518 	jr	Z, 00118$
-                                    519 ;src/ui.c:91: gotoxy(3, 11);
+                                    519 ;src/ui.c:96: gotoxy(3, 11);
     00000238 21 03 0B         [12]  520 	ld	hl, #0xb03
     0000023B E5               [16]  521 	push	hl
     0000023C CDr00r00         [24]  522 	call	_gotoxy
     0000023F E1               [12]  523 	pop	hl
-                                    524 ;src/ui.c:92: printf("HIGH: %d", game.highScore);
+                                    524 ;src/ui.c:97: printf("HIGH: %d", game.highScore);
     00000240 21r03r00         [12]  525 	ld	hl, #(_game + 3)
     00000243 2A               [ 8]  526 	ld	a, (hl+)
     00000244 4F               [ 4]  527 	ld	c, a
@@ -532,17 +532,17 @@
     0000024A D5               [16]  531 	push	de
     0000024B CDr00r00         [24]  532 	call	_printf
     0000024E E8 04            [16]  533 	add	sp, #4
-                                    534 ;src/ui.c:95: while (1)
+                                    534 ;src/ui.c:100: while (1)
     00000250                        535 00118$:
     00000250                        536 00108$:
-                                    537 ;src/ui.c:97: if (++blinkCounter > 30)
+                                    537 ;src/ui.c:102: if (++blinkCounter > 30)
     00000250 F8 01            [12]  538 	ldhl	sp,	#1
     00000252 34               [12]  539 	inc	(hl)
     00000253 3E 1E            [ 8]  540 	ld	a, #0x1e
     00000255 96               [ 8]  541 	sub	a, (hl)
     00000256 30 24            [12]  542 	jr	NC, 00104$
-                                    543 ;src/ui.c:99: blinkCounter = 0;
-                                    544 ;src/ui.c:100: showText = !showText;
+                                    543 ;src/ui.c:104: blinkCounter = 0;
+                                    544 ;src/ui.c:105: showText = !showText;
     00000258 AF               [ 4]  545 	xor	a, a
     00000259 32               [ 8]  546 	ld	(hl-), a
     0000025A 7E               [ 8]  547 	ld	a, (hl)
@@ -550,12 +550,12 @@
     0000025D 3E 00            [ 8]  549 	ld	a, #0x00
     0000025F 17               [ 4]  550 	rla
     00000260 77               [ 8]  551 	ld	(hl), a
-                                    552 ;src/ui.c:101: gotoxy(2, 14);
+                                    552 ;src/ui.c:106: gotoxy(2, 14);
     00000261 21 02 0E         [12]  553 	ld	hl, #0xe02
     00000264 E5               [16]  554 	push	hl
     00000265 CDr00r00         [24]  555 	call	_gotoxy
     00000268 E1               [12]  556 	pop	hl
-                                    557 ;src/ui.c:102: printf(showText ? "PRESS  START" : "              ");
+                                    557 ;src/ui.c:107: printf(showText ? "PRESS  START" : "              ");
     00000269 F8 00            [12]  558 	ldhl	sp,	#0
     0000026B 7E               [ 8]  559 	ld	a, (hl)
     0000026C B7               [ 4]  560 	or	a, a
@@ -569,15 +569,15 @@
     00000278 CDr00r00         [24]  568 	call	_printf
     0000027B E1               [12]  569 	pop	hl
     0000027C                        570 00104$:
-                                    571 ;src/ui.c:105: if (joypad() & J_START)
+                                    571 ;src/ui.c:110: if (joypad() & J_START)
     0000027C CDr00r00         [24]  572 	call	_joypad
     0000027F 07               [ 4]  573 	rlca
     00000280 38 05            [12]  574 	jr	C, 00110$
-                                    575 ;src/ui.c:107: wait_vbl_done();
+                                    575 ;src/ui.c:112: wait_vbl_done();
     00000282 CDr00r00         [24]  576 	call	_wait_vbl_done
     00000285 18 C9            [12]  577 	jr	00108$
     00000287                        578 00110$:
-                                    579 ;src/ui.c:109: }
+                                    579 ;src/ui.c:114: }
     00000287 33               [ 8]  580 	inc	sp
     00000288 33               [ 8]  581 	inc	sp
     00000289 C9               [16]  582 	ret
@@ -607,36 +607,36 @@
     000002C5 20 20 20 20 20 20 20   602 	.ascii "              "
              20 20 20 20 20 20 20
     000002D3 00                     603 	.db 0x00
-                                    604 ;src/ui.c:111: UINT8 showGameOverScreen(void)
+                                    604 ;src/ui.c:117: UINT8 showGameOverScreen(void)
                                     605 ;	---------------------------------
                                     606 ; Function showGameOverScreen
                                     607 ; ---------------------------------
     000002D4                        608 _showGameOverScreen::
     000002D4 3B               [ 8]  609 	dec	sp
     000002D5 3B               [ 8]  610 	dec	sp
-                                    611 ;src/ui.c:113: UINT8 blinkCounter = 0;
+                                    611 ;src/ui.c:119: UINT8 blinkCounter = 0;
     000002D6 F8 01            [12]  612 	ldhl	sp,	#1
-                                    613 ;src/ui.c:114: UINT8 showText = 1;
+                                    613 ;src/ui.c:120: UINT8 showText = 1;
     000002D8 AF               [ 4]  614 	xor	a, a
     000002D9 32               [ 8]  615 	ld	(hl-), a
     000002DA 36 01            [12]  616 	ld	(hl), #0x01
-                                    617 ;src/ui.c:117: playSound(SOUND_GAME_OVER);
+                                    617 ;src/ui.c:123: playSound(SOUND_GAME_OVER);
     000002DC 3E 03            [ 8]  618 	ld	a, #0x03
     000002DE CDr00r00         [24]  619 	call	_playSound
-                                    620 ;src/ui.c:119: SCX_REG = 0;
+                                    620 ;src/ui.c:125: SCX_REG = 0;
     000002E1 AF               [ 4]  621 	xor	a, a
     000002E2 E0r00            [12]  622 	ldh	(_SCX_REG + 0), a
-                                    623 ;src/ui.c:120: SCY_REG = 0;
+                                    623 ;src/ui.c:126: SCY_REG = 0;
     000002E4 AF               [ 4]  624 	xor	a, a
     000002E5 E0r00            [12]  625 	ldh	(_SCY_REG + 0), a
-                                    626 ;src/ui.c:121: HIDE_SPRITES;
+                                    626 ;src/ui.c:127: HIDE_SPRITES;
     000002E7 F0r00            [12]  627 	ldh	a, (_LCDC_REG + 0)
     000002E9 E6 FD            [ 8]  628 	and	a, #0xfd
     000002EB E0r00            [12]  629 	ldh	(_LCDC_REG + 0), a
-                                    630 ;src/ui.c:122: BGP_REG = 0x1B;
+                                    630 ;src/ui.c:128: BGP_REG = 0x1B;
     000002ED 3E 1B            [ 8]  631 	ld	a, #0x1b
     000002EF E0r00            [12]  632 	ldh	(_BGP_REG + 0), a
-                                    633 ;src/ui.c:123: fill_bkg_rect(0, 0, 20, 18, 0x00);
+                                    633 ;src/ui.c:129: fill_bkg_rect(0, 0, 20, 18, 0x00);
     000002F1 AF               [ 4]  634 	xor	a, a
     000002F2 67               [ 4]  635 	ld	h, a
     000002F3 2E 12            [ 8]  636 	ld	l, #0x12
@@ -649,22 +649,22 @@
     000002FC F5               [16]  643 	push	af
     000002FD CDr00r00         [24]  644 	call	_fill_bkg_rect
     00000300 E8 05            [16]  645 	add	sp, #5
-                                    646 ;src/ui.c:125: gotoxy(5, 6);
+                                    646 ;src/ui.c:131: gotoxy(5, 6);
     00000302 21 05 06         [12]  647 	ld	hl, #0x605
     00000305 E5               [16]  648 	push	hl
     00000306 CDr00r00         [24]  649 	call	_gotoxy
     00000309 E1               [12]  650 	pop	hl
-                                    651 ;src/ui.c:126: printf("GAME  OVER");
+                                    651 ;src/ui.c:132: printf("GAME  OVER");
     0000030A 11r88r03         [12]  652 	ld	de, #___str_9
     0000030D D5               [16]  653 	push	de
     0000030E CDr00r00         [24]  654 	call	_printf
     00000311 E1               [12]  655 	pop	hl
-                                    656 ;src/ui.c:127: gotoxy(4, 9);
+                                    656 ;src/ui.c:133: gotoxy(4, 9);
     00000312 21 04 09         [12]  657 	ld	hl, #0x904
     00000315 E5               [16]  658 	push	hl
     00000316 CDr00r00         [24]  659 	call	_gotoxy
     00000319 E1               [12]  660 	pop	hl
-                                    661 ;src/ui.c:128: printf("SCORE: %d", game.score);
+                                    661 ;src/ui.c:134: printf("SCORE: %d", game.score);
     0000031A 21r01r00         [12]  662 	ld	hl, #_game + 1
     0000031D 2A               [ 8]  663 	ld	a, (hl+)
     0000031E 4F               [ 4]  664 	ld	c, a
@@ -674,12 +674,12 @@
     00000324 D5               [16]  668 	push	de
     00000325 CDr00r00         [24]  669 	call	_printf
     00000328 E8 04            [16]  670 	add	sp, #4
-                                    671 ;src/ui.c:129: gotoxy(4, 10);
+                                    671 ;src/ui.c:135: gotoxy(4, 10);
     0000032A 21 04 0A         [12]  672 	ld	hl, #0xa04
     0000032D E5               [16]  673 	push	hl
     0000032E CDr00r00         [24]  674 	call	_gotoxy
     00000331 E1               [12]  675 	pop	hl
-                                    676 ;src/ui.c:130: printf("WAVE:  %d", game.waveNumber);
+                                    676 ;src/ui.c:136: printf("WAVE:  %d", game.waveNumber);
     00000332 21r05r00         [12]  677 	ld	hl, #_game + 5
     00000335 4E               [ 8]  678 	ld	c, (hl)
     00000336 06 00            [ 8]  679 	ld	b, #0x00
@@ -688,24 +688,24 @@
     0000033C D5               [16]  682 	push	de
     0000033D CDr00r00         [24]  683 	call	_printf
     00000340 E8 04            [16]  684 	add	sp, #4
-                                    685 ;src/ui.c:132: for (i = 0; i < 60; i++)
+                                    685 ;src/ui.c:138: for (i = 0; i < 60; i++)
     00000342 0E 3C            [ 8]  686 	ld	c, #0x3c
     00000344                        687 00111$:
-                                    688 ;src/ui.c:133: wait_vbl_done();
+                                    688 ;src/ui.c:139: wait_vbl_done();
     00000344 CDr00r00         [24]  689 	call	_wait_vbl_done
     00000347 0D               [ 4]  690 	dec	c
     00000348 20 FA            [12]  691 	jr	NZ, 00111$
-                                    692 ;src/ui.c:132: for (i = 0; i < 60; i++)
-                                    693 ;src/ui.c:135: while (1)
+                                    692 ;src/ui.c:138: for (i = 0; i < 60; i++)
+                                    693 ;src/ui.c:141: while (1)
     0000034A                        694 00107$:
-                                    695 ;src/ui.c:137: if (++blinkCounter > 30)
+                                    695 ;src/ui.c:143: if (++blinkCounter > 30)
     0000034A F8 01            [12]  696 	ldhl	sp,	#1
     0000034C 34               [12]  697 	inc	(hl)
     0000034D 3E 1E            [ 8]  698 	ld	a, #0x1e
     0000034F 96               [ 8]  699 	sub	a, (hl)
     00000350 30 24            [12]  700 	jr	NC, 00103$
-                                    701 ;src/ui.c:139: blinkCounter = 0;
-                                    702 ;src/ui.c:140: showText = !showText;
+                                    701 ;src/ui.c:145: blinkCounter = 0;
+                                    702 ;src/ui.c:146: showText = !showText;
     00000352 AF               [ 4]  703 	xor	a, a
     00000353 32               [ 8]  704 	ld	(hl-), a
     00000354 7E               [ 8]  705 	ld	a, (hl)
@@ -713,12 +713,12 @@
     00000357 3E 00            [ 8]  707 	ld	a, #0x00
     00000359 17               [ 4]  708 	rla
     0000035A 77               [ 8]  709 	ld	(hl), a
-                                    710 ;src/ui.c:141: gotoxy(3, 15);
+                                    710 ;src/ui.c:147: gotoxy(3, 15);
     0000035B 21 03 0F         [12]  711 	ld	hl, #0xf03
     0000035E E5               [16]  712 	push	hl
     0000035F CDr00r00         [24]  713 	call	_gotoxy
     00000362 E1               [12]  714 	pop	hl
-                                    715 ;src/ui.c:142: printf(showText ? "START:RETRY" : "           ");
+                                    715 ;src/ui.c:148: printf(showText ? "START:RETRY" : "           ");
     00000363 F8 00            [12]  716 	ldhl	sp,	#0
     00000365 7E               [ 8]  717 	ld	a, (hl)
     00000366 B7               [ 4]  718 	or	a, a
@@ -732,19 +732,19 @@
     00000372 CDr00r00         [24]  726 	call	_printf
     00000375 E1               [12]  727 	pop	hl
     00000376                        728 00103$:
-                                    729 ;src/ui.c:145: if (joypad() & J_START)
+                                    729 ;src/ui.c:151: if (joypad() & J_START)
     00000376 CDr00r00         [24]  730 	call	_joypad
     00000379 07               [ 4]  731 	rlca
     0000037A 30 04            [12]  732 	jr	NC, 00105$
-                                    733 ;src/ui.c:146: return 1;
+                                    733 ;src/ui.c:152: return 1;
     0000037C 3E 01            [ 8]  734 	ld	a, #0x01
     0000037E 18 05            [12]  735 	jr	00112$
     00000380                        736 00105$:
-                                    737 ;src/ui.c:147: wait_vbl_done();
+                                    737 ;src/ui.c:153: wait_vbl_done();
     00000380 CDr00r00         [24]  738 	call	_wait_vbl_done
     00000383 18 C5            [12]  739 	jr	00107$
     00000385                        740 00112$:
-                                    741 ;src/ui.c:149: }
+                                    741 ;src/ui.c:155: }
     00000385 33               [ 8]  742 	inc	sp
     00000386 33               [ 8]  743 	inc	sp
     00000387 C9               [16]  744 	ret

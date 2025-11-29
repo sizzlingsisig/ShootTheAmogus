@@ -8,7 +8,7 @@
 ; Public variables in this module
 ;--------------------------------------------------------
 	.globl _gbt_update
-	.globl _wait_vbl_done
+	.globl _vsync
 	.globl _simpleRand
 	.globl _initRand
 	.globl _moveSprite4
@@ -48,12 +48,12 @@ _randSeed:
 ; code
 ;--------------------------------------------------------
 	.area _CODE
-;src/utils.c:7: UINT8 simpleRand(void)
+;src/utils.c:9: UINT8 simpleRand(void)
 ;	---------------------------------
 ; Function simpleRand
 ; ---------------------------------
 _simpleRand::
-;src/utils.c:9: randSeed = (randSeed * 1103515245U + 12345U) & 0x7FFFU;
+;src/utils.c:11: randSeed = (randSeed * 1103515245U + 12345U) & 0x7FFFU;
 	ld	a, (_randSeed)
 	ld	c, a
 	ld	hl, #_randSeed + 1
@@ -89,11 +89,11 @@ _simpleRand::
 	ld	a, h
 	and	a, #0x7f
 	ld	(#_randSeed + 1),a
-;src/utils.c:10: return (UINT8)(randSeed >> 8);
+;src/utils.c:12: return (UINT8)(randSeed >> 8);
 	ld	a, (_randSeed + 1)
-;src/utils.c:11: }
+;src/utils.c:13: }
 	ret
-;src/utils.c:13: void initRand(UINT16 seed)
+;src/utils.c:16: void initRand(UINT16 seed)
 ;	---------------------------------
 ; Function initRand
 ; ---------------------------------
@@ -102,10 +102,10 @@ _initRand::
 	ld	a, e
 	ld	(hl+), a
 	ld	(hl), d
-;src/utils.c:15: randSeed = seed;
-;src/utils.c:16: }
+;src/utils.c:18: randSeed = seed;
+;src/utils.c:19: }
 	ret
-;src/utils.c:18: void moveSprite4(UINT8 sprite1, UINT8 sprite2, UINT8 sprite3, UINT8 sprite4,
+;src/utils.c:22: void moveSprite4(UINT8 sprite1, UINT8 sprite2, UINT8 sprite3, UINT8 sprite4,
 ;	---------------------------------
 ; Function moveSprite4
 ; ---------------------------------
@@ -114,7 +114,7 @@ _moveSprite4::
 	ldhl	sp,	#3
 	ld	(hl-), a
 	ld	(hl), e
-;src/utils.c:21: move_sprite(sprite1, x, y);
+;src/utils.c:25: move_sprite(sprite1, x, y);
 	ldhl	sp,	#10
 	ld	a, (hl-)
 	dec	hl
@@ -139,7 +139,7 @@ _moveSprite4::
 	ld	a, e
 	ld	(hl+), a
 	ld	(hl), c
-;src/utils.c:22: move_sprite(sprite2, x + SPRITE_SIZE, y);
+;src/utils.c:26: move_sprite(sprite2, x + SPRITE_SIZE, y);
 	ldhl	sp,	#8
 	ld	a, (hl)
 	add	a, #0x08
@@ -161,7 +161,7 @@ _moveSprite4::
 	ld	a, e
 	ld	(hl+), a
 	ld	(hl), b
-;src/utils.c:23: move_sprite(sprite3, x, y + SPRITE_SIZE);
+;src/utils.c:27: move_sprite(sprite3, x, y + SPRITE_SIZE);
 	ld	a, e
 	add	a, #0x08
 	ld	b, a
@@ -184,7 +184,7 @@ _moveSprite4::
 	inc	de
 	ld	a, (hl)
 	ld	(de), a
-;src/utils.c:24: move_sprite(sprite4, x + SPRITE_SIZE, y + SPRITE_SIZE);
+;src/utils.c:28: move_sprite(sprite4, x + SPRITE_SIZE, y + SPRITE_SIZE);
 	ldhl	sp,	#7
 ;c:\gbdk\include\gb\gb.h:1973: OAM_item_t * itm = &shadow_OAM[nb];
 	ld	l, (hl)
@@ -197,13 +197,13 @@ _moveSprite4::
 	ld	(hl), b
 	inc	hl
 	ld	(hl), c
-;src/utils.c:24: move_sprite(sprite4, x + SPRITE_SIZE, y + SPRITE_SIZE);
-;src/utils.c:25: }
+;src/utils.c:28: move_sprite(sprite4, x + SPRITE_SIZE, y + SPRITE_SIZE);
+;src/utils.c:29: }
 	add	sp, #4
 	pop	hl
 	add	sp, #5
 	jp	(hl)
-;src/utils.c:27: void hideSprite4(UINT8 base)
+;src/utils.c:32: void hideSprite4(UINT8 base)
 ;	---------------------------------
 ; Function hideSprite4
 ; ---------------------------------
@@ -221,7 +221,7 @@ _hideSprite4::
 	ld	a, #0xc8
 	ld	(hl+), a
 	ld	(hl), #0xc8
-;src/utils.c:30: move_sprite(base + 1, OFFSCREEN_X, OFFSCREEN_Y);
+;src/utils.c:35: move_sprite(base + 1, OFFSCREEN_X, OFFSCREEN_Y);
 	ld	d, e
 	inc	d
 ;c:\gbdk\include\gb\gb.h:1973: OAM_item_t * itm = &shadow_OAM[nb];
@@ -235,7 +235,7 @@ _hideSprite4::
 	ld	a, #0xc8
 	ld	(hl+), a
 	ld	(hl), #0xc8
-;src/utils.c:31: move_sprite(base + 2, OFFSCREEN_X, OFFSCREEN_Y);
+;src/utils.c:36: move_sprite(base + 2, OFFSCREEN_X, OFFSCREEN_Y);
 	ld	d, e
 	inc	d
 	inc	d
@@ -250,7 +250,7 @@ _hideSprite4::
 	ld	a, #0xc8
 	ld	(hl+), a
 	ld	(hl), #0xc8
-;src/utils.c:32: move_sprite(base + 3, OFFSCREEN_X, OFFSCREEN_Y);
+;src/utils.c:37: move_sprite(base + 3, OFFSCREEN_X, OFFSCREEN_Y);
 	inc	e
 	inc	e
 	inc	e
@@ -266,32 +266,32 @@ _hideSprite4::
 	ld	a, #0xc8
 	ld	(hl+), a
 	ld	(hl), #0xc8
-;src/utils.c:32: move_sprite(base + 3, OFFSCREEN_X, OFFSCREEN_Y);
-;src/utils.c:33: }
+;src/utils.c:37: move_sprite(base + 3, OFFSCREEN_X, OFFSCREEN_Y);
+;src/utils.c:38: }
 	ret
-;src/utils.c:35: void waitFrames(UINT8 frames)
+;src/utils.c:41: void waitFrames(UINT8 frames)
 ;	---------------------------------
 ; Function waitFrames
 ; ---------------------------------
 _waitFrames::
 	ld	c, a
-;src/utils.c:38: for (i = 0; i < frames; i++)
+;src/utils.c:44: for (i = 0; i < frames; i++)
 	ld	b, #0x00
 00103$:
 	ld	a, b
 	sub	a, c
 	ret	NC
-;src/utils.c:40: wait_vbl_done();
-	call	_wait_vbl_done
-;src/utils.c:41: gbt_update();
+;src/utils.c:46: vsync();
+	call	_vsync
+;src/utils.c:47: gbt_update();
 	push	bc
 	call	_gbt_update
 	pop	bc
-;src/utils.c:38: for (i = 0; i < frames; i++)
+;src/utils.c:44: for (i = 0; i < frames; i++)
 	inc	b
-;src/utils.c:43: }
+;src/utils.c:49: }
 	jr	00103$
-;src/utils.c:45: UINT8 checkCollision(UINT8 x1, UINT8 y1, UINT8 w1, UINT8 h1,
+;src/utils.c:52: UINT8 checkCollision(UINT8 x1, UINT8 y1, UINT8 w1, UINT8 h1,
 ;	---------------------------------
 ; Function checkCollision
 ; ---------------------------------
@@ -300,7 +300,7 @@ _checkCollision::
 	ld	d, a
 	ldhl	sp,	#4
 	ld	(hl), e
-;src/utils.c:48: return (x1 < x2 + w2 && x1 + w1 > x2 &&
+;src/utils.c:55: return (x1 < x2 + w2 && x1 + w1 > x2 &&
 	ldhl	sp,	#9
 	ld	a, (hl)
 	ldhl	sp,	#0
@@ -340,7 +340,7 @@ _checkCollision::
 	ld	a, (hl)
 	sbc	a, b
 	jr	NC, 00103$
-;src/utils.c:49: y1 < y2 + h2 && y1 + h1 > y2);
+;src/utils.c:56: y1 < y2 + h2 && y1 + h1 > y2);
 	ldhl	sp,	#10
 	ld	a, (hl)
 	ldhl	sp,	#0
@@ -387,7 +387,7 @@ _checkCollision::
 00104$:
 	ld	a, #0x01
 00105$:
-;src/utils.c:50: }
+;src/utils.c:57: }
 	add	sp, #5
 	pop	hl
 	add	sp, #6

@@ -87,7 +87,7 @@
                                      87 	.area _GSINIT
                                      88 	.area _GSFINAL
                                      89 	.area _GSINIT
-                                     90 ;src/game.c:191: static UINT8 fireDelay = 0;
+                                     90 ;src/game.c:194: static UINT8 fireDelay = 0;
     00000000 AF               [ 4]   91 	xor	a, a
     00000001 21r0Cr00         [12]   92 	ld	hl, #_Game_update_fireDelay_10000_250
     00000004 77               [ 8]   93 	ld	(hl), a
@@ -100,21 +100,21 @@
                                     100 ; code
                                     101 ;--------------------------------------------------------
                                     102 	.area _CODE
-                                    103 ;src/game.c:28: UINT8 getWaveNumber(void) { return game.waveNumber; }
+                                    103 ;src/game.c:29: UINT8 getWaveNumber(void) { return game.waveNumber; }
                                     104 ;	---------------------------------
                                     105 ; Function getWaveNumber
                                     106 ; ---------------------------------
     00000000                        107 _getWaveNumber::
     00000000 FAr05r00         [16]  108 	ld	a, (#(_game + 5) + 0)
     00000003 C9               [16]  109 	ret
-                                    110 ;src/game.c:29: UINT8 getEnemySpeed(void) { return game.enemySpeed; }
+                                    110 ;src/game.c:30: UINT8 getEnemySpeed(void) { return game.enemySpeed; }
                                     111 ;	---------------------------------
                                     112 ; Function getEnemySpeed
                                     113 ; ---------------------------------
     00000004                        114 _getEnemySpeed::
     00000004 FAr08r00         [16]  115 	ld	a, (#(_game + 8) + 0)
     00000007 C9               [16]  116 	ret
-                                    117 ;src/game.c:30: void incrementWave(void) { game.waveNumber++; game.enemiesKilledInWave = 0; }
+                                    117 ;src/game.c:31: void incrementWave(void) { game.waveNumber++; game.enemiesKilledInWave = 0; }
                                     118 ;	---------------------------------
                                     119 ; Function incrementWave
                                     120 ; ---------------------------------
@@ -124,7 +124,7 @@
     0000000C 21r06r00         [12]  124 	ld	hl, #_game + 6
     0000000F 36 00            [12]  125 	ld	(hl), #0x00
     00000011 C9               [16]  126 	ret
-                                    127 ;src/game.c:31: void incrementEnemiesKilled(void) { game.enemiesKilledInWave++; }
+                                    127 ;src/game.c:32: void incrementEnemiesKilled(void) { game.enemiesKilledInWave++; }
                                     128 ;	---------------------------------
                                     129 ; Function incrementEnemiesKilled
                                     130 ; ---------------------------------
@@ -134,7 +134,7 @@
     00000016 3C               [ 4]  134 	inc	a
     00000017 02               [ 8]  135 	ld	(bc), a
     00000018 C9               [16]  136 	ret
-                                    137 ;src/game.c:32: void addScore(UINT16 points) { game.score += points; }
+                                    137 ;src/game.c:33: void addScore(UINT16 points) { game.score += points; }
                                     138 ;	---------------------------------
                                     139 ; Function addScore
                                     140 ; ---------------------------------
@@ -153,103 +153,103 @@
     00000028 22               [ 8]  153 	ld	(hl+), a
     00000029 70               [ 8]  154 	ld	(hl), b
     0000002A C9               [16]  155 	ret
-                                    156 ;src/game.c:34: void Game_init(void)
+                                    156 ;src/game.c:36: void Game_init(void)
                                     157 ;	---------------------------------
                                     158 ; Function Game_init
                                     159 ; ---------------------------------
     0000002B                        160 _Game_init::
-                                    161 ;src/game.c:37: set_sprite_data(0, 8, GameSprites);
+                                    161 ;src/game.c:39: set_sprite_data(0, 8, GameSprites);
     0000002B 11r00r00         [12]  162 	ld	de, #_GameSprites
     0000002E D5               [16]  163 	push	de
     0000002F 21 00 08         [12]  164 	ld	hl, #0x800
     00000032 E5               [16]  165 	push	hl
     00000033 CDr00r00         [24]  166 	call	_set_sprite_data
     00000036 E8 04            [16]  167 	add	sp, #4
-                                    168 ;src/game.c:38: set_sprite_data(8, 12, Amogus);
+                                    168 ;src/game.c:40: set_sprite_data(8, 12, Amogus);
     00000038 11r00r00         [12]  169 	ld	de, #_Amogus
     0000003B D5               [16]  170 	push	de
     0000003C 21 08 0C         [12]  171 	ld	hl, #0xc08
     0000003F E5               [16]  172 	push	hl
     00000040 CDr00r00         [24]  173 	call	_set_sprite_data
     00000043 E8 04            [16]  174 	add	sp, #4
-                                    175 ;src/game.c:39: set_sprite_data(20, 12, hatamogus);
+                                    175 ;src/game.c:41: set_sprite_data(20, 12, hatamogus);
     00000045 11r00r00         [12]  176 	ld	de, #_hatamogus
     00000048 D5               [16]  177 	push	de
     00000049 21 14 0C         [12]  178 	ld	hl, #0xc14
     0000004C E5               [16]  179 	push	hl
     0000004D CDr00r00         [24]  180 	call	_set_sprite_data
     00000050 E8 04            [16]  181 	add	sp, #4
-                                    182 ;src/game.c:40: set_sprite_data(32, 4, ghostamogus);
+                                    182 ;src/game.c:42: set_sprite_data(32, 4, ghostamogus);
     00000052 11r00r00         [12]  183 	ld	de, #_ghostamogus
     00000055 D5               [16]  184 	push	de
     00000056 21 20 04         [12]  185 	ld	hl, #0x420
     00000059 E5               [16]  186 	push	hl
     0000005A CDr00r00         [24]  187 	call	_set_sprite_data
     0000005D E8 04            [16]  188 	add	sp, #4
-                                    189 ;src/game.c:41: set_sprite_data(36, 12, bigamogus);
+                                    189 ;src/game.c:43: set_sprite_data(36, 12, bigamogus);
     0000005F 11r00r00         [12]  190 	ld	de, #_bigamogus
     00000062 D5               [16]  191 	push	de
     00000063 21 24 0C         [12]  192 	ld	hl, #0xc24
     00000066 E5               [16]  193 	push	hl
     00000067 CDr00r00         [24]  194 	call	_set_sprite_data
     0000006A E8 04            [16]  195 	add	sp, #4
-                                    196 ;src/game.c:42: set_sprite_data(48, 5, heart);
+                                    196 ;src/game.c:44: set_sprite_data(48, 5, heart);
     0000006C 11r00r00         [12]  197 	ld	de, #_heart
     0000006F D5               [16]  198 	push	de
     00000070 21 30 05         [12]  199 	ld	hl, #0x530
     00000073 E5               [16]  200 	push	hl
     00000074 CDr00r00         [24]  201 	call	_set_sprite_data
     00000077 E8 04            [16]  202 	add	sp, #4
-                                    203 ;src/game.c:45: NR52_REG = 0x80;
+                                    203 ;src/game.c:47: NR52_REG = 0x80;
     00000079 3E 80            [ 8]  204 	ld	a, #0x80
     0000007B E0r00            [12]  205 	ldh	(_NR52_REG + 0), a
-                                    206 ;src/game.c:46: NR50_REG = 0x77;
+                                    206 ;src/game.c:48: NR50_REG = 0x77;
     0000007D 3E 77            [ 8]  207 	ld	a, #0x77
     0000007F E0r00            [12]  208 	ldh	(_NR50_REG + 0), a
-                                    209 ;src/game.c:47: NR51_REG = 0xFF;
+                                    209 ;src/game.c:49: NR51_REG = 0xFF;
     00000081 3E FF            [ 8]  210 	ld	a, #0xff
     00000083 E0r00            [12]  211 	ldh	(_NR51_REG + 0), a
-                                    212 ;src/game.c:50: BGP_REG = 0xE4;
+                                    212 ;src/game.c:52: BGP_REG = 0xE4;
     00000085 3E E4            [ 8]  213 	ld	a, #0xe4
     00000087 E0r00            [12]  214 	ldh	(_BGP_REG + 0), a
-                                    215 ;src/game.c:51: OBP0_REG = 0xE4;
+                                    215 ;src/game.c:53: OBP0_REG = 0xE4;
     00000089 3E E4            [ 8]  216 	ld	a, #0xe4
     0000008B E0r00            [12]  217 	ldh	(_OBP0_REG + 0), a
-                                    218 ;src/game.c:52: OBP1_REG = 0xE4;
+                                    218 ;src/game.c:54: OBP1_REG = 0xE4;
     0000008D 3E E4            [ 8]  219 	ld	a, #0xe4
     0000008F E0r00            [12]  220 	ldh	(_OBP1_REG + 0), a
-                                    221 ;src/game.c:54: SHOW_BKG;
+                                    221 ;src/game.c:56: SHOW_BKG;
     00000091 F0r00            [12]  222 	ldh	a, (_LCDC_REG + 0)
     00000093 F6 01            [ 8]  223 	or	a, #0x01
     00000095 E0r00            [12]  224 	ldh	(_LCDC_REG + 0), a
-                                    225 ;src/game.c:55: DISPLAY_ON;
+                                    225 ;src/game.c:57: DISPLAY_ON;
     00000097 F0r00            [12]  226 	ldh	a, (_LCDC_REG + 0)
     00000099 F6 80            [ 8]  227 	or	a, #0x80
     0000009B E0r00            [12]  228 	ldh	(_LCDC_REG + 0), a
-                                    229 ;src/game.c:57: game.highScore = 0;
+                                    229 ;src/game.c:59: game.highScore = 0;
     0000009D 21r03r00         [12]  230 	ld	hl, #(_game + 3)
     000000A0 AF               [ 4]  231 	xor	a, a
     000000A1 22               [ 8]  232 	ld	(hl+), a
     000000A2 77               [ 8]  233 	ld	(hl), a
-                                    234 ;src/game.c:58: }
+                                    234 ;src/game.c:60: }
     000000A3 C9               [16]  235 	ret
-                                    236 ;src/game.c:60: void Game_start(void)
+                                    236 ;src/game.c:63: void Game_start(void)
                                     237 ;	---------------------------------
                                     238 ; Function Game_start
                                     239 ; ---------------------------------
     000000A4                        240 _Game_start::
-                                    241 ;src/game.c:62: while (1)
+                                    241 ;src/game.c:65: while (1)
     000000A4                        242 00107$:
-                                    243 ;src/game.c:64: showStartScreen();
+                                    243 ;src/game.c:67: showStartScreen();
     000000A4 CDr00r00         [24]  244 	call	_showStartScreen
-                                    245 ;src/game.c:67: set_bkg_data(0, 9, tile);
+                                    245 ;src/game.c:70: set_bkg_data(0, 9, tile);
     000000A7 11r00r00         [12]  246 	ld	de, #_tile
     000000AA D5               [16]  247 	push	de
     000000AB 21 00 09         [12]  248 	ld	hl, #0x900
     000000AE E5               [16]  249 	push	hl
     000000AF CDr00r00         [24]  250 	call	_set_bkg_data
     000000B2 E8 04            [16]  251 	add	sp, #4
-                                    252 ;src/game.c:68: set_bkg_tiles(0, 0, 40, 18, bgmap);
+                                    252 ;src/game.c:71: set_bkg_tiles(0, 0, 40, 18, bgmap);
     000000B4 11r00r00         [12]  253 	ld	de, #_bgmap
     000000B7 D5               [16]  254 	push	de
     000000B8 21 28 12         [12]  255 	ld	hl, #0x1228
@@ -259,32 +259,32 @@
     000000BE F5               [16]  259 	push	af
     000000BF CDr00r00         [24]  260 	call	_set_bkg_tiles
     000000C2 E8 06            [16]  261 	add	sp, #6
-                                    262 ;src/game.c:69: BGP_REG = 0xE4;
+                                    262 ;src/game.c:72: BGP_REG = 0xE4;
     000000C4 3E E4            [ 8]  263 	ld	a, #0xe4
     000000C6 E0r00            [12]  264 	ldh	(_BGP_REG + 0), a
-                                    265 ;src/game.c:71: Game_reset();
+                                    265 ;src/game.c:74: Game_reset();
     000000C8 CDr1Br01         [24]  266 	call	_Game_reset
                                     267 ;c:\gbdk\include\gb\gb.h:811: __asm__("di");
     000000CB F3               [ 4]  268 	di
-                                    269 ;src/game.c:75: gbt_play(song_Data, 2, 7);
+                                    269 ;src/game.c:78: gbt_play(song_Data, 2, 7);
     000000CC 21 02 07         [12]  270 	ld	hl, #0x702
     000000CF E5               [16]  271 	push	hl
     000000D0 11r00r00         [12]  272 	ld	de, #_song_Data
     000000D3 D5               [16]  273 	push	de
     000000D4 CDr00r00         [24]  274 	call	_gbt_play
     000000D7 E8 04            [16]  275 	add	sp, #4
-                                    276 ;src/game.c:76: gbt_loop(1);
+                                    276 ;src/game.c:79: gbt_loop(1);
     000000D9 3E 01            [ 8]  277 	ld	a, #0x01
     000000DB F5               [16]  278 	push	af
     000000DC 33               [ 8]  279 	inc	sp
     000000DD CDr00r00         [24]  280 	call	_gbt_loop
     000000E0 33               [ 8]  281 	inc	sp
-                                    282 ;src/game.c:77: set_interrupts(VBL_IFLAG);
+                                    282 ;src/game.c:80: set_interrupts(VBL_IFLAG);
     000000E1 3E 01            [ 8]  283 	ld	a, #0x01
     000000E3 CDr00r00         [24]  284 	call	_set_interrupts
                                     285 ;c:\gbdk\include\gb\gb.h:795: __asm__("ei");
     000000E6 FB               [ 4]  286 	ei
-                                    287 ;src/game.c:80: SHOW_SPRITES;
+                                    287 ;src/game.c:83: SHOW_SPRITES;
     000000E7 F0r00            [12]  288 	ldh	a, (_LCDC_REG + 0)
     000000E9 F6 02            [ 8]  289 	or	a, #0x02
     000000EB E0r00            [12]  290 	ldh	(_LCDC_REG + 0), a
@@ -297,33 +297,33 @@
     000000FA 36 01            [12]  297 	ld	(hl), #0x01
     000000FC 21r0Er00         [12]  298 	ld	hl, #(_shadow_OAM + 14)
     000000FF 36 03            [12]  299 	ld	(hl), #0x03
-                                    300 ;src/game.c:87: while (game.lives > 0)
+                                    300 ;src/game.c:90: while (game.lives > 0)
     00000101                        301 00101$:
     00000101 FAr00r00         [16]  302 	ld	a, (#_game + 0)
     00000104 B7               [ 4]  303 	or	a, a
     00000105 28 0D            [12]  304 	jr	Z, 00103$
-                                    305 ;src/game.c:89: Game_update();
+                                    305 ;src/game.c:92: Game_update();
     00000107 CDr54r02         [24]  306 	call	_Game_update
-                                    307 ;src/game.c:90: Game_draw();
+                                    307 ;src/game.c:93: Game_draw();
     0000010A CDrCBr02         [24]  308 	call	_Game_draw
-                                    309 ;src/game.c:91: waitFrames(4);
+                                    309 ;src/game.c:94: waitFrames(4);
     0000010D 3E 04            [ 8]  310 	ld	a, #0x04
     0000010F CDr00r00         [24]  311 	call	_waitFrames
     00000112 18 ED            [12]  312 	jr	00101$
     00000114                        313 00103$:
-                                    314 ;src/game.c:94: if (!showGameOverScreen())
+                                    314 ;src/game.c:97: if (!showGameOverScreen())
     00000114 CDr00r00         [24]  315 	call	_showGameOverScreen
     00000117 B7               [ 4]  316 	or	a, a
     00000118 20 8A            [12]  317 	jr	NZ, 00107$
-                                    318 ;src/game.c:95: break;
-                                    319 ;src/game.c:97: }
+                                    318 ;src/game.c:98: break;
+                                    319 ;src/game.c:100: }
     0000011A C9               [16]  320 	ret
-                                    321 ;src/game.c:99: void Game_reset(void)
+                                    321 ;src/game.c:102: void Game_reset(void)
                                     322 ;	---------------------------------
                                     323 ; Function Game_reset
                                     324 ; ---------------------------------
     0000011B                        325 _Game_reset::
-                                    326 ;src/game.c:101: if (game.score > game.highScore)
+                                    326 ;src/game.c:104: if (game.score > game.highScore)
     0000011B 21r01r00         [12]  327 	ld	hl, #(_game + 1)
     0000011E 2A               [ 8]  328 	ld	a, (hl+)
     0000011F 4F               [ 4]  329 	ld	c, a
@@ -335,58 +335,58 @@
     00000127 7C               [ 4]  335 	ld	a, h
     00000128 98               [ 4]  336 	sbc	a, b
     00000129 30 06            [12]  337 	jr	NC, 00102$
-                                    338 ;src/game.c:103: game.highScore = game.score;
+                                    338 ;src/game.c:106: game.highScore = game.score;
     0000012B 21r03r00         [12]  339 	ld	hl, #(_game + 3)
     0000012E 79               [ 4]  340 	ld	a, c
     0000012F 22               [ 8]  341 	ld	(hl+), a
     00000130 70               [ 8]  342 	ld	(hl), b
     00000131                        343 00102$:
-                                    344 ;src/game.c:106: game.lives = MAX_LIVES;
+                                    344 ;src/game.c:109: game.lives = MAX_LIVES;
     00000131 21r00r00         [12]  345 	ld	hl, #_game
-                                    346 ;src/game.c:107: game.score = 0;
+                                    346 ;src/game.c:110: game.score = 0;
     00000134 3E 03            [ 8]  347 	ld	a, #0x03
     00000136 22               [ 8]  348 	ld	(hl+), a
     00000137 AF               [ 4]  349 	xor	a, a
     00000138 22               [ 8]  350 	ld	(hl+), a
     00000139 77               [ 8]  351 	ld	(hl), a
-                                    352 ;src/game.c:108: game.difficultyLevel = 1;
+                                    352 ;src/game.c:111: game.difficultyLevel = 1;
     0000013A 21r07r00         [12]  353 	ld	hl, #_game + 7
     0000013D 36 01            [12]  354 	ld	(hl), #0x01
-                                    355 ;src/game.c:109: game.enemySpeed = ENEMY_SPEED_BASE;
+                                    355 ;src/game.c:112: game.enemySpeed = ENEMY_SPEED_BASE;
     0000013F 21r08r00         [12]  356 	ld	hl, #_game + 8
     00000142 36 04            [12]  357 	ld	(hl), #0x04
-                                    358 ;src/game.c:110: game.frameCounter = 0;
+                                    358 ;src/game.c:113: game.frameCounter = 0;
     00000144 21r09r00         [12]  359 	ld	hl, #(_game + 9)
     00000147 AF               [ 4]  360 	xor	a, a
     00000148 22               [ 8]  361 	ld	(hl+), a
     00000149 77               [ 8]  362 	ld	(hl), a
-                                    363 ;src/game.c:111: game.waveNumber = 1;
+                                    363 ;src/game.c:114: game.waveNumber = 1;
     0000014A 21r05r00         [12]  364 	ld	hl, #_game + 5
     0000014D 36 01            [12]  365 	ld	(hl), #0x01
-                                    366 ;src/game.c:112: game.enemiesKilledInWave = 0;
+                                    366 ;src/game.c:115: game.enemiesKilledInWave = 0;
     0000014F 21r06r00         [12]  367 	ld	hl, #_game + 6
     00000152 36 00            [12]  368 	ld	(hl), #0x00
-                                    369 ;src/game.c:114: enemySpawnTimer = INITIAL_SPAWN_INTERVAL;
+                                    369 ;src/game.c:117: enemySpawnTimer = INITIAL_SPAWN_INTERVAL;
     00000154 21r0Br00         [12]  370 	ld	hl, #_enemySpawnTimer
     00000157 36 14            [12]  371 	ld	(hl), #0x14
-                                    372 ;src/game.c:115: initRand(DIV_REG);
+                                    372 ;src/game.c:118: initRand(DIV_REG);
     00000159 F0r00            [12]  373 	ldh	a, (_DIV_REG + 0)
     0000015B 16 00            [ 8]  374 	ld	d, #0x00
     0000015D 5F               [ 4]  375 	ld	e, a
     0000015E CDr00r00         [24]  376 	call	_initRand
-                                    377 ;src/game.c:117: initPlayer();
+                                    377 ;src/game.c:120: initPlayer();
     00000161 CDr00r00         [24]  378 	call	_initPlayer
-                                    379 ;src/game.c:118: initBullets();
+                                    379 ;src/game.c:121: initBullets();
     00000164 CDr00r00         [24]  380 	call	_initBullets
-                                    381 ;src/game.c:119: initEnemies();
-                                    382 ;src/game.c:120: }
+                                    381 ;src/game.c:122: initEnemies();
+                                    382 ;src/game.c:123: }
     00000167 C3r00r00         [16]  383 	jp	_initEnemies
-                                    384 ;src/game.c:122: void updateDifficulty(void)
+                                    384 ;src/game.c:125: void updateDifficulty(void)
                                     385 ;	---------------------------------
                                     386 ; Function updateDifficulty
                                     387 ; ---------------------------------
     0000016A                        388 _updateDifficulty::
-                                    389 ;src/game.c:124: if (game.frameCounter % DIFFICULTY_INTERVAL == 0 && game.frameCounter > 0)
+                                    389 ;src/game.c:127: if (game.frameCounter % DIFFICULTY_INTERVAL == 0 && game.frameCounter > 0)
     0000016A 21r09r00         [12]  390 	ld	hl, #_game + 9
     0000016D 2A               [ 8]  391 	ld	a,	(hl+)
     0000016E 66               [ 8]  392 	ld	h, (hl)
@@ -403,25 +403,25 @@
     0000017D 7C               [ 4]  403 	ld	a, h
     0000017E B5               [ 4]  404 	or	a, l
     0000017F C8               [20]  405 	ret	Z
-                                    406 ;src/game.c:126: game.difficultyLevel++;
+                                    406 ;src/game.c:129: game.difficultyLevel++;
     00000180 21r07r00         [12]  407 	ld	hl, #_game + 7
     00000183 34               [12]  408 	inc	(hl)
-                                    409 ;src/game.c:127: if (game.enemySpeed < MAX_ENEMY_SPEED)
+                                    409 ;src/game.c:130: if (game.enemySpeed < MAX_ENEMY_SPEED)
     00000184 21r08r00         [12]  410 	ld	hl, #_game + 8
     00000187 7E               [ 8]  411 	ld	a, (hl)
     00000188 FE 06            [ 8]  412 	cp	a, #0x06
     0000018A D0               [20]  413 	ret	NC
-                                    414 ;src/game.c:129: game.enemySpeed++;
+                                    414 ;src/game.c:132: game.enemySpeed++;
     0000018B 3C               [ 4]  415 	inc	a
     0000018C 77               [ 8]  416 	ld	(hl), a
-                                    417 ;src/game.c:132: }
+                                    417 ;src/game.c:135: }
     0000018D C9               [16]  418 	ret
-                                    419 ;src/game.c:134: UINT8 getSpawnInterval(void)
+                                    419 ;src/game.c:137: UINT8 getSpawnInterval(void)
                                     420 ;	---------------------------------
                                     421 ; Function getSpawnInterval
                                     422 ; ---------------------------------
     0000018E                        423 _getSpawnInterval::
-                                    424 ;src/game.c:136: UINT8 interval = BASE_SPAWN_INTERVAL - (game.difficultyLevel * 3);
+                                    424 ;src/game.c:139: UINT8 interval = BASE_SPAWN_INTERVAL - (game.difficultyLevel * 3);
     0000018E FAr07r00         [16]  425 	ld	a, (#(_game + 7) + 0)
     00000191 4F               [ 4]  426 	ld	c, a
     00000192 87               [ 4]  427 	add	a, a
@@ -429,30 +429,30 @@
     00000194 4F               [ 4]  429 	ld	c, a
     00000195 3E 23            [ 8]  430 	ld	a, #0x23
     00000197 91               [ 4]  431 	sub	a, c
-                                    432 ;src/game.c:137: return (interval < MIN_SPAWN_INTERVAL) ? MIN_SPAWN_INTERVAL : interval;
+                                    432 ;src/game.c:140: return (interval < MIN_SPAWN_INTERVAL) ? MIN_SPAWN_INTERVAL : interval;
     00000198 FE 0A            [ 8]  433 	cp	a, #0x0a
     0000019A D0               [20]  434 	ret	NC
     0000019B 3E 0A            [ 8]  435 	ld	a, #0x0a
-                                    436 ;src/game.c:138: }
+                                    436 ;src/game.c:141: }
     0000019D C9               [16]  437 	ret
-                                    438 ;src/game.c:140: void checkWaveCompletion(void)
+                                    438 ;src/game.c:143: void checkWaveCompletion(void)
                                     439 ;	---------------------------------
                                     440 ; Function checkWaveCompletion
                                     441 ; ---------------------------------
     0000019E                        442 _checkWaveCompletion::
-                                    443 ;src/game.c:142: if (game.enemiesKilledInWave >= ENEMIES_PER_WAVE)
+                                    443 ;src/game.c:145: if (game.enemiesKilledInWave >= ENEMIES_PER_WAVE)
     0000019E 21r06r00         [12]  444 	ld	hl, #_game + 6
     000001A1 7E               [ 8]  445 	ld	a, (hl)
     000001A2 D6 0A            [ 8]  446 	sub	a, #0x0a
     000001A4 D8               [20]  447 	ret	C
-                                    448 ;src/game.c:144: game.waveNumber++;
+                                    448 ;src/game.c:147: game.waveNumber++;
     000001A5 01r05r00         [12]  449 	ld	bc, #_game + 5
     000001A8 0A               [ 8]  450 	ld	a, (bc)
     000001A9 3C               [ 4]  451 	inc	a
     000001AA 02               [ 8]  452 	ld	(bc), a
-                                    453 ;src/game.c:145: game.enemiesKilledInWave = 0;
+                                    453 ;src/game.c:148: game.enemiesKilledInWave = 0;
     000001AB 36 00            [12]  454 	ld	(hl), #0x00
-                                    455 ;src/game.c:146: game.score += 50;
+                                    455 ;src/game.c:149: game.score += 50;
     000001AD 21r01r00         [12]  456 	ld	hl, #(_game + 1)
     000001B0 2A               [ 8]  457 	ld	a, (hl+)
     000001B1 4F               [ 4]  458 	ld	c, a
@@ -465,15 +465,15 @@
     000001BC 79               [ 4]  465 	ld	a, c
     000001BD 22               [ 8]  466 	ld	(hl+), a
     000001BE 70               [ 8]  467 	ld	(hl), b
-                                    468 ;src/game.c:148: }
+                                    468 ;src/game.c:151: }
     000001BF C9               [16]  469 	ret
-                                    470 ;src/game.c:150: void updateEnemySpawning(void)
+                                    470 ;src/game.c:153: void updateEnemySpawning(void)
                                     471 ;	---------------------------------
                                     472 ; Function updateEnemySpawning
                                     473 ; ---------------------------------
     000001C0                        474 _updateEnemySpawning::
     000001C0 3B               [ 8]  475 	dec	sp
-                                    476 ;src/game.c:152: if (game.waveNumber >= 5 && game.waveNumber % 5 == 0)
+                                    476 ;src/game.c:155: if (game.waveNumber >= 5 && game.waveNumber % 5 == 0)
     000001C1 FAr05r00         [16]  477 	ld	a, (#(_game + 5) + 0)
     000001C4 FE 05            [ 8]  478 	cp	a, #0x05
     000001C6 38 29            [12]  479 	jr	C, 00108$
@@ -482,40 +482,40 @@
     000001CD 79               [ 4]  482 	ld	a, c
     000001CE B7               [ 4]  483 	or	a, a
     000001CF 20 20            [12]  484 	jr	NZ, 00108$
-                                    485 ;src/game.c:154: if (countActiveEnemies() == 0 && enemySpawnTimer == 0)
+                                    485 ;src/game.c:157: if (countActiveEnemies() == 0 && enemySpawnTimer == 0)
     000001D1 CDr00r00         [24]  486 	call	_countActiveEnemies
     000001D4 B7               [ 4]  487 	or	a, a
     000001D5 20 10            [12]  488 	jr	NZ, 00104$
     000001D7 FAr0Br00         [16]  489 	ld	a, (#_enemySpawnTimer)
-                                    490 ;src/game.c:156: spawnBossEnemy(0);
+                                    490 ;src/game.c:159: spawnBossEnemy(0);
     000001DA B7               [ 4]  491 	or	a,a
     000001DB 20 0A            [12]  492 	jr	NZ, 00104$
     000001DD CDr00r00         [24]  493 	call	_spawnBossEnemy
-                                    494 ;src/game.c:157: enemySpawnTimer = 255;
+                                    494 ;src/game.c:160: enemySpawnTimer = 255;
     000001E0 21r0Br00         [12]  495 	ld	hl, #_enemySpawnTimer
     000001E3 36 FF            [12]  496 	ld	(hl), #0xff
     000001E5 18 6B            [12]  497 	jr	00120$
     000001E7                        498 00104$:
-                                    499 ;src/game.c:159: else if (enemySpawnTimer > 0)
+                                    499 ;src/game.c:162: else if (enemySpawnTimer > 0)
     000001E7 21r0Br00         [12]  500 	ld	hl, #_enemySpawnTimer
     000001EA 7E               [ 8]  501 	ld	a, (hl)
     000001EB B7               [ 4]  502 	or	a, a
     000001EC 28 64            [12]  503 	jr	Z, 00120$
-                                    504 ;src/game.c:161: enemySpawnTimer--;
+                                    504 ;src/game.c:164: enemySpawnTimer--;
     000001EE 35               [12]  505 	dec	(hl)
-                                    506 ;src/game.c:163: return;
+                                    506 ;src/game.c:166: return;
     000001EF 18 61            [12]  507 	jr	00120$
     000001F1                        508 00108$:
-                                    509 ;src/game.c:166: enemySpawnTimer--;
+                                    509 ;src/game.c:169: enemySpawnTimer--;
     000001F1 21r0Br00         [12]  510 	ld	hl, #_enemySpawnTimer
-                                    511 ;src/game.c:167: if (enemySpawnTimer == 0 || countActiveEnemies() == 0)
+                                    511 ;src/game.c:170: if (enemySpawnTimer == 0 || countActiveEnemies() == 0)
     000001F4 35               [12]  512 	dec	(hl)
     000001F5 28 06            [12]  513 	jr	Z, 00113$
     000001F7 CDr00r00         [24]  514 	call	_countActiveEnemies
     000001FA B7               [ 4]  515 	or	a, a
     000001FB 20 55            [12]  516 	jr	NZ, 00120$
     000001FD                        517 00113$:
-                                    518 ;src/game.c:170: UINT8 spawnCount = (simpleRand() % 10 == 0) ? 2 : 1;
+                                    518 ;src/game.c:173: UINT8 spawnCount = (simpleRand() % 10 == 0) ? 2 : 1;
     000001FD CDr00r00         [24]  519 	call	_simpleRand
     00000200 1E 0A            [ 8]  520 	ld	e, #0x0a
     00000202 CDr00r00         [24]  521 	call	__moduchar
@@ -527,7 +527,7 @@
     0000020D                        527 00123$:
     0000020D F8 00            [12]  528 	ldhl	sp,	#0
     0000020F 77               [ 8]  529 	ld	(hl), a
-                                    530 ;src/game.c:173: for (i = 0; i < MAX_ENEMIES && spawned < spawnCount; i++)
+                                    530 ;src/game.c:176: for (i = 0; i < MAX_ENEMIES && spawned < spawnCount; i++)
     00000210 01 00 00         [12]  531 	ld	bc, #0x0
     00000213                        532 00118$:
     00000213 79               [ 4]  533 	ld	a, c
@@ -537,7 +537,7 @@
     00000219 F8 00            [12]  537 	ldhl	sp,	#0
     0000021B 96               [ 8]  538 	sub	a, (hl)
     0000021C 30 21            [12]  539 	jr	NC, 00112$
-                                    540 ;src/game.c:175: if (!enemies[i].isActive)
+                                    540 ;src/game.c:178: if (!enemies[i].isActive)
     0000021E 59               [ 4]  541 	ld	e, c
     0000021F 16 00            [ 8]  542 	ld	d, #0x00
     00000221 6B               [ 4]  543 	ld	l, e
@@ -557,46 +557,46 @@
     00000231 7E               [ 8]  557 	ld	a, (hl)
     00000232 B7               [ 4]  558 	or	a, a
     00000233 20 07            [12]  559 	jr	NZ, 00119$
-                                    560 ;src/game.c:177: spawnEnemy(i);
+                                    560 ;src/game.c:180: spawnEnemy(i);
     00000235 C5               [16]  561 	push	bc
     00000236 79               [ 4]  562 	ld	a, c
     00000237 CDr00r00         [24]  563 	call	_spawnEnemy
     0000023A C1               [12]  564 	pop	bc
-                                    565 ;src/game.c:178: spawned++;
+                                    565 ;src/game.c:181: spawned++;
     0000023B 04               [ 4]  566 	inc	b
     0000023C                        567 00119$:
-                                    568 ;src/game.c:173: for (i = 0; i < MAX_ENEMIES && spawned < spawnCount; i++)
+                                    568 ;src/game.c:176: for (i = 0; i < MAX_ENEMIES && spawned < spawnCount; i++)
     0000023C 0C               [ 4]  569 	inc	c
     0000023D 18 D4            [12]  570 	jr	00118$
     0000023F                        571 00112$:
-                                    572 ;src/game.c:182: UINT8 baseInterval = getSpawnInterval();
+                                    572 ;src/game.c:185: UINT8 baseInterval = getSpawnInterval();
     0000023F CDr8Er01         [24]  573 	call	_getSpawnInterval
     00000242 4F               [ 4]  574 	ld	c, a
-                                    575 ;src/game.c:183: UINT8 randomVariation = simpleRand() % (SPAWN_RANDOMNESS * 2);
+                                    575 ;src/game.c:186: UINT8 randomVariation = simpleRand() % (SPAWN_RANDOMNESS * 2);
     00000243 C5               [16]  576 	push	bc
     00000244 CDr00r00         [24]  577 	call	_simpleRand
     00000247 1E 32            [ 8]  578 	ld	e, #0x32
-                                    579 ;src/game.c:184: enemySpawnTimer = baseInterval + randomVariation;
+                                    579 ;src/game.c:187: enemySpawnTimer = baseInterval + randomVariation;
     00000249 CDr00r00         [24]  580 	call	__moduchar
     0000024C 79               [ 4]  581 	ld	a, c
     0000024D C1               [12]  582 	pop	bc
     0000024E 81               [ 4]  583 	add	a, c
     0000024F EAr0Br00         [16]  584 	ld	(#_enemySpawnTimer),a
     00000252                        585 00120$:
-                                    586 ;src/game.c:186: }
+                                    586 ;src/game.c:189: }
     00000252 33               [ 8]  587 	inc	sp
     00000253 C9               [16]  588 	ret
-                                    589 ;src/game.c:188: void Game_update(void)
+                                    589 ;src/game.c:191: void Game_update(void)
                                     590 ;	---------------------------------
                                     591 ; Function Game_update
                                     592 ; ---------------------------------
     00000254                        593 _Game_update::
     00000254 3B               [ 8]  594 	dec	sp
-                                    595 ;src/game.c:190: UINT8 joy = joypad();
+                                    595 ;src/game.c:193: UINT8 joy = joypad();
     00000255 CDr00r00         [24]  596 	call	_joypad
     00000258 F8 00            [12]  597 	ldhl	sp,	#0
     0000025A 77               [ 8]  598 	ld	(hl), a
-                                    599 ;src/game.c:193: game.frameCounter++;
+                                    599 ;src/game.c:196: game.frameCounter++;
     0000025B 21r09r00         [12]  600 	ld	hl, #(_game + 9)
     0000025E 2A               [ 8]  601 	ld	a, (hl+)
     0000025F 4F               [ 4]  602 	ld	c, a
@@ -606,17 +606,17 @@
     00000265 79               [ 4]  606 	ld	a, c
     00000266 22               [ 8]  607 	ld	(hl+), a
     00000267 70               [ 8]  608 	ld	(hl), b
-                                    609 ;src/game.c:195: updateDifficulty();
+                                    609 ;src/game.c:198: updateDifficulty();
     00000268 CDr6Ar01         [24]  610 	call	_updateDifficulty
-                                    611 ;src/game.c:196: updatePlayerInput(joy);
+                                    611 ;src/game.c:199: updatePlayerInput(joy);
     0000026B F8 00            [12]  612 	ldhl	sp,	#0
     0000026D 7E               [ 8]  613 	ld	a, (hl)
     0000026E CDr00r00         [24]  614 	call	_updatePlayerInput
-                                    615 ;src/game.c:197: updatePlayerPhysics();
+                                    615 ;src/game.c:200: updatePlayerPhysics();
     00000271 CDr00r00         [24]  616 	call	_updatePlayerPhysics
-                                    617 ;src/game.c:198: updatePlayerAnimation();
+                                    617 ;src/game.c:201: updatePlayerAnimation();
     00000274 CDr00r00         [24]  618 	call	_updatePlayerAnimation
-                                    619 ;src/game.c:200: if ((joy & J_A) && fireDelay == 0)
+                                    619 ;src/game.c:203: if ((joy & J_A) && fireDelay == 0)
     00000277 E5               [16]  620 	push	hl
     00000278 F8 02            [12]  621 	ldhl	sp,	#2
     0000027A CB 66            [12]  622 	bit	4, (hl)
@@ -625,29 +625,29 @@
     0000027F FAr0Cr00         [16]  625 	ld	a, (#_Game_update_fireDelay_10000_250)
     00000282 B7               [ 4]  626 	or	a, a
     00000283 20 0B            [12]  627 	jr	NZ, 00104$
-                                    628 ;src/game.c:202: if (fireBullet())
+                                    628 ;src/game.c:205: if (fireBullet())
     00000285 CDr00r00         [24]  629 	call	_fireBullet
     00000288 B7               [ 4]  630 	or	a, a
     00000289 28 05            [12]  631 	jr	Z, 00104$
-                                    632 ;src/game.c:204: fireDelay = FIRE_RATE;
+                                    632 ;src/game.c:207: fireDelay = FIRE_RATE;
     0000028B 21r0Cr00         [12]  633 	ld	hl, #_Game_update_fireDelay_10000_250
     0000028E 36 0F            [12]  634 	ld	(hl), #0x0f
     00000290                        635 00104$:
-                                    636 ;src/game.c:207: if (fireDelay > 0) fireDelay--;
+                                    636 ;src/game.c:210: if (fireDelay > 0) fireDelay--;
     00000290 21r0Cr00         [12]  637 	ld	hl, #_Game_update_fireDelay_10000_250
     00000293 7E               [ 8]  638 	ld	a, (hl)
     00000294 B7               [ 4]  639 	or	a, a
     00000295 28 01            [12]  640 	jr	Z, 00107$
     00000297 35               [12]  641 	dec	(hl)
     00000298                        642 00107$:
-                                    643 ;src/game.c:209: updateBullets();
+                                    643 ;src/game.c:212: updateBullets();
     00000298 CDr00r00         [24]  644 	call	_updateBullets
-                                    645 ;src/game.c:210: updateEnemySpawning();
+                                    645 ;src/game.c:213: updateEnemySpawning();
     0000029B CDrC0r01         [24]  646 	call	_updateEnemySpawning
-                                    647 ;src/game.c:213: for (i = 0; i < MAX_ENEMIES; i++)
+                                    647 ;src/game.c:216: for (i = 0; i < MAX_ENEMIES; i++)
     0000029E 0E 00            [ 8]  648 	ld	c, #0x00
     000002A0                        649 00109$:
-                                    650 ;src/game.c:215: updateEnemyPhysics(&enemies[i]);
+                                    650 ;src/game.c:218: updateEnemyPhysics(&enemies[i]);
     000002A0 06 00            [ 8]  651 	ld	b, #0x00
     000002A2 69               [ 4]  652 	ld	l, c
     000002A3 60               [ 4]  653 	ld	h, b
@@ -664,35 +664,35 @@
     000002B0 D5               [16]  664 	push	de
     000002B1 CDr00r00         [24]  665 	call	_updateEnemyPhysics
     000002B4 D1               [12]  666 	pop	de
-                                    667 ;src/game.c:216: updateEnemyAnimation(&enemies[i]);
+                                    667 ;src/game.c:219: updateEnemyAnimation(&enemies[i]);
     000002B5 CDr00r00         [24]  668 	call	_updateEnemyAnimation
     000002B8 C1               [12]  669 	pop	bc
-                                    670 ;src/game.c:213: for (i = 0; i < MAX_ENEMIES; i++)
+                                    670 ;src/game.c:216: for (i = 0; i < MAX_ENEMIES; i++)
     000002B9 0C               [ 4]  671 	inc	c
     000002BA 79               [ 4]  672 	ld	a, c
     000002BB D6 04            [ 8]  673 	sub	a, #0x04
     000002BD 38 E1            [12]  674 	jr	C, 00109$
-                                    675 ;src/game.c:219: checkBulletEnemyCollisions();
+                                    675 ;src/game.c:222: checkBulletEnemyCollisions();
     000002BF CDr00r00         [24]  676 	call	_checkBulletEnemyCollisions
-                                    677 ;src/game.c:220: checkPlayerEnemyCollisions();
+                                    677 ;src/game.c:223: checkPlayerEnemyCollisions();
     000002C2 CDr00r00         [24]  678 	call	_checkPlayerEnemyCollisions
-                                    679 ;src/game.c:221: checkWaveCompletion();
+                                    679 ;src/game.c:224: checkWaveCompletion();
     000002C5 33               [ 8]  680 	inc	sp
     000002C6 C3r9Er01         [16]  681 	jp	_checkWaveCompletion
-                                    682 ;src/game.c:222: }
+                                    682 ;src/game.c:225: }
     000002C9 33               [ 8]  683 	inc	sp
     000002CA C9               [16]  684 	ret
-                                    685 ;src/game.c:224: void Game_draw(void)
+                                    685 ;src/game.c:227: void Game_draw(void)
                                     686 ;	---------------------------------
                                     687 ; Function Game_draw
                                     688 ; ---------------------------------
     000002CB                        689 _Game_draw::
-                                    690 ;src/game.c:228: drawPlayer();
+                                    690 ;src/game.c:231: drawPlayer();
     000002CB CDr00r00         [24]  691 	call	_drawPlayer
-                                    692 ;src/game.c:229: for (i = 0; i < MAX_ENEMIES; i++)
+                                    692 ;src/game.c:232: for (i = 0; i < MAX_ENEMIES; i++)
     000002CE 0E 00            [ 8]  693 	ld	c, #0x00
     000002D0                        694 00103$:
-                                    695 ;src/game.c:231: drawEnemy(&enemies[i]);
+                                    695 ;src/game.c:234: drawEnemy(&enemies[i]);
     000002D0 06 00            [ 8]  696 	ld	b, #0x00
     000002D2 69               [ 4]  697 	ld	l, c
     000002D3 60               [ 4]  698 	ld	h, b
@@ -708,7 +708,7 @@
     000002DF C5               [16]  708 	push	bc
     000002E0 CDr00r00         [24]  709 	call	_drawEnemy
     000002E3 C1               [12]  710 	pop	bc
-                                    711 ;src/game.c:229: for (i = 0; i < MAX_ENEMIES; i++)
+                                    711 ;src/game.c:232: for (i = 0; i < MAX_ENEMIES; i++)
     000002E4 0C               [ 4]  712 	inc	c
     000002E5 79               [ 4]  713 	ld	a, c
     000002E6 D6 04            [ 8]  714 	sub	a, #0x04
@@ -717,39 +717,39 @@
     000002EA F0r00            [12]  717 	ldh	a, (_SCX_REG + 0)
     000002EC 3C               [ 4]  718 	inc	a
     000002ED E0r00            [12]  719 	ldh	(_SCX_REG + 0), a
-                                    720 ;src/game.c:235: drawHearts();
+                                    720 ;src/game.c:238: drawHearts();
     000002EF CDr00r00         [24]  721 	call	_drawHearts
-                                    722 ;src/game.c:236: drawScore();
+                                    722 ;src/game.c:239: drawScore();
     000002F2 CDr00r00         [24]  723 	call	_drawScore
-                                    724 ;src/game.c:237: drawWave();
-                                    725 ;src/game.c:238: }
+                                    724 ;src/game.c:240: drawWave();
+                                    725 ;src/game.c:241: }
     000002F5 C3r00r00         [16]  726 	jp	_drawWave
-                                    727 ;src/game.c:241: void loseQuarterLife(void)
+                                    727 ;src/game.c:244: void loseQuarterLife(void)
                                     728 ;	---------------------------------
                                     729 ; Function loseQuarterLife
                                     730 ; ---------------------------------
     000002F8                        731 _loseQuarterLife::
-                                    732 ;src/game.c:243: quarterLife++;
+                                    732 ;src/game.c:246: quarterLife++;
     000002F8 21r00r00         [12]  733 	ld	hl, #_quarterLife
     000002FB 34               [12]  734 	inc	(hl)
-                                    735 ;src/game.c:244: if (quarterLife >= 4) {
+                                    735 ;src/game.c:247: if (quarterLife >= 4) {
     000002FC 7E               [ 8]  736 	ld	a, (hl)
     000002FD D6 04            [ 8]  737 	sub	a, #0x04
     000002FF DAr00r00         [16]  738 	jp	C, _drawHearts
-                                    739 ;src/game.c:245: if (game.lives > 0) {
+                                    739 ;src/game.c:248: if (game.lives > 0) {
     00000302 01r00r00         [12]  740 	ld	bc, #_game+0
     00000305 0A               [ 8]  741 	ld	a, (bc)
     00000306 B7               [ 4]  742 	or	a, a
     00000307 28 02            [12]  743 	jr	Z, 00102$
-                                    744 ;src/game.c:246: game.lives--;
+                                    744 ;src/game.c:249: game.lives--;
     00000309 3D               [ 4]  745 	dec	a
     0000030A 02               [ 8]  746 	ld	(bc), a
     0000030B                        747 00102$:
-                                    748 ;src/game.c:248: quarterLife = 0; // Reset partial heart when a life is lost
+                                    748 ;src/game.c:251: quarterLife = 0; 
     0000030B AF               [ 4]  749 	xor	a, a
     0000030C EAr00r00         [16]  750 	ld	(#_quarterLife),a
-                                    751 ;src/game.c:250: drawHearts();
-                                    752 ;src/game.c:251: }
+                                    751 ;src/game.c:253: drawHearts();
+                                    752 ;src/game.c:254: }
     0000030F C3r00r00         [16]  753 	jp	_drawHearts
                                     754 	.area _CODE
                                     755 	.area _INITIALIZER

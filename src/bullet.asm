@@ -45,16 +45,16 @@ _bullets::
 ; code
 ;--------------------------------------------------------
 	.area _CODE
-;src/bullet.c:8: void initBullets(void)
+;src/bullet.c:10: void initBullets(void)
 ;	---------------------------------
 ; Function initBullets
 ; ---------------------------------
 _initBullets::
 	dec	sp
-;src/bullet.c:11: for (i = 0; i < MAX_BULLETS; i++)
+;src/bullet.c:13: for (i = 0; i < MAX_BULLETS; i++)
 	ld	c, #0x00
 00104$:
-;src/bullet.c:13: bullets[i].x = 0;
+;src/bullet.c:15: bullets[i].x = 0;
 	ld	l, c
 	ld	h, #0x00
 	add	hl, hl
@@ -68,12 +68,12 @@ _initBullets::
 	ld	d, a
 	xor	a, a
 	ld	(de), a
-;src/bullet.c:14: bullets[i].y = 0;
+;src/bullet.c:16: bullets[i].y = 0;
 	ld	l, e
 	ld	h, d
 	inc	hl
 	ld	(hl), #0x00
-;src/bullet.c:15: set_sprite_tile(24 + i, 0);
+;src/bullet.c:17: set_sprite_tile(24 + i, 0);
 	ld	a, c
 	add	a, #0x18
 	ldhl	sp,	#0
@@ -92,7 +92,7 @@ _initBullets::
 	inc	hl
 	pop	de
 	ld	(hl), #0x00
-;src/bullet.c:16: bullets[i].spritids[0] = 24 + i;
+;src/bullet.c:18: bullets[i].spritids[0] = 24 + i;
 	inc	de
 	inc	de
 	inc	de
@@ -100,7 +100,7 @@ _initBullets::
 	ldhl	sp,	#0
 	ld	a, (hl)
 	ld	(de), a
-;src/bullet.c:17: move_sprite(24 + i, OFFSCREEN_X, OFFSCREEN_Y);
+;src/bullet.c:19: move_sprite(24 + i, OFFSCREEN_X, OFFSCREEN_Y);
 ;c:\gbdk\include\gb\gb.h:1973: OAM_item_t * itm = &shadow_OAM[nb];
 	ld	l, (hl)
 	ld	de, #_shadow_OAM+0
@@ -112,25 +112,25 @@ _initBullets::
 	ld	a, #0xc8
 	ld	(hl+), a
 	ld	(hl), #0xc8
-;src/bullet.c:11: for (i = 0; i < MAX_BULLETS; i++)
+;src/bullet.c:13: for (i = 0; i < MAX_BULLETS; i++)
 	inc	c
 	ld	a, c
 	sub	a, #0x06
 	jr	C, 00104$
-;src/bullet.c:19: }
+;src/bullet.c:21: }
 	inc	sp
 	ret
-;src/bullet.c:21: UINT8 fireBullet(void)
+;src/bullet.c:24: UINT8 fireBullet(void)
 ;	---------------------------------
 ; Function fireBullet
 ; ---------------------------------
 _fireBullet::
 	add	sp, #-6
-;src/bullet.c:24: for (i = 0; i < MAX_BULLETS; i++)
+;src/bullet.c:27: for (i = 0; i < MAX_BULLETS; i++)
 	ldhl	sp,	#5
 	ld	(hl), #0x00
 00104$:
-;src/bullet.c:26: if (bullets[i].y == 0)
+;src/bullet.c:29: if (bullets[i].y == 0)
 	ldhl	sp,	#5
 	ld	a, (hl-)
 	dec	hl
@@ -174,7 +174,7 @@ _fireBullet::
 	ld	(hl), a
 	or	a, a
 	jr	NZ, 00105$
-;src/bullet.c:28: bullets[i].x = player.x + BULLET_OFFSET_X;
+;src/bullet.c:31: bullets[i].x = player.x + BULLET_OFFSET_X;
 	ldhl	sp,	#0
 	ld	a, (hl)
 	ldhl	sp,	#4
@@ -190,7 +190,7 @@ _fireBullet::
 	ld	h, (hl)
 	ld	l, e
 	ld	(hl), a
-;src/bullet.c:29: bullets[i].y = player.y + BULLET_OFFSET_Y;
+;src/bullet.c:32: bullets[i].y = player.y + BULLET_OFFSET_Y;
 	ld	a, (#(_player + 1) + 0)
 	ldhl	sp,#5
 	ld	(hl), a
@@ -204,36 +204,36 @@ _fireBullet::
 	ld	d, a
 	ld	a, (hl)
 	ld	(de), a
-;src/bullet.c:30: playSound(SOUND_SHOOT);
+;src/bullet.c:33: playSound(SOUND_SHOOT);
 	ld	a, #0x02
 	call	_playSound
-;src/bullet.c:31: return 1;
+;src/bullet.c:34: return 1;
 	ld	a, #0x01
 	jr	00106$
 00105$:
-;src/bullet.c:24: for (i = 0; i < MAX_BULLETS; i++)
+;src/bullet.c:27: for (i = 0; i < MAX_BULLETS; i++)
 	ldhl	sp,	#5
 	inc	(hl)
 	ld	a, (hl)
 	sub	a, #0x06
 	jr	C, 00104$
-;src/bullet.c:34: return 0;
+;src/bullet.c:37: return 0;
 	xor	a, a
 00106$:
-;src/bullet.c:35: }
+;src/bullet.c:38: }
 	add	sp, #6
 	ret
-;src/bullet.c:37: void updateBullets(void)
+;src/bullet.c:41: void updateBullets(void)
 ;	---------------------------------
 ; Function updateBullets
 ; ---------------------------------
 _updateBullets::
 	add	sp, #-8
-;src/bullet.c:40: for (i = 0; i < MAX_BULLETS; i++)
+;src/bullet.c:44: for (i = 0; i < MAX_BULLETS; i++)
 	ldhl	sp,	#7
 	ld	(hl), #0x00
 00109$:
-;src/bullet.c:42: if (bullets[i].y > 0)
+;src/bullet.c:46: if (bullets[i].y > 0)
 	ldhl	sp,	#7
 	ld	c, (hl)
 	ld	b, #0x00
@@ -270,8 +270,8 @@ _updateBullets::
 	ld	a, (hl)
 	or	a, a
 	jp	Z, 00110$
-;src/bullet.c:44: bullets[i].x += BULLET_SPEED;
-;src/bullet.c:46: if (bullets[i].x >= SCREEN_WIDTH)
+;src/bullet.c:48: bullets[i].x += BULLET_SPEED;
+;src/bullet.c:50: if (bullets[i].x >= SCREEN_WIDTH)
 	dec	hl
 	dec	hl
 	pop	bc
@@ -281,7 +281,7 @@ _updateBullets::
 	ld	(bc), a
 	ld	a, (bc)
 	ld	(hl), a
-;src/bullet.c:49: move_sprite(bullets[i].spritids[0], OFFSCREEN_X, OFFSCREEN_Y);
+;src/bullet.c:53: move_sprite(bullets[i].spritids[0], OFFSCREEN_X, OFFSCREEN_Y);
 	pop	de
 	push	de
 	ld	hl, #0x0004
@@ -293,19 +293,19 @@ _updateBullets::
 	pop	hl
 	ld	a, h
 	ldhl	sp,	#6
-;src/bullet.c:46: if (bullets[i].x >= SCREEN_WIDTH)
+;src/bullet.c:50: if (bullets[i].x >= SCREEN_WIDTH)
 	ld	(hl-), a
 	dec	hl
 	ld	a, (hl)
 	sub	a, #0xa0
 	jr	C, 00102$
-;src/bullet.c:48: bullets[i].y = 0;
+;src/bullet.c:52: bullets[i].y = 0;
 	dec	hl
 	ld	a, (hl-)
 	ld	l, (hl)
 	ld	h, a
 	ld	(hl), #0x00
-;src/bullet.c:49: move_sprite(bullets[i].spritids[0], OFFSCREEN_X, OFFSCREEN_Y);
+;src/bullet.c:53: move_sprite(bullets[i].spritids[0], OFFSCREEN_X, OFFSCREEN_Y);
 	ldhl	sp,#5
 	ld	a, (hl+)
 	ld	e, a
@@ -374,10 +374,10 @@ _updateBullets::
 	ld	h, (hl)
 	ld	l, a
 	ld	(hl), #0xc8
-;src/bullet.c:49: move_sprite(bullets[i].spritids[0], OFFSCREEN_X, OFFSCREEN_Y);
+;src/bullet.c:53: move_sprite(bullets[i].spritids[0], OFFSCREEN_X, OFFSCREEN_Y);
 	jr	00110$
 00102$:
-;src/bullet.c:53: move_sprite(bullets[i].spritids[0], bullets[i].x, bullets[i].y);
+;src/bullet.c:57: move_sprite(bullets[i].spritids[0], bullets[i].x, bullets[i].y);
 	ldhl	sp,#2
 	ld	a, (hl+)
 	ld	e, a
@@ -448,15 +448,15 @@ _updateBullets::
 	ld	d, a
 	ld	a, (hl)
 	ld	(de), a
-;src/bullet.c:53: move_sprite(bullets[i].spritids[0], bullets[i].x, bullets[i].y);
+;src/bullet.c:57: move_sprite(bullets[i].spritids[0], bullets[i].x, bullets[i].y);
 00110$:
-;src/bullet.c:40: for (i = 0; i < MAX_BULLETS; i++)
+;src/bullet.c:44: for (i = 0; i < MAX_BULLETS; i++)
 	ldhl	sp,	#7
 	inc	(hl)
 	ld	a, (hl)
 	sub	a, #0x06
 	jp	C, 00109$
-;src/bullet.c:57: }
+;src/bullet.c:61: }
 	add	sp, #8
 	ret
 	.area _CODE
